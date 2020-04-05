@@ -21,7 +21,7 @@ class PopUpInfo extends HTMLElement {
  if(this.hasAttribute('img)) {
     imgUrl = this.getAttribute('img');
    } else {
-     imgUrl = '/img/default.png';
+     imgUrl = 'default.png';
     }
  const img = document.createElement('img');
  img.src = imgUrl;
