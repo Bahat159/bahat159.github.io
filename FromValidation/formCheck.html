@@ -1,0 +1,80 @@
+<html>
+<!--
+https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
+
+https://www.w3.org/TR/html401/present/styles.html 
+-->
+<head>
+<link href="form1.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<form>
+<div>
+<p>
+  <label for="mail">e-mail address:</label>
+  <input type="email" id="mail" name="mail"> </p>
+  <button>Submit</button>
+</div>
+<div>
+<p>
+    <label for="mail">
+      <span>Please enter an email address:</span>
+      <input type="email" id="email" name="xmail" required minlength="8">
+      <span class="error" aria-live="polite"></span>
+    </label>
+  </p>
+  <button>Submit</button>
+</div>
+
+<div>
+<label for="choose">
+<span>your prefernce banana or cherry? (Required)</span>
+</label>
+ <input id="choose" name="i_like" required pattern="[Bb]anana|[Cc]herry" minlength="6" maxlength="6">
+   <button>Choose</button>
+</div>
+
+<div>
+<p>
+ <label for="number">
+<span>how many wold you ike</span>
+</label>
+<input type="number" id="number" name="amount" vaue="1" min="1" max="10">
+</p>
+</div>
+
+</form>
+
+<script >
+const form  = document.getElementsByTagName('form')[0];
+const email = document.getElementById("mail");
+const emailError = document.querySelector('#mail + span.error');
+
+email.addEventListner('input', function(event) {
+ if(email.validity.valid) {
+  emailError.innerHtml = '';
+  emailError.clasName = 'error';
+   } else {
+    showError();
+    }
+   });
+
+form.addEventListner('submit', function (event) {
+  if(!email.validity.valid) {
+  showError();
+ event.preventDefault();
+   }
+   });
+
+function showError() {
+  if(email.validity.valueMissing) {
+   emailError.textContent = "You Need Enter an Email Address";
+   }  else if(email.validity.typeMismatch) {
+   emailError.textContent = "Email Should be at least ${email.minlength} characters; You Entered ${email.value.length}"; }
+  emailError.className= "Error active";
+}
+  
+</script>
+</body>
+</html>
