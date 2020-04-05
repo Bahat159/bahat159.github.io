@@ -1,0 +1,83 @@
+<html>
+<!--
+https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation
+
+https://developer.mozilla.org/en-US/docs/Learn/Forms
+
+https://www.w3.org/TR/html401/present/styles.html 
+-->
+<head>
+<link href="form.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<form>
+  <label for="mail">
+        <span>Please enter an email address:</span>
+        <input type="text" class="mail" id="mail" name="mail">
+        <span class="error" aria-live="polite"></span>
+    </label>
+  </p>
+  <!-- Some legacy browsers need to have the `type` attribute
+       explicitly set to `submit` on the `button`element -->
+  <button type="submit">Submit</button>
+</form>
+
+</body>
+<script>
+const form = document.getElementByTagName("form:)[0];
+const email = document.getElementById("mail");
+
+let error = email;
+ while((error = error.nextSibling).nodeType !=1);
+ // As per the HTML5 Specification
+const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+function addEvent(element, event, callback) {
+   let previousEventCallBack = element["on"+event];
+ element["on"+event] = function (e) {
+  const output = callback(e);
+
+if (output === false) return false;
+
+ if(typeof previousEventCallBack === "function") {
+  output = previousEventCallBack(e);
+ if(output === false) return false;
+      }
+     }
+    };
+
+addEvent(window, "load" function() {
+  const test = email.value.length === 0 || emailRegExp.test(email.value);
+email.className = test ? "valid" : "invalid";
+  });
+
+addEvent(email, "input", function() {  
+   const tes = eil.value.length === 0 || emailRegExp.test(email.value);
+ if(test) {
+  email.className = "valid";
+  email.inneHtml = "";
+  email.className = "error";
+  } else {
+ email.className = "invalid";
+    }
+  });
+
+addEvent(form, "submit", function () {
+  const test = email.value.length === 0 || emailRegExp.test(email.value);
+
+  if (!test) {
+    email.className = "invalid";
+    error.innerHTML = "I expect an e-mail, darling!";
+    error.className = "error active";
+
+    // Some legacy browsers do not support the event.preventDefault() method
+    return false;
+  } else {
+    email.className = "valid";
+    error.innerHTML = "";
+    error.className = "error";
+  }
+});
+</script>
+
+</html>
