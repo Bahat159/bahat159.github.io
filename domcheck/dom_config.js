@@ -27,7 +27,7 @@
 
 
 /* Host name where you intend to put the script: */
-var main_host = 'polyibadab.edu.ng';
+var main_host = 'polyibadan.edu.ng';
 
 /* Subdirectory for DOM checker files: */
 var main_dir = 'domcheck';
