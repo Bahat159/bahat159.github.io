@@ -27,15 +27,15 @@
 
 
 /* Host name where you intend to put the script: */
-var main_host = 'lcamtuf.coredump.cx';
+var main_host = 'polyibadab.edu.ng';
 
 /* Subdirectory for DOM checker files: */
-var main_dir = 'dom_checker';
+var main_dir = 'domcheck';
 
 /* An alternative way to call the same resource in a manner that
    appears to the browser as completely unrelated to main_host
    (try IP address): */
-var alt_host  = '213.134.128.25';
+var alt_host  = '98.102.204.206';
 
 /* Subdirectory for DOM checker files: */
 var alt_dir = 'lcamtuf';
