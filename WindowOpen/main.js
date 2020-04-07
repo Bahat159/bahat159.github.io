@@ -1,7 +1,7 @@
 
 
 
-function verify(button){
+document.addEventListner('click', function verify(button){
     document.getElementById('verify').innerHTML= 'Processing...';
     aes_key_verify();
 }
