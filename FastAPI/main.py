@@ -115,3 +115,21 @@ async def read_optional_query_item(item_id: str, query_id: Optional[str] = None)
     if query_id:
         return {"item_id": item_id, "query_id": query_id}
     return {"item_id": item_id}
+
+
+# http://127.0.0.1:8000/query_items_with_type_conversion/456?query_id=justimTime&short=true
+# {"item_id": "456","query_id": "justimTime"}
+#
+# http://127.0.0.1:8000/query_items_with_type_conversion/1?query_id=justimTime
+# {"item_id": "1","query_id": "justimTime","description": "This is an amazing item that has a long description"}
+
+@app.get("/query_items_with_type_conversion/{item_id}")
+async def read_optional_query_item_with_type_conversion(item_id: str, query_id: Optional[str] = None, short: bool = False):
+    item = {"item_id": item_id}
+    if query_id:
+        item.update({"query_id": query_id})
+    if not short:
+        item.update(
+            {"description": "This is an amazing item that has a long description"}
+        )
+    return item
