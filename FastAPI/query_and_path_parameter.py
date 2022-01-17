@@ -173,8 +173,6 @@ async def read_user_query_parameter(required_query_parameter: str, needy: str):
 # -H 'accept:application/json'
 #
 @app.get("/required_query_with_optional_parameter/{required_query_with_optional_parameter}")
-async def read_user_item(
-    required_query_with_optional_parameter: str, needy: str, skip: int = 0, limit: Optional[int] = None
-):
+async def read_user_item(required_query_with_optional_parameter: str, needy: str, skip: int = 0, limit: Optional[int] = None):
     item = {"required_query_with_optional_parameter": required_query_with_optional_parameter, "needy": needy, "skip": skip, "limit": limit}
     return item
