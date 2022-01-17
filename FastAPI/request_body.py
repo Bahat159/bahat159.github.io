@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
 
@@ -18,8 +18,8 @@ app = FastAPI()
 async def create_item(item: Item):
     return item
 
-@app.post("/items/")
-async def create_item(item: Item):
+@app.post("/create_parameter_with_module/")
+async def create_parameter_with_module(item: Item):
     item_dict = item.dict()
     if item.tax:
         price_with_tax = item.price + item.tax
@@ -75,7 +75,46 @@ async def create_request_and_path_and_query_parameter_item(request_and_path_and_
 # http://127.0.0.1:8000/query_parameter/?query=naija_news
 # {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "naija_news"}
 @app.get("/query_parameter/")
-async def read_query_items(query: Optional[str] = None):
+async def read_query_parameter_items(query: Optional[str] = None):
+    results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
+    if query:
+        results.update({"query": query})
+    return results
+
+# Query Parameters with string limit
+# http://127.0.0.1:8000/query_parameter_with_limit/?query=parameterwithlimit
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "parameterwithlimit"}
+
+@app.get("/query_parameter_with_limit/")
+async def read_query_parameter_with_limit_items(query: Optional[str] = Query(None, max_length=50)):
+    results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
+    if query:
+        results.update({"query": query})
+    return results
+
+# Query Parameters set as optional with string limit
+# http://127.0.0.1:8000/query_parameter_as_optional_with_limit/?query=optional_query
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "optional_query"}
+#
+# http://127.0.0.1:8000/query_parameter_as_optional_with_limit/?query=indo_query
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "indo_query"}
+
+@app.get("/query_parameter_as_optional_with_limit/")
+async def get_query_parameter_as_optional_with_limit(query: Optional[str] = Query(None, max_length=50)):
+    results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
+    if query:
+        results.update({"query": query})
+    return results
+
+# Query Parameters set as optional with string limit and minlength
+# http://127.0.0.1:8000/query_parameter_as_optional_with_limit_validation/?query=que
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "que"}
+# 
+# http://127.0.0.1:8000/query_parameter_as_optional_with_limit_validation/?query=quertz
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "quertz"}
+
+@app.get("/query_parameter_as_optional_with_limit_validation/")
+async def get_query_parameter_as_optional_with_limit_validation(query: Optional[str] = Query(None, min_length=3, max_length=50)):
     results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
     if query:
         results.update({"query": query})
