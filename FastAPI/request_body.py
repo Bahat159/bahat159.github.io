@@ -64,3 +64,19 @@ async def create_request_and_path_and_query_parameter_item(request_and_path_and_
     if query:
         result.update({"query": query})
     return result
+
+# Query Parameters
+# http://127.0.0.1:8000/items/?query=justinTime
+# {"items": [{"item_id": "Foo"},{"item_id": "Bar"}],"query": "justinTime"}
+#
+# http://127.0.0.1:8000/query_parameter/
+# {"query_parameter": [{"item_id": "Foo"},{"item_id": "Bar"}]}
+#
+# http://127.0.0.1:8000/query_parameter/?query=naija_news
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "naija_news"}
+@app.get("/query_parameter/")
+async def read_query_items(query: Optional[str] = None):
+    results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
+    if query:
+        results.update({"query": query})
+    return results
