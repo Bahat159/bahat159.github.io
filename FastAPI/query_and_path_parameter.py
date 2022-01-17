@@ -137,6 +137,12 @@ async def read_optional_query_item_with_type_conversion(item_id: str, query_id: 
 # Multiple path and query parameters
 # http://127.0.0.1:8000/users/178/items/456?query_id=urlshortner
 # {"item_id": "456","owner_id": 178,"query_id": "urlshortner","description": "This is an amazing item that has a long description"}
+# 
+# http://127.0.0.1:8000/users/178/items/456?query_id=urlshortner&short=true
+# {"item_id": "456","owner_id": 178,"query_id": "urlshortner"}
+#
+# http://127.0.0.1:8000/users/178/items/456?query_id=urlshortner&short=false
+# {"item_id": "456","owner_id": 178,"query_id": "urlshortner","description": "This is an amazing item that has a long description"}
 
 @app.get("/users/{user_id}/items/{item_id}")
 async def read_user_item(user_id: int, item_id: str, query_id: Optional[str] = None, short: bool = False):
