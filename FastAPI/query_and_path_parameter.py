@@ -154,3 +154,27 @@ async def read_multiple_path_and_query_parameter(user_id: int, item_id: str, que
             {"description": "This is an amazing item that has a long description"}
         )
     return item
+
+
+# Required query parameter
+# http://127.0.0.1:8000/required_query_parameter/justInTime?needy=needles_to_say
+# {"required_query_parameter": "justInTime","needy": "needles_to_say"}
+
+@app.get("/required_query_parameter/{required_query_parameter}")
+async def read_user_query_parameter(required_query_parameter: str, needy: str):
+    item = {"required_query_parameter": required_query_parameter, "needy": needy}
+    return item
+
+# Required query parameter with optional parameter
+# http://127.0.0.1:8000/required_query_with_optional_parameter/justInTime?needy=needless_to_say&skip=0&limit=2
+# {"required_query_with_optional_parameter": "justInTime","needy": "needless_to_say","skip": 0,"limit": 2}
+#
+# curl -X 'GET' \'http://127.0.0.1:8000/required_query_with_optional_parameter/justInTime?needy=needless_to_say&skip=0&limit=2' \
+# -H 'accept:application/json'
+#
+@app.get("/required_query_with_optional_parameter/{required_query_with_optional_parameter}")
+async def read_user_item(
+    required_query_with_optional_parameter: str, needy: str, skip: int = 0, limit: Optional[int] = None
+):
+    item = {"required_query_with_optional_parameter": required_query_with_optional_parameter, "needy": needy, "skip": skip, "limit": limit}
+    return item
