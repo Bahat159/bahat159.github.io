@@ -1,8 +1,6 @@
-from typing import Optional
-
-from fastapi import FastAPI, Query
 from pydantic import BaseModel
-
+from typing import List, Optional
+from fastapi import FastAPI, Query
 
 class Item(BaseModel):
     name: str
@@ -119,3 +117,60 @@ async def get_query_parameter_as_optional_with_limit_validation(query: Optional[
     if query:
         results.update({"query": query})
     return results
+
+# Query Parameters set as optional with string limit and minlength with Regex
+# http://127.0.0.1:8000/query_parameter_as_optional_with_limit_validation_with_regex/?query=fixedquery
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "fixedquery"}
+
+@app.get("/query_parameter_as_optional_with_limit_validation_with_regex/")
+async def query_parameter_as_optional_with_regex(query: Optional[str] = Query(None, min_length=3, max_length=50, regex="^fixedquery$")):
+    results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
+    if query:
+        results.update({"query": query})
+    return results
+
+# http://127.0.0.1:8000/query_parameter_with_default_value/?query=fixed_query
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "fixed_query"}
+# http://127.0.0.1:8000/query_parameter_with_default_value/?query=fixedme
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "fixedme"}
+
+@app.get("/query_parameter_with_default_value/")
+async def query_parameter_with_default_value(query: str = Query("fixedquery", min_length=3)):
+    results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
+    if query:
+        results.update({"query": query})
+    return results
+
+# http://127.0.0.1:8000/query_parameter_with_default/?query=quertyz
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"query": "quertyz"}
+
+@app.get("/query_parameter_with_default/")
+async def query_parameter_with_default(query: str = Query(..., min_length=3)):
+    results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
+    if query:
+        results.update({"query": query})
+    return results
+
+
+# Query parameter list / multiple values
+# http://127.0.0.1:8000/query_parameter_with_multiple_value/?query=string0&query=string1&query=string2
+# {"query": ["string0","string1","string2"]}
+
+@app.get("/query_parameter_with_multiple_value/")
+async def query_parameter_with_multiple_value(query: Optional[List[str]] = Query(None)):
+    if query:
+        query_items = {"query": query}
+    return query_items
+
+# Query parameter list / multiple values with defaults
+# http://127.0.0.1:8000/query_parameter_with_multiple_default_value/?query=foo&query=bar&query=geez
+# {"query": ["foo","bar","geez"]}
+#
+# http://127.0.0.1:8000/query_parameter_with_multiple_default_value/?parameter_query=foo&parameter_query=bar&parameter_query=breez
+# {"parameter_query": ["foo","bar","breez"]}
+
+@app.get("/query_parameter_with_multiple_default_value/")
+async def query_parameter_with_multiple_default_value(parameter_query: List[str] = Query(["foo", "bar"])):
+    if parameter_query:
+        query_items = {"parameter_query": parameter_query}
+    return query_items
