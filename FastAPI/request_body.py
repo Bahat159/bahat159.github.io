@@ -174,3 +174,37 @@ async def query_parameter_with_multiple_default_value(parameter_query: List[str]
     if parameter_query:
         query_items = {"parameter_query": parameter_query}
     return query_items
+
+# Declare more metadata
+# You can add more information about the parameter.
+# http://127.0.0.1:8000/query_with_title_parameter/?parameter_query=nice_title_match
+# {"query_parameter": [{"naija_news": "Nairaland.com"},{"naija_entertainment": "Naijaloaded.com"}],"parameter_query": "nice_title_match"}
+
+@app.get("/query_with_title_parameter/")
+async def get_query_with_title_parameter(parameter_query: Optional[str] = Query(None, title="Query string", min_length=3)):
+    results = {"query_parameter": [{"naija_news": "Nairaland.com"}, {"naija_entertainment": "Naijaloaded.com"}]}
+    if parameter_query:
+        results.update({"parameter_query": parameter_query})
+    return results
+
+
+# http://127.0.0.1:8000/query_parameter_validation/?item-query=fixedquery
+# {"items": [{"item_id": "Foo"},{"item_id": "Bar"}],"query_parameter": "fixedquery"}
+
+@app.get("/query_parameter_validation/")
+async def get_query_parameter_validation(
+    query: Optional[str] = Query(
+        None,
+        alias="item-query",
+        title="Query string",
+        description="Query string for the items to search in the database that have a good match",
+        min_length=3,
+        max_length=50,
+        regex="^fixedquery$",
+        deprecated=True,
+    )
+):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if query:
+        results.update({"query_parameter": query})
+    return results
