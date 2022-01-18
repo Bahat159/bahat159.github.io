@@ -22,10 +22,23 @@ async def get_url_path(item_id: int = Path(..., title="The ID of the item to get
 
 # http://127.0.0.1:8000/url_path_with_query/7688?query=query_this_path
 # {"item_id": 7688,"query": "query_this_path"}
+#
+# http://127.0.0.1:8000/url_path_with_query/6575878?query=coding_challenge
+# {"competitive_programming_Turing_id": 6575878,"url_query": "coding_challenge"}
 
 @app.get("/url_path_with_query/{item_id}")
 async def get_url_path_with_query(query: str, item_id: int = Path(..., title="The ID of the item to get")):
-    results = {"item_id": item_id}
+    results = {"competitive_programming_Turing_id": item_id}
     if query:
         results.update({"url_query": query})
+    return results
+
+# http://127.0.0.1:8000/url_path_with_query_param_order/64764764?query=hacker_rank
+# {"competitive_programming_hacker_rank_id": 64764764,"query": "hacker_rank"}
+
+@app.get("/url_path_with_query_param_order/{item_id}")
+async def get_url_path_with_query_order(*, item_id: int = Path(..., title="The ID of the item to get"), query: str):
+    results = {"competitive_programming_hacker_rank_id": item_id}
+    if query:
+        results.update({"query": query})
     return results
