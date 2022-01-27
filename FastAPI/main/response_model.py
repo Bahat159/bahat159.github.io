@@ -81,7 +81,7 @@ items = {
     },
 }
 
-@app.get("/response_model_exclude_item_name/{item_id}/name", response_model=ResponseModelExculdeItem, response_model_include={"name", "description"},)
+@app.get("/response_model_exclude_item_name/{item_id}/name", response_model=ResponseModelExculdeItem, response_model_include=set({"name", "description"}),)
 async def read_response_model_exculde_item_name(item_id: str):
     for x in items:
         return items[x]
