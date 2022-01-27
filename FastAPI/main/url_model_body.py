@@ -1,6 +1,6 @@
-from typing import Optional
-from fastapi import FastAPI, Path
-from pydantic import BaseModel
+from typing import List, Optional, Set
+from fastapi import FastAPI, Path, Body
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
@@ -14,6 +14,7 @@ class Item(BaseModel):
 class User(BaseModel):
     username: str
     full_name: Optional[str] = None
+
 
 
 # http://127.0.0.1:8000/path_query_and_body_parameter/677?query=JustInTime
@@ -59,4 +60,89 @@ async def update_multiple_body_item(item_id: int, item: Item, user: User):
 @app.put("/multiple_body_parameter_/{item_id}")
 async def update_multiple_body_item_original(item_id: int, item: Item, user: User):
     results = {"item_id": item_id, "item": item,"user": user}
+    return results
+
+
+# http://127.0.0.1:8000/update_item_with_body/565
+# {"item_id": 565,"item": {"name": "string","description": "string","price": 0,"tax": 0},"user": {"username": "string",#   "full_name": "string"},"importance": 0}
+
+@app.put("/update_item_with_body/{item_id}")
+async def update_body_with_item(item_id: int, item: Item, user: User, importance: int = Body(...)):
+    results = {"item_id": item_id, "item": item, "user": user, "importance": importance}
+    return results
+
+
+# Body Field
+
+class BodyItemField(BaseModel):
+    name: str
+    description: Optional[str] = Field(None, title="The description of the item", max_length=300)
+    price: float = Field(..., gt=0, description="The price must be greater than zero")
+    tax: Optional[float] = None
+
+@app.put("/update_body_field_items/{item_id}")
+async def update_body_field_item(item_id: int, item: BodyItemField = Body(..., embed=True)):
+    results = {"item_id": item_id, "item": item.name}
+    return results
+
+# Body - Nested Models
+# List fields
+
+class ListItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+    tags: list = []
+
+
+@app.put("/update_with_list_item/{item_id}")
+async def update_with_list_item(item_id: int, item: ListItem):
+    results = {"item_id": item_id, "item_tag": item.tags, "item_name": item.name, "item_tax": item.tax}
+    return results
+
+# List fields with type parameter
+
+class ListFiedWithParameterItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+    tags: List[str] = []
+
+@app.put("/update_list_with_parameter_item/{item_id}")
+async def update_list_with_parameter_item(item_id: int, item: ListFiedWithParameterItem):
+    results = {"item_id": item_id, "item": item}
+    return results
+
+class ListWithSetItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = set()
+
+@app.put("/update_list_with_set_item/{item_id}")
+async def update_list_with_set_item(item_id: int, item: ListWithSetItem):
+    results = {"item_id": item_id, "item": item}
+    return results
+
+# Nested Models
+
+class Image(BaseModel):
+    url: str
+    name: str
+
+
+class NestedModelItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = []
+    image: Optional[Image] = None
+
+@app.put("/update_nested_model_item/{item_id}")
+async def update_nested_model_item(item_id: int, item: NestedModelItem):
+    results = {"item_id": item_id, "item": item}
     return results
