@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
 
 app = FastAPI()
 
@@ -23,10 +23,19 @@ async def create_response_model_item(item: ResponseModelItem):
 class UserIn(BaseModel):
     username: str = "Bahat"
     password: str = "Ju99sterpo00se%\intT0oF5astA0pi" # we could be sending our user's passwords to every client.
-    email: str = "busarihabib159@gmail.com"
+    email: EmailStr = "busarihabib159@gmail.com"
     full_name: Optional[str] = "Busari Habibullaah"
 
 # Don't do this in production!
-@app.post("/create_user_input/", response_model=UserIn)
-async def create_user_input(user: UserIn):
+@app.post("/user_input_model/", response_model=UserIn)
+async def create_user_input_model(user: UserIn):
+    return user
+
+class UserOut(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: Optional[str] = None
+
+@app.post("/user_output_model/", response_model=UserOut)
+async def create_user_output_model(user: UserIn):
     return user
