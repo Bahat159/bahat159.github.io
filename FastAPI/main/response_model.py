@@ -1,7 +1,6 @@
 from typing import List, Optional
-
 from fastapi import FastAPI
-from pydantic import BaseModel,EmailStr
+from pydantic import BaseModel, EmailStr
 
 app = FastAPI()
 
@@ -91,3 +90,42 @@ async def read_response_model_exculde_item_name(item_id: str):
 async def read_response_model_exclude_item_public_data(item_id: str):
     for x in items:
         return items[x]
+
+
+# Multiple models
+
+class MultipleModelUserIn(BaseModel):
+    username: str
+    password: str
+    email: EmailStr
+    full_name: Optional[str] = None
+
+
+class MultipleModelUserOut(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: Optional[str] = None
+
+
+class MultipleModelUserInDB(BaseModel):
+    username: str
+    hashed_password: str
+    email: EmailStr
+    full_name: Optional[str] = None
+
+
+def multiple_model_fake_password_hasher(raw_password: str):
+    return "supersecret" + raw_password
+
+
+def multiple_model_fake_save_user(user_in: MultipleModelUserIn):
+    hashed_password = multiple_model_fake_password_hasher(user_in.password)
+    user_in_db = MultipleModelUserInDB(**user_in.dict(), hashed_password=hashed_password)
+    print("User saved! ..not really")
+    return user_in_db
+
+
+@app.post("/miltiple_model_user/", response_model= MultipleModelUserOut)
+async def create_multiple_model_user(user_in: MultipleModelUserIn):
+    user_saved = multiple_model_fake_save_user(user_in)
+    return user_saved
