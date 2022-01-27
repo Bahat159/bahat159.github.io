@@ -1,6 +1,6 @@
 from typing import List, Optional, Set
 from fastapi import FastAPI, Path, Body
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 
 app = FastAPI()
 
@@ -167,5 +167,138 @@ class SubModel_as_type_Item(BaseModel):
 
 @app.put("/update_submodel_as_type_item/{item_id}")
 async def update_submodel_as_type_item(item_id: int, item: SubModel_as_type_Item):
+    results = {"item_id": item_id, "item": item}
+    return results
+
+# Special types and validation
+#
+# Apart from normal singular types like str, int, float, etc. 
+# You can use more complex singular types that inherit from str.
+# To see all the options you have, checkout the docs for Pydantic's exotic types
+# https://pydantic-docs.helpmanual.io/usage/types/
+
+class UrlImage(BaseModel):
+    url: HttpUrl
+    name: str 
+
+
+class SpecialValidationItem(BaseModel):
+    name: str = "Special types and validation"
+    description: Optional[str] = "Apart from normal singular types like str, int, float, etc.You can use more complex singular types that inherit from str."
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = set({"rock","metal","bar"})
+    images: Optional[List[UrlImage]] = UrlImage
+
+@app.put("/update_special_types_and_validation_item/{item_id}")
+async def update_special_types_and_validation_item(item_id: int, item: SpecialValidationItem):
+    results = {"item_id": item_id, "item": item}
+    return results
+
+# Declare Request Example Data
+#
+# You can declare examples of the data your app can receive.
+# Here are several ways to do it.
+
+class SchemaItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+
+class Config:
+    schema_extra = {
+        "example": {
+            "name": "Foo",
+            "description": "A very nice Item",
+            "price": 35.4,
+            "tax": 3.2,
+            }
+        }
+
+@app.put("/update_schema_extra_item/{item_id}")
+async def update_schema_extra_item(item_id: int, item: SchemaItem):
+    results = {"item_id": item_id, "item": item}
+    return results
+
+# Field additional arguments
+#
+# When using Field() with Pydantic models, 
+# you can also declare extra info (metadata) for the JSON Schema 
+# by passing any other arbitrary arguments to the function.
+
+class Schema_with_additional_field_Item(BaseModel):
+    name: str = Field(..., example="Busari Habibullaah")
+    description: Optional[str] = Field(None, example="Working with FastAPIs")
+    price: float = Field(..., example=35.4)
+    tax: Optional[float] = Field(None, example=3.2)
+
+@app.put("/update_schema_with_additional_field_item/{item_id}")
+async def update_schema_with_additional_field_item(item_id: int, item: Schema_with_additional_field_Item):
+    results = {"item_id": item_id, "item": item}
+    return results
+
+
+class BodyWithExampleItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+
+
+@app.put("/update_body_with_example_item/{item_id}")
+async def update_body_with_example_item(item_id: int, item: BodyWithExampleItem = Body(...,
+example={
+    "name": "Foo",
+    "description": "A very nice Item",
+    "price": 35.4,
+    "tax": 3.2,},),):
+    results = {"item_id": item_id, "item": item}
+    return results
+
+# Body with multiple examples
+
+class BodyWithMultipleItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+
+
+@app.put("/update_body_with_multiple_item/{item_id}")
+async def update_body_with_multiple_item(
+    *,
+    item_id: int,
+    item: BodyWithMultipleItem = Body(
+        ...,
+        examples={
+            "normal": {
+                "summary": "A normal example",
+                "description": "A **normal** item works correctly.",
+                "value": {
+                    "name": "Foo",
+                    "description": "A very nice Item",
+                    "price": 35.4,
+                    "tax": 3.2,
+                },
+            },
+            "converted": {
+                "summary": "An example with converted data",
+                "description": "FastAPI can convert price `strings` to actual `numbers` automatically",
+                "value": {
+                    "name": "Bar",
+                    "price": "35.4",
+                },
+            },
+            "invalid": {
+                "summary": "Invalid data is rejected with an error",
+                "value": {
+                    "name": "Baz",
+                    "price": "thirty five point four",
+                },
+            },
+        },
+    ),
+):
     results = {"item_id": item_id, "item": item}
     return results
