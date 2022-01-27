@@ -6,14 +6,14 @@ app = FastAPI()
 
 
 class Item(BaseModel):
-    name: str
-    description: Optional[str] = None
+    name: str = "Base model"
+    description: Optional[str] = "Described by Busari Habibullaah"
     price: float
     tax: Optional[float] = None
 
 class User(BaseModel):
-    username: str
-    full_name: Optional[str] = None
+    username: str = "First Base Model Username"
+    full_name: Optional[str] = "FastApi user model class"
 
 
 
@@ -104,11 +104,11 @@ async def update_with_list_item(item_id: int, item: ListItem):
 # List fields with type parameter
 
 class ListFiedWithParameterItem(BaseModel):
-    name: str
-    description: Optional[str] = None
+    name: str = "Nigeria bet application company"
+    description: Optional[str] = "Nigerian bet application platform website list"
     price: float
     tax: Optional[float] = None
-    tags: List[str] = []
+    tags: List[str] = ["sportybet.com", "nairabet.com", "betnaija.com"]
 
 @app.put("/update_list_with_parameter_item/{item_id}")
 async def update_list_with_parameter_item(item_id: int, item: ListFiedWithParameterItem):
@@ -116,11 +116,11 @@ async def update_list_with_parameter_item(item_id: int, item: ListFiedWithParame
     return results
 
 class ListWithSetItem(BaseModel):
-    name: str
-    description: Optional[str] = None
-    price: float
+    name: str = "Nigerian Entertainment List"
+    description: Optional[str] = "Nigerian Entertainment List of website"
+    price: float = 2.4
     tax: Optional[float] = None
-    tags: Set[str] = set()
+    tags: Set[str] = set({"Nairaland.com", "naijaloaded.com", "Tooexclusive.com"})
 
 @app.put("/update_list_with_set_item/{item_id}")
 async def update_list_with_set_item(item_id: int, item: ListWithSetItem):
@@ -130,19 +130,42 @@ async def update_list_with_set_item(item_id: int, item: ListWithSetItem):
 # Nested Models
 
 class Image(BaseModel):
-    url: str
-    name: str
+    url: str = "https://bahat159.github.io"
+    name: str = "Busari Habibullaah"
 
 
 class NestedModelItem(BaseModel):
-    name: str
-    description: Optional[str] = None
-    price: float
-    tax: Optional[float] = None
-    tags: Set[str] = []
+    name: str = "Busari Habibullaah"
+    description: Optional[str] = "First ever understanding of model body item"
+    price: float = 90.00
+    tax: Optional[float] =  2.40
+    tags: Set[str] = ["tag array", "second_tag_array"]
     image: Optional[Image] = None
 
 @app.put("/update_nested_model_item/{item_id}")
 async def update_nested_model_item(item_id: int, item: NestedModelItem):
+    results = {"item_id": item_id, "item_model_name": item.name, "item_description": item.description, "item_price":item.price, "item_price": item.price, "item_tax": item.tax, "item_tags": item.tags, "item_image_url":item.image}
+    return results
+
+# Use the submodel as a type
+#
+# And then we can use it as the type of an attribute:
+
+class Submodel_Image(BaseModel):
+    url: str = "http://example.com/baz.jpg"
+    name: str = "The Foo live"
+
+
+class SubModel_as_type_Item(BaseModel):
+    name: str = "Foo"
+    description: Optional[str] = "The pretender"
+    price: float = 42.0
+    tax: Optional[float] = 3.2
+    tags: Set[str] = ["rock", "metal", "bar"]
+    image: Optional[Submodel_Image] = None
+
+
+@app.put("/update_submodel_as_type_item/{item_id}")
+async def update_submodel_as_type_item(item_id: int, item: SubModel_as_type_Item):
     results = {"item_id": item_id, "item": item}
     return results
