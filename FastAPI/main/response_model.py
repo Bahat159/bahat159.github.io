@@ -44,8 +44,8 @@ async def create_user_output_model(user: UserIn):
 # Response Model encoding parameters
 
 class ResponseModelEncodingParameterItem(BaseModel):
-    name: str
-    description: Optional[str] = None
+    name: str = "Busari Habibullaah"
+    description: Optional[str] = "The complete code"
     price: float
     tax: float = 10.5
     tags: List[str] = []
@@ -59,5 +59,35 @@ items = {
 
 @app.get("/response_model_encoding_parameter_items/{item_id}", response_model=ResponseModelEncodingParameterItem, response_model_exclude_unset=True)
 async def read_response_model_encoding_parameter_item(item_id: str):
+    for x in items:
+        return items[x]
+
+
+class ResponseModelExculdeItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: float = 10.5
+
+
+items = {
+    "foo": {"name": "Foo", "price": 50.2},
+    "bar": {"name": "Bar", "description": "The Bar fighters", "price": 62, "tax": 20.2},
+    "baz": {
+        "name": "Baz",
+        "description": "There goes my baz",
+        "price": 50.2,
+        "tax": 10.5,
+    },
+}
+
+@app.get("/response_model_exclude_item_name/{item_id}/name", response_model=ResponseModelExculdeItem, response_model_include={"name", "description"},)
+async def read_response_model_exculde_item_name(item_id: str):
+    for x in items:
+        return items[x]
+
+
+@app.get("/response_model_exclude_item_public_data/{item_id}/public", response_model=ResponseModelExculdeItem, response_model_exclude={"tax"})
+async def read_response_model_exclude_item_public_data(item_id: str):
     for x in items:
         return items[x]
