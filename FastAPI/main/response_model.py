@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, Form, UploadFile, File
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional, Union, Dict
 
@@ -209,7 +209,7 @@ items = {
 @app.get("/union_or_anyof_response/{item_id}", response_model=Union[PlaneItem, CarItem])
 async def read_response_with_union_item(item_id: str):
     for x in items:
-        return items[x]
+        return items
 
 # List of Model
 
@@ -253,3 +253,29 @@ async def create_response_status_code_item(name: str):
 @app.post("/fastapi_status_items/", status_code=status.HTTP_201_CREATED)
 async def create_with_fastapi_status_item(name: str):
     return {"name": name}
+
+
+# Form Data
+#
+# curl -X 'POST' \
+#  'http://127.0.0.1:8000/form_login/' \
+#  -H 'accept: application/json' \
+#  -H 'Content-Type: application/x-www-form-urlencoded' \
+#  -d 'username=bahat&password=passcoder'
+
+@app.post("/form_login/")
+async def login_form(username: str = Form(...), password: str = Form(...)):
+    return {"username": username, "password": password}
+
+
+# Request Files
+
+@app.post("/get_files_parameter_size/")
+async def create_file(file: bytes = File(...)):
+    return {"file_size": len(file)}
+
+# Current issue with FastApi
+#
+# @app.post("/uploadfile/")
+# async def create_upload_file(file: UploadFile):
+#    return {"filename": file.filename, "file_content_type": file.content_type}
