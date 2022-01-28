@@ -279,3 +279,26 @@ async def create_file(file: bytes = File(...)):
 # @app.post("/uploadfile/")
 # async def create_upload_file(file: UploadFile):
 #    return {"filename": file.filename, "file_content_type": file.content_type}
+
+from fastapi.responses import HTMLResponse
+
+@app.post("/multiple_files_size/")
+async def create_multiple_files_size(files: List[bytes] = File(..., description="Multiple files as bytes")):
+    return {"file_sizes": [len(file) for file in files]}
+
+@app.get("/main_html_type/")
+async def main_html_type():
+    content = """
+    <body>
+        <form action="/files/" enctype="multipart/form-data" method="post">
+            <input name="files" type="file" multiple>
+            <input type="submit">
+        </form>
+        <form action="/uploadfiles/" enctype="multipart/form-data" method="post">
+            <input name="files" type="file" multiple>
+            <input type="submit">
+        </form>
+    </body>
+    """
+    return HTMLResponse(content=content)
+
