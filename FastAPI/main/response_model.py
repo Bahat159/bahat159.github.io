@@ -1,6 +1,6 @@
-from typing import List, Optional
 from fastapi import FastAPI
 from pydantic import BaseModel, EmailStr
+from typing import List, Optional, Union, Dict
 
 app = FastAPI()
 
@@ -174,3 +174,62 @@ def reduce_duplicate_fake_save_user(user_in: ReduceDuplicateUserIn):
 async def create_user_to_reduce_duplication(user_in: ReduceDuplicateUserIn):
     user_saved = reduce_duplicate_fake_save_user(user_in)
     return user_saved
+
+# Union or anyOf
+# You can declare a response to be the Union of two types, 
+# that means, that the response would be any of the two.
+
+class UnionBaseItem(BaseModel):
+    description: str 
+    type: str
+
+
+class CarItem(UnionBaseItem):
+    type = "car"
+
+
+class PlaneItem(UnionBaseItem):
+    type = "plane"
+    size: int
+
+
+items = {
+    "item1": {
+        "description": "All my friends drive a low rider", 
+        "type": "car"
+    },
+    "item2": {
+        "description": "Music is my aeroplane, it's my aeroplane",
+        "type": "plane",
+        "size": 5,
+    },
+}
+
+
+@app.get("/union_or_anyof_response/{item_id}", response_model=Union[PlaneItem, CarItem])
+async def read_response_with_union_item(item_id: str):
+    for x in items:
+        return items[x]
+
+# List of Model
+
+class ListOfModelItem(BaseModel):
+    name: str
+    description: str
+
+
+items = [
+    {"name": "Entertainment", "description": "List of entertainment websites in Nigeria"},
+    {"name": "Sport betting", "description": "List of sporting bet websites in Nigeria"},
+]
+
+
+@app.get("/list_of_model_items/", response_model=List[ListOfModelItem])
+async def read_list_of_model_items():
+    return items
+
+# Response with dict
+
+@app.get("/keyword-weights_with_dict/", response_model=Dict[str, float])
+async def read_keyword_weights_with_dict():
+    return {"foo": 2.3, "bar": 3.4}
