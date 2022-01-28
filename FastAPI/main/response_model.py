@@ -108,10 +108,10 @@ class MultipleModelUserOut(BaseModel):
 
 
 class MultipleModelUserInDB(BaseModel):
-    username: str
+    username: str = "bahat"
     hashed_password: str
-    email: EmailStr 
-    full_name: Optional[str] = None
+    email: EmailStr = "busarihabib159@gmail.com"
+    full_name: Optional[str] = "Busari Habibullaah"
 
 
 def multiple_model_fake_password_hasher(raw_password: str):
@@ -130,4 +130,47 @@ async def create_multiple_model_user(user_in: MultipleModelUserIn):
     user_saved = multiple_model_fake_save_user(user_in)
     return user_saved
 
+def get_most_out_of_model_dict(user_object):
+    user_in = user_object(username="john", password="secret", email="john.doe@example.com")
+    user_dict = user_in.dict()
+    return user_dict
+
+# print(get_most_out_of_model_dict(MultipleModelUserIn))
+
+
 # Extra Models
+# Reduce duplication
+
+class ReduceDuplicateUserBase(BaseModel):
+    username: str = "bahat"
+    email: EmailStr = "busarihabib159@gmail.com"
+    full_name: Optional[str] = "Busari Habibullaah"
+
+
+class ReduceDuplicateUserIn(ReduceDuplicateUserBase):
+    password: str
+
+
+class ReduceDuplicateUserOut(ReduceDuplicateUserBase):
+    pass
+
+
+class ReduceDuplicateUserInDB(ReduceDuplicateUserBase):
+    hashed_password: str
+
+
+def reduce_duplicate_fake_password_hasher(raw_password: str):
+    return "supersecret" + raw_password
+
+
+def reduce_duplicate_fake_save_user(user_in: ReduceDuplicateUserIn):
+    hashed_password = reduce_duplicate_fake_password_hasher(user_in.password)
+    user_in_db = ReduceDuplicateUserInDB(**user_in.dict(), hashed_password=hashed_password)
+    print("User saved! ..not really")
+    return user_in_db
+
+
+@app.post("/user_to_reduce_duplication/", response_model=ReduceDuplicateUserOut)
+async def create_user_to_reduce_duplication(user_in: ReduceDuplicateUserIn):
+    user_saved = reduce_duplicate_fake_save_user(user_in)
+    return user_saved
