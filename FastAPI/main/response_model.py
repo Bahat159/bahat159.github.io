@@ -95,10 +95,10 @@ async def read_response_model_exclude_item_public_data(item_id: str):
 # Multiple models
 
 class MultipleModelUserIn(BaseModel):
-    username: str
+    username: str = "bahat"
     password: str
-    email: EmailStr
-    full_name: Optional[str] = None
+    email: EmailStr = "busarihabib159@gmail.com"
+    full_name: Optional[str] = "Busari Habibullaah"
 
 
 class MultipleModelUserOut(BaseModel):
@@ -110,7 +110,7 @@ class MultipleModelUserOut(BaseModel):
 class MultipleModelUserInDB(BaseModel):
     username: str
     hashed_password: str
-    email: EmailStr
+    email: EmailStr 
     full_name: Optional[str] = None
 
 
@@ -129,3 +129,5 @@ def multiple_model_fake_save_user(user_in: MultipleModelUserIn):
 async def create_multiple_model_user(user_in: MultipleModelUserIn):
     user_saved = multiple_model_fake_save_user(user_in)
     return user_saved
+
+# Extra Models
