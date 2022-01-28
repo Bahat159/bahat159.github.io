@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional, Union, Dict
 
@@ -233,3 +233,23 @@ async def read_list_of_model_items():
 @app.get("/keyword-weights_with_dict/", response_model=Dict[str, float])
 async def read_keyword_weights_with_dict():
     return {"foo": 2.3, "bar": 3.4}
+
+
+
+# Response Status Code
+# The same way you can specify a response model, 
+# you can also declare the HTTP status code used for the response with the 
+# parameter status_code in any of the path operations:
+# @app.get()
+# @app.post()
+# @app.put()
+# @app.delete()
+
+@app.post("/response_status_code_items/", status_code=200)
+async def create_response_status_code_item(name: str):
+    return {"name": name}
+
+
+@app.post("/fastapi_status_items/", status_code=status.HTTP_201_CREATED)
+async def create_with_fastapi_status_item(name: str):
+    return {"name": name}
