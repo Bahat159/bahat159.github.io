@@ -1,6 +1,9 @@
 from pydantic import BaseModel, EmailStr
 from fastapi.responses import JSONResponse
 from typing import List, Optional, Union, Dict
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import PlainTextResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import FastAPI, status, Form, UploadFile, File, HTTPException, Request
 
 app = FastAPI()
@@ -318,19 +321,19 @@ async def create_recieve_file_with_uploadfile_and_file(file: bytes = File(...), 
 items = {"foo": "The Foo Wrestlers", "bar":"The Bar Wrestlers"}
 
 
-@app.get("/use_http_exception_error_handling_items/{item_id}")
-async def read_http_exception_error_handling_item(item_id: str):
-    if item_id not in items:
+@app.get("/use_http_exception_error_handling_items/{exception_id}")
+async def read_http_exception_error_handling_item(exception_id: str):
+    if exception_id not in items:
         raise HTTPException(status_code=404, detail="Item not found")
-    return {"item": items[item_id]}
+    return {"item": items[exception_id]}
 
 # Exception with custom header
 
-@app.get("/assert_items_with_custom_header/{item_id}")
-async def read_item_with_custom_header(item_id: str):
-    if item_id not in items:
+@app.get("/assert_items_with_custom_header/{exception_id}")
+async def read_item_with_custom_header(exception_id: str):
+    if exception_id not in items:
         raise HTTPException(status_code=404,detail="Item not found",headers={"X-Error": "There goes my error"},)
-    return {"item": items[item_id]}
+    return {"item": items[exception_id]}
 
 
 class UnicornException(Exception):
@@ -350,3 +353,24 @@ async def read_unicorn_exception_handler(name: str):
     if name == "yolo":
         raise UnicornException(name=name)
     return {"unicorn_exception_name": name}
+
+# Override the default exception handlers
+#
+# Override request validation exceptions
+#
+
+@app.exception_handler(StarletteHTTPException)
+async def http_starlette_exception_handler(request, exc):
+    return PlainTextResponse(str(exc.detail), status_code=exc.status_code)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return PlainTextResponse(str(exc), status_code=400)
+
+
+@app.get("/excpetion_items/{exception_id}")
+async def read_exception_item(exception_id: int):
+    if exception_id == 3:
+        raise HTTPException(status_code=418, detail="Nope! I don't like 3.")
+    return {"exception_id": exception_id}
