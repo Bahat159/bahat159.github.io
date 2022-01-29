@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, Form, UploadFile, File
+from fastapi import FastAPI, status, Form, UploadFile, File, HTTPException
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional, Union, Dict
 
@@ -302,3 +302,23 @@ async def main_html_type():
     """
     return HTMLResponse(content=content)
 
+# Request Forms and Files
+
+@app.post("/recieve_file_with_uploadfile_and_files/")
+async def create_recieve_file_with_uploadfile_and_file(file: bytes = File(...), fileb: UploadFile = File(...), token: str = Form(...)):
+    return {
+        "file_size": len(file),
+        "token": token,
+        "fileb_content_type": fileb.content_type,
+    }
+
+# Handling Error
+
+items = {"foo": "The Foo Wrestlers", "bar":"The Bar Wrestlers"}
+
+
+@app.get("/use_http_exception_error_handling_items/{item_id}")
+async def read_http_exception_error_handling_item(item_id: str):
+    if item_id not in items:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return {"item": items[item_id]}
