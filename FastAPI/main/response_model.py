@@ -463,3 +463,23 @@ async def read_items():
 @app.get("/read_users_tags/", tags=["users"])
 async def read_users():
     return [{"username": "johndoe"}]
+
+# Tags with Enums
+# If you have a big application, you might end up accumulating several tags, 
+# and you would want to make sure you always use the same tag for related path operations.
+
+from enum import Enum
+
+class TagsWithEnum(Enum):
+    items = "items"
+    users = "users"
+
+
+@app.get("/get_enum_items/", tags=[TagsWithEnum.items])
+async def get_Enumitems():
+    return {"items":"Portal gun", "uses":"Plumbus"}
+
+
+@app.get("/read_enum_users/", tags=[TagsWithEnum.users])
+async def read_Enum_users():
+    return {"items":"Rick", "users":"Morty"}
