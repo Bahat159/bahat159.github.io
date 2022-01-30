@@ -393,3 +393,35 @@ async def update_item(item_id: str, item: ExcludeUnsetItem):
     updated_item = stored_item_model.copy(update=update_data)
     items[item_id] = jsonable_encoder(updated_item)
     return updated_item
+
+
+# Partial updates recap
+
+class PartialUpdateItem(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[float] = None
+    tax: float = 10.5
+    tags: List[str] = []
+
+
+items = {
+    "foo": {"name": "Foo", "price": 50.2},
+    "bar": {"name": "Bar", "description": "The bartenders", "price": 62, "tax": 20.2},
+    "baz": {"name": "Baz", "description": None, "price": 50.2, "tax": 10.5, "tags": []},
+}
+
+
+@app.get("/partial_update_items/{item_id}", tags=["Partial Update Item"], response_model=PartialUpdateItem)
+async def read_partial_update_item(item_id: str):
+    return items[item_id]
+
+
+@app.patch("/patch_partial_update_items/{item_id}", tags=["Partial Update Item"], response_model=PartialUpdateItem)
+async def update_patch_partial_update_item(item_id: str, item: PartialUpdateItem):
+    stored_item_data = items[item_id]
+    stored_item_model = Item(**stored_item_data)
+    update_data = item.dict(exclude_unset=True)
+    updated_item = stored_item_model.copy(update=update_data)
+    items[item_id] = jsonable_encoder(updated_item)
+    return updated_item
