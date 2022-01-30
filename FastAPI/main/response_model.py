@@ -483,3 +483,50 @@ async def get_Enumitems():
 @app.get("/read_enum_users/", tags=[TagsWithEnum.users])
 async def read_Enum_users():
     return {"items":"Rick", "users":"Morty"}
+
+
+# Summary and description
+# You can add a summary and description (metadata)
+
+class SummaryDescriptionItem(BaseModel):
+    name: str = "Busari Habibullaah"
+    description: Optional[str] = "Summary and description"
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = set()
+
+
+@app.post("/summary_and_description_items/",
+    response_model=SummaryDescriptionItem,
+    summary="Create summary and description item",
+    description="Create an item with all the information, name, description, price, tax and a set of unique tags",
+)
+async def create_sumary_and_description_item(item: SummaryDescriptionItem):
+    return item
+
+
+# Description from docstring
+# As descriptions tend to be long and cover multiple lines, 
+# you can declare the path operation description in 
+# the function docstring and FastAPI will read it from there.
+
+class DescriptionAndDocStringItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = set()
+
+
+@app.post("/description_and_docstring_items/", response_model=DescriptionAndDocStringItem, summary="Create Descrption and Docstring item")
+async def create_description_and_docstring_item(item: DescriptionAndDocStringItem):
+    """
+    Create an item with all the information:
+
+    - **name**: each item must have a name
+    - **description**: a long description
+    - **price**: required
+    - **tax**: if the item doesn't have tax, you can omit this
+    - **tags**: a set of unique tag strings for this item
+    """
+    return item
