@@ -530,3 +530,34 @@ async def create_description_and_docstring_item(item: DescriptionAndDocStringIte
     - **tags**: a set of unique tag strings for this item
     """
     return item
+
+# Response description
+# You can specify the response description 
+# with the parameter response_description
+
+class ResponseDescriptionItem(BaseModel):
+    name: str = "Response and description"
+    description: Optional[str] = "Response and description Item creation"
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = set()
+
+
+@app.post(
+    "/response_and_description_items/",
+    response_model=ResponseDescriptionItem,
+    summary="Create Response and Description item",
+    response_description="The created item",
+    tags=["Response and Description"],
+)
+async def create_item(item: ResponseDescriptionItem):
+    """
+    Create an item with all the information:
+
+    - **name**: each item must have a name
+    - **description**: a long description
+    - **price**: required
+    - **tax**: if the item doesn't have tax, you can omit this
+    - **tags**: a set of unique tag strings for this item
+    """
+    return item
