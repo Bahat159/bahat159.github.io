@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from fastapi.responses import JSONResponse
-from typing import List, Optional, Union, Dict
+from typing import List, Optional, Union, Dict, Set
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -421,3 +421,20 @@ async def read_validation_excpetion_handler_item(excpetion_handler_id: int):
     if excpetion_handler_id == 3:
         raise HTTPException(status_code=418, detail="Nope! I don't like 3.")
     return {"excpetion_handler_item_id": excpetion_handler_id}
+
+# Path Operation Configuration
+# There are several parameters that you can pass 
+# to your path operation decorator to configure it.
+
+
+class PathOperationConfigurationItem(BaseModel):
+    name: str = "Path configuration Item"
+    description: Optional[str] = "PathOperationConfigurationItem"
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = set({"path","configuration","item"})
+
+
+@app.post("/path_cofiguration_items/", response_model=PathOperationConfigurationItem, status_code=status.HTTP_201_CREATED)
+async def create_item(item: PathOperationConfigurationItem):
+    return item
