@@ -374,3 +374,50 @@ async def read_exception_item(exception_id: int):
     if exception_id == 3:
         raise HTTPException(status_code=418, detail="Nope! I don't like 3.")
     return {"exception_id": exception_id}
+
+
+# Use the RequestValidationError body
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    try:
+        from fastapi.encoders import jsonable_encoder
+        from fastapi.responses import JSONResponse
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
+        )
+    except Exception:
+        sys.exit()
+
+class ExcpetItem(BaseModel):
+    title: str = "towel"
+    size: int ="XL"
+
+
+@app.post("/validation_exception_handler_items/")
+async def create_validation_exception_handler_item(item: ExcpetItem):
+    return item
+
+# Re-use FastAPI's exception handlers
+# You could also just want to use the exception somehow, 
+# but then use the same default exception handlers from FastAPI.
+
+from fastapi.exception_handlers import (http_exception_handler,request_validation_exception_handler,)
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request, exc):
+    print(f"OMG! An HTTP error!: {repr(exc)}")
+    return await http_exception_handler(request, exc)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    print(f"OMG! The client sent invalid data!: {exc}")
+    return await request_validation_exception_handler(request, exc)
+
+
+@app.get("/validation_excpetion_handler_items/{excpetion_handler_id}")
+async def read_validation_excpetion_handler_item(excpetion_handler_id: int):
+    if excpetion_handler_id == 3:
+        raise HTTPException(status_code=418, detail="Nope! I don't like 3.")
+    return {"excpetion_handler_item_id": excpetion_handler_id}
