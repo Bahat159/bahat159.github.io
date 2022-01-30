@@ -422,6 +422,7 @@ async def read_validation_excpetion_handler_item(excpetion_handler_id: int):
         raise HTTPException(status_code=418, detail="Nope! I don't like 3.")
     return {"excpetion_handler_item_id": excpetion_handler_id}
 
+
 # Path Operation Configuration
 # There are several parameters that you can pass 
 # to your path operation decorator to configure it.
@@ -438,3 +439,27 @@ class PathOperationConfigurationItem(BaseModel):
 @app.post("/path_cofiguration_items/", response_model=PathOperationConfigurationItem, status_code=status.HTTP_201_CREATED)
 async def create_item(item: PathOperationConfigurationItem):
     return item
+
+# Tags
+
+class TagsItem(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = set()
+
+
+@app.post("/create_tags_items/", response_model=TagsItem, tags=["items"])
+async def create_item(item: TagsItem):
+    return item
+
+
+@app.get("/read_tags_items/", tags=["items"])
+async def read_items():
+    return [{"name": "Foo", "price": 42}]
+
+
+@app.get("/read_users_tags/", tags=["users"])
+async def read_users():
+    return [{"username": "johndoe"}]
