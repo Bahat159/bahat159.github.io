@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Cookie
 
 # Dependencies - First Steps
 # Dependency Injection
@@ -81,3 +81,25 @@ async def read_common_query_parameters_with_shortcut_mothod_items(commons: Commo
     items = fake_items_db[commons.skip : commons.skip + commons.limit]
     response.update({"iquery_tems": items})
     return response
+
+
+# Sub-dependencies
+# You can create dependencies that have sub-dependencies.
+# They can be as deep as you need them to be. 
+#
+# First dependency "dependable"
+
+def query_extractor(query: Optional[str] = None):
+    return query
+
+
+def query_or_cookie_extractor(query: str = Depends(query_extractor), last_query: Optional[str] = Cookie(None)):
+    if not query:
+        return last_query
+    return query
+
+
+@app.get("/query_or_cookie_extractor_items/", tags=["Sub-dependencies"])
+async def read_query_or_cookie_extractor_items(query_or_default: str = Depends(query_or_cookie_extractor)):
+    return {"query_or_cookie": query_or_default}
+
