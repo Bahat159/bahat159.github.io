@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import Depends, FastAPI, Cookie
+from fastapi import Depends, FastAPI, Cookie,  Header, HTTPException
 
 # Dependencies - First Steps
 # Dependency Injection
@@ -103,3 +103,20 @@ def query_or_cookie_extractor(query: str = Depends(query_extractor), last_query:
 async def read_query_or_cookie_extractor_items(query_or_default: str = Depends(query_or_cookie_extractor)):
     return {"query_or_cookie": query_or_default}
 
+# Dependencies in path operation decorators
+# List of dependencies
+
+async def verify_token(x_token: str = Header(...)):
+    if x_token != "fake-super-secret-token":
+        raise HTTPException(status_code=400, detail="X-Token header invalid")
+
+
+async def verify_key(x_key: str = Header(...)):
+    if x_key != "fake-super-secret-key":
+        raise HTTPException(status_code=400, detail="X-Key header invalid")
+    return x_key
+
+
+@app.get("/items/", tags=["Sub-dependencies"], dependencies=[Depends(verify_token), Depends(verify_key)])
+async def read_items():
+    return [{"item": "Foo"}, {"item": "Bar"}]
