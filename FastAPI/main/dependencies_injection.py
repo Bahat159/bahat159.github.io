@@ -16,8 +16,8 @@ from fastapi import Depends, FastAPI
 app = FastAPI()
 
 
-async def common_parameters(q: Optional[str] = None, skip: int = 0, limit: int = 100):
-    return {"q": q, "skip": skip, "limit": limit}
+async def common_parameters(query_string: Optional[str] = None, optional_query_parameter_skip: int = 0, optional_query_parameter_limit: int = 100):
+    return {"query_string": query_string, "query_parameter_skip": optional_query_parameter_skip, "query_parameter_limit": optional_query_parameter_limit}
 
 
 @app.get("/items/", tags=["Dependecies injection"])
