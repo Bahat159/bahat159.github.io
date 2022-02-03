@@ -5,6 +5,11 @@ import models, schemas
 # CRUD utils
 # CRUD comes from: Create, Read, Update, and Delete.
 #
+# This example is not secure, the password is not hashed.
+# In a real life application you would need to hash the password and never save them in plaintext.
+# For more details, go back to the Security section in the tutorial.
+# Here we are focusing only on the tools and mechanics of databases.
+#
 # Create utility functions to:
 
 
