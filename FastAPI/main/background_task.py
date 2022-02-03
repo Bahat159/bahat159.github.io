@@ -16,13 +16,14 @@
 # through a slow process, you can return a response of 
 # "Accepted" (HTTP 202) and process it in the background.
 
-from fastapi import BackgroundTasks, FastAPI
+from typing import Optional
+from fastapi import BackgroundTasks, Depends, FastAPI
 
 app = FastAPI()
 
 
 def write_notification(email: str, message=""):
-    with open("background_task_log.txt", mode="w") as email_file:
+    with open("background_tasks_log.txt", mode="w") as email_file:
         content = f"notification for {email}: {message}"
         email_file.write(content)
 
@@ -31,3 +32,24 @@ def write_notification(email: str, message=""):
 async def send_notification(email: str, background_tasks: BackgroundTasks):
     background_tasks.add_task(write_notification, email, message="some notification")
     return {"message": "Notification sent in the background"}
+
+
+def write_log(message: str):
+    with open("background_task_log.txt", mode="a") as log:
+        log.write(message)
+
+
+def get_query(background_tasks: BackgroundTasks, q: Optional[str] = None):
+    if q:
+        message = f"found query: {q}\n"
+        background_tasks.add_task(write_log, message)
+    return q
+
+
+@app.post("/send-notification-with-background-task/{email}")
+async def send_notification(
+    email: str, background_tasks: BackgroundTasks, q: str = Depends(get_query)
+):
+    message = f"message to {email}\n"
+    background_tasks.add_task(write_log, message)
+    return {"message": "Message sent"}
