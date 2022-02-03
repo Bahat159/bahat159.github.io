@@ -22,7 +22,7 @@ app = FastAPI()
 
 
 def write_notification(email: str, message=""):
-    with open("log.txt", mode="w") as email_file:
+    with open("background_task_log.txt", mode="w") as email_file:
         content = f"notification for {email}: {message}"
         email_file.write(content)
 
