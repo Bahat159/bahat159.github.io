@@ -62,3 +62,9 @@ async def create_advanced_docstring_description_item(item: Item):
     :param item: User input.
     """
     return item
+
+# OpenAPI Extensions
+
+@app.get("/open_api_extension_items/", openapi_extra={"x-aperture-labs-portal": "blue"}, tags=["OpenApi Extension"])
+async def read_with_openapi_extension_items():
+    return [{"item_id": "portal-gun"}]
