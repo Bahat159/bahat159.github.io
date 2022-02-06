@@ -1,6 +1,7 @@
-from typing import Optional, Set
-from fastapi import FastAPI, status
-from pydantic import BaseModel
+import yaml
+from typing import Optional, Set, List
+from fastapi import FastAPI, status, Request, HTTPException
+from pydantic import BaseModel, ValidationError
 from fastapi.routing import APIRoute
 
 
@@ -68,3 +69,73 @@ async def create_advanced_docstring_description_item(item: Item):
 @app.get("/open_api_extension_items/", openapi_extra={"x-aperture-labs-portal": "blue"}, tags=["OpenApi Extension"])
 async def read_with_openapi_extension_items():
     return [{"item_id": "portal-gun"}]
+
+
+# Custom OpenAPI path operation schema
+
+def magic_data_reader(raw_body: bytes):
+    return {
+        "size": len(raw_body),
+        "content": {
+            "name": "Maaaagic",
+            "price": 42,
+            "description": "Just kiddin', no magic here. ✨",
+        },
+    }
+
+
+@app.post(
+    "/custom_path_operation_items/",
+    openapi_extra={
+        "requestBody": {
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "required": ["name", "price"],
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string"},
+                            "price": {"type": "number"},
+                            "description": {"type": "string"},
+                        },
+                    }
+                }
+            },
+            "required": True,
+        },
+    },
+    tags=["Custom Path Operation"]
+)
+async def create_custom_openapi_path_operation_item(request: Request):
+    raw_body = await request.body()
+    data = magic_data_reader(raw_body)
+    return data
+
+# Custom OpenAPI content type
+
+class CustomAPIItem(BaseModel):
+    name: str
+    tags: List[str]
+
+
+@app.post(
+    "/custom_operation_content_type_items/",
+    openapi_extra={
+        "requestBody": {
+            "content": {"application/x-yaml": {"schema": CustomAPIItem.schema()}},
+            "required": True,
+        },
+    },
+    tags=["Custom Operation Content Type"]
+)
+async def create_custom_operation_content_type_item(request: Request):
+    raw_body = await request.body()
+    try:
+        data = yaml.safe_load(raw_body)
+    except yaml.YAMLError:
+        raise HTTPException(status_code=422, detail="Invalid YAML")
+    try:
+        item = CustomAPIItem.parse_obj(data)
+    except ValidationError as e:
+        raise HTTPException(status_code=422, detail=e.errors())
+    return item
