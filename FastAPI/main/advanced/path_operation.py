@@ -1,7 +1,10 @@
-# Path Operation Advanced Configuration
-
-from fastapi import FastAPI
+from typing import Optional, Set
+from fastapi import FastAPI, status
+from pydantic import BaseModel
 from fastapi.routing import APIRoute
+
+
+# Path Operation Advanced Configuration
 
 app = FastAPI()
 
@@ -34,3 +37,28 @@ def use_route_names_as_operation_ids(app: FastAPI) -> None:
 
 
 use_route_names_as_operation_ids(app)
+
+# Advanced description from docstring
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+    tags: Set[str] = []
+
+
+@app.post("/advanced_doc_string_description_items/", response_model=Item, summary="Create an item", tags=["Advanced docstring description"], status_code=200)
+async def create_advanced_docstring_description_item(item: Item):
+    """
+    Create an item with all the information:
+
+    - **name**: each item must have a name
+    - **description**: a long description
+    - **price**: required
+    - **tax**: if the item doesn't have tax, you can omit this
+    - **tags**: a set of unique tag strings for this item
+    \f
+    :param item: User input.
+    """
+    return item
