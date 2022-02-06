@@ -1,7 +1,7 @@
 from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel
-from fastapi import Body, FastAPI, status
+from fastapi import Body, FastAPI, status, Response
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
@@ -43,7 +43,24 @@ class Item(BaseModel):
 
 
 
-@app.put("/return_response_directly_items/{id}")
+@app.put("/return_response_directly_items/{id}", tags=["Return Response directly"])
 def update_return_response_directly_item(id: str, item: Item):
     json_compatible_item_data = jsonable_encoder(item)
     return JSONResponse(content=json_compatible_item_data)
+
+
+# Returning a custom Response
+
+@app.get("/legacy/", tags=["Return Custom Response"])
+def get_legacy_data():
+    data = """<?xml version="1.0"?>
+    <shampoo>
+    <Header>
+        Apply shampoo here.
+    </Header>
+    <Body>
+        You'll have to use soap here.
+    </Body>
+    </shampoo>
+    """
+    return Response(content=data, media_type="application/xml")
