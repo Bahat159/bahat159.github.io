@@ -86,3 +86,18 @@ async def main_plaintext_response():
 @app.get("/read_ujson_response_items/", response_class=UJSONResponse, tags=["UJson Response"])
 async def read_ujson_response_items():
     return [{"item_id": "UJson Response Item"}]
+
+# RedirectResponse
+@app.get("/typer", tags=["RedirectResponse"])
+async def redirect_typer():
+    return RedirectResponse("https://typer.tiangolo.com")
+
+
+@app.get("/fastapi", response_class=RedirectResponse, tags=["RedirectResponse"])
+async def redirect_fastapi():
+    return "https://fastapi.tiangolo.com"
+
+
+@app.get("/pydantic", response_class=RedirectResponse, status_code=302, tags=["RedirectResponse"])
+async def redirect_pydantic():
+    return "https://pydantic-docs.helpmanual.io/"
