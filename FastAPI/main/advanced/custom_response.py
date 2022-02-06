@@ -101,3 +101,47 @@ async def redirect_fastapi():
 @app.get("/pydantic", response_class=RedirectResponse, status_code=302, tags=["RedirectResponse"])
 async def redirect_pydantic():
     return "https://pydantic-docs.helpmanual.io/"
+
+# StreamingResponse
+# Takes an async generator or a normal generator/iterator and streams the response body.
+
+async def fake_video_streamer():
+    for i in range(10):
+        yield b"some fake video bytes"
+
+
+@app.get("/fake_video_streaming_response", tags=["Streaming Response"])
+async def fake_video_streaming_response():
+    return StreamingResponse(fake_video_streamer())
+
+
+# Using StreamingResponse with file-like objects
+
+
+some_file_path = "large-video-file.mp4"
+
+
+
+@app.get("/streaming_response_with_file_like_object", tags=["Streaming Response"])
+def main():
+    def iterfile():  # This is the generator function. It's a "generator function" 
+                    # because it contains yield    statements inside.
+        with open(some_file_path, mode="rb") as file_like:  # 
+            yield from file_like  # By using a with block, we make sure that the file-like object 
+                                    # is closed after the generator function is done.
+                                    #  So, after it finishes sending the response.
+
+    return StreamingResponse(iterfile(), media_type="video/mp4")
+
+
+# FileResponse
+
+some_file_path = "large-video-file.mp4"
+
+@app.get("/file_response", tags=["File Response"])
+async def get_file_response_main():
+    return FileResponse(some_file_path)
+
+@app.get("/file_response_main_response_class", response_class=FileResponse, tags=["File Response"])
+async def get_file_response_main_response_class():
+    return some_file_path
