@@ -11,6 +11,10 @@ app = Flask(__name__)
 def index():
     return 'Index Page'
 
+@app.route('/login')
+def login():
+    return 'login'
+
 @app.route("/hello_world")
 def hello_world():
     return "<p>Hello, World!</p>"
@@ -55,3 +59,26 @@ def unique_url_about():
 # to a variable part of the URL rule. Unknown variable 
 # parts are appended to the URL as query parameters.
 
+def url_binding():
+    with app.test_request_context():
+        print(url_for('index'))
+        print(url_for('login'))
+        print(url_for('login', next='/'))
+        print(url_for('profile', username='John Doe'))
+
+
+# HTTP Methods
+#
+# Web applications use different HTTP methods when accessing URLs. 
+# You should familiarize yourself with the HTTP methods as 
+# you work with Flask. By default, a route only answers to GET requests. 
+# You can use the methods argument of the route() decorator to handle different HTTP methods.
+
+from flask import request
+
+@app.route('/login_http_request', methods=['GET', 'POST'])
+def login_http_request():
+    if request.method == 'POST':
+        return do_the_login()
+    else:
+        return show_the_login_form()
