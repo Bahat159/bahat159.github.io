@@ -5,7 +5,7 @@
 
 
 int main(){
-    char message[200] = "\nWelcome, Busari Habibullaah\nC/CPP/ASM Programming\nMalware analysis and Reverse Enginerring";
+    char message[200] = "\nWelcome, Busari Habibullaah\nC/CPP/ASM Programming\nMalware analysis and Reverse Engineering";
     printf("\n%s\n",message);
     printf("===========End of Introduction==============\n");
     exit(0);
@@ -267,4 +267,3 @@ void unget_character(int c) {
         buf[bufp++] = c;
     }
 }
-
