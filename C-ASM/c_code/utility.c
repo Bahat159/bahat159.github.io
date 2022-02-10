@@ -5,18 +5,9 @@
 
 
 int main(){
-    int i = 1;
-    long testvalue = 150;
-    char message[22] = {"This is a test message"};
-
-    printf("\nBusari Habibullaah back to C/CPP Programming language\n");
-    printf("\n{%s}\n",message);
-    printf("%ld\n", testvalue);
-    printf("=============with While Loop================\n");
-    calculate_fahrenhite();
-    printf("==============With For Loop=================\n");
-    /*calculate_fahr_with_for_loop(); */
-
+    char message[200] = "\nWelcome, Busari Habibullaah\nC/CPP/ASM Programming\nMalware analysis and Reverse Enginerring";
+    printf("\n%s\n",message);
+    printf("===========End of Introduction==============\n");
     exit(0);
 }
 
