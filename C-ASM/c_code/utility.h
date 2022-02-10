@@ -59,7 +59,8 @@ int string_compare(char *s, char *t);
 int day_of_year(int year, int mont, int day);
 void month_day(int year, int yearday, int *pmonth, int *pday);
 char *month_name(int n);
-
+int main_with_commandline_argument(int argc, char *argv[]);
+int main_with_command_line_argument(int argc, char *argv[]);
 
 enum boolean {NO, YES};
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
