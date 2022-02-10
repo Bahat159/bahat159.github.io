@@ -5,6 +5,8 @@
 
 
 int main(){
+    char *s = "This is from Busari Habibullaah";
+    char *t = "String comparison function implemented in pointers";
     char message[200] = "\nWelcome, Busari Habibullaah\nC/CPP/ASM Programming\nMalware analysis and Reverse Engineering";
     printf("\n%s\n",message);
     printf("===========End of Introduction==============\n");
@@ -18,6 +20,8 @@ int main(){
     else{
         printf("Unable to allocated space from memory!!\n");
     }
+    int returned_value = string_compare(s, t);
+    printf("Returned Value: %d\n", returned_value);
     exit(0);
 }
 
@@ -392,3 +396,12 @@ void copy_to_from_using_pointer(char *s, char *t){
     }
 }
 
+
+int string_compare(char *s, char *t){
+    for(; *s == *t; s++, t++){
+        if(*s == '\0'){
+            return 0;
+        }
+    }
+    return *s - *t;
+}
