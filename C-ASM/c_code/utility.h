@@ -58,6 +58,7 @@ void copy_to_from_using_pointer(char *s, char *t);
 int string_compare(char *s, char *t);
 int day_of_year(int year, int mont, int day);
 void month_day(int year, int yearday, int *pmonth, int *pday);
+char *month_name(int n);
 
 
 enum boolean {NO, YES};
