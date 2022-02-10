@@ -5,5 +5,6 @@
 - Python
 - Php
 - Javascript
+- Typescript
 - Html
 - Css
