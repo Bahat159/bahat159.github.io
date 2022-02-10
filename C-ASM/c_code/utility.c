@@ -9,7 +9,15 @@ int main(){
     printf("\n%s\n",message);
     printf("===========End of Introduction==============\n");
     int string_length = string_length_with_pointer("Hello World");
+    int space_to_allocate = 10000;
+    char *allocated_space = memory_allocator(space_to_allocate);
     printf("String length input: %d\n", string_length);
+    if (allocated_space >= space_to_allocate){
+        printf("Allocated Space from Memory: %d\n", *allocated_space);
+    }
+    else{
+        printf("Unable to allocated space from memory!!\n");
+    }
     exit(0);
 }
 
@@ -357,4 +365,21 @@ int string_length_with_pointer(char *s){
         n++;
     }
     return n;
+}
+
+
+char *memory_allocator(int n){
+    if (allocbuf + ALLOCSIZE - allocp >= n){
+        allocp += n;
+        return allocp - n;
+    }
+    else{
+        return 0;
+    }
+}
+
+void after_use_free(char *p){
+    if (p >= allocbuf && p < allocbuf + ALLOCSIZE){
+        allocp = p;
+    }
 }
