@@ -8,6 +8,8 @@ int main(){
     char message[200] = "\nWelcome, Busari Habibullaah\nC/CPP/ASM Programming\nMalware analysis and Reverse Engineering";
     printf("\n%s\n",message);
     printf("===========End of Introduction==============\n");
+    int string_length = string_length_with_pointer("Hello World");
+    printf("String length input: %d\n", string_length);
     exit(0);
 }
 
@@ -310,7 +312,7 @@ void swap_data(int v[], int i, int j){
 }
 
 
-/* Pointers and Addresses */
+/* Pointers and Function Arguments */
 
 void swap_data_with_pointer(int *px, int *py){
     int temp;
@@ -343,4 +345,16 @@ int get_integer(int *pn){
         unget_character(c);
     }
     return c;
+}
+
+/* Pointers and Arrays */
+
+
+/* strlen: return length of string s */
+int string_length_with_pointer(char *s){
+    int n;
+    for(n = 0; *s != '\0'; s++){
+        n++;
+    }
+    return n;
 }
