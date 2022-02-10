@@ -3,7 +3,7 @@
   - `as -o cpuid.o cpuid.s`
   - `ld -o cpuid cpuid.o`
   
-***Another way to Assemble and Link some files in this Repo***
+***Another way to Assemble and Link some files with Printf function calls in this Repo***
   - **update you linux download manager**
   - `sudo apt-get update`
   - **Install the required packages**
