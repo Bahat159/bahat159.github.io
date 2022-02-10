@@ -25,6 +25,7 @@ int binary_search(int x, int v[], int n);
 int alphabet_to_integer(char s[]);
 void shell_sort(int v[], int n);
 void reverse_string(char s[]);
+int trim_character(char s[]);
 
 enum boolean {NO, YES};
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
@@ -208,4 +209,14 @@ void reverse_string(char s[]){
         s[i] = s[j];
         s[j] = c;
     }
+}
+
+int trim_character(char s[]){
+    int n;
+    for (n = string_length(s)-1; n >= 0; n--){
+        if (s[n] != ' ' && s[n] != '\t' && s[n] != '\n')
+        break;
+    }
+    s[n+1] = '\0';
+    return n;
 }
