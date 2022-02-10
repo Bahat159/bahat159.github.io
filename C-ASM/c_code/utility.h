@@ -19,6 +19,12 @@ double val[MAXVAL]; /* value stack */
 char buf[BUFSIZE]; /* buffer for ungetch */
 int bufp = 0; /* next free position in buf */
 
+static char daytab[2][13] = {
+{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
+{0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+};
+
+
 int calculate_fahrenhite();
 int calculate_fahr_with_for_loop();
 int power_function_call_by_value(int base, int n);
@@ -50,6 +56,9 @@ char *memory_allocator(int n);
 void after_use_free(char *p);
 void copy_to_from_using_pointer(char *s, char *t);
 int string_compare(char *s, char *t);
+int day_of_year(int year, int mont, int day);
+void month_day(int year, int yearday, int *pmonth, int *pday);
+
 
 enum boolean {NO, YES};
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
