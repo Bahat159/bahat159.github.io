@@ -1,8 +1,11 @@
 # To Assemble and link (Building the executables) in this Repo
+  ***Basic method to assmeble abd link asm files without stress***
 
   - `as -o cpuid.o cpuid.s`
   - `ld -o cpuid cpuid.o`
-  
+#
+- ***when in doubt or encountered error you should use the below technique to successfully assemble and link your executable***
+#
 ***Another way to Assemble and Link some files with Printf function calls in this Repo***
   - **update you linux download manager**
   - `sudo apt-get update`
@@ -18,6 +21,6 @@
 - `gcc -o cpuid cpuid.s`
 
 # Using `GDB` to debug application
- - **In order to debug the assembly language program, you must first reassemble the source code using the `-gstabs` parameter**
+**In order to debug the assembly language program, you must first reassemble the source code using the `-gstabs` parameter**
   - `as -gstabs -o cpuid.o cpuid.s`
   - `ld -o cpuid cpuid.o`
