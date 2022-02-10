@@ -383,3 +383,12 @@ void after_use_free(char *p){
         allocp = p;
     }
 }
+
+/* Character Pointers and Functions */
+
+void copy_to_from_using_pointer(char *s, char *t){
+    while((*s = *t) != '\0'){
+        ;
+    }
+}
+
