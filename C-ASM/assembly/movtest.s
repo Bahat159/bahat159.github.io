@@ -1,6 +1,5 @@
-# movtest3.s – Another example of using indexed memory locations
+# movtest.s – Another example of using indexed memory locations
 .section .data
-
 output:
     .asciz "The value is %d\n"
 values:
