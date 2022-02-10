@@ -1,7 +1,7 @@
 # To Assemble and link (Building the executables) in this Repo
 
-  - as -o cpuid.o cpuid.s
-  - ld -o cpuid cpuid.o
+  - `as -o cpuid.o cpuid.s`
+  - `ld -o cpuid cpuid.o`
   
 ***Another way to Assemble and Link some files in this Repo***
   - **update you linux download manager**
@@ -15,10 +15,9 @@
   - `ld -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 -o movtest -lc movtest.o`
 
 # To Assemble Using `GCC` Compiler to compile and link
-
-- gcc -o cpuid cpuid.s
+- `gcc -o cpuid cpuid.s`
 
 # Using `GDB` to debug application
- -In order to debug the assembly language program, you must first reassemble the source code using the `-gstabs` parameter
-  - as `-gstabs` -o cpuid.o cpuid.s
-  - ld -o cpuid cpuid.o
+ - **In order to debug the assembly language program, you must first reassemble the source code using the `-gstabs` parameter**
+  - `as -gstabs -o cpuid.o cpuid.s`
+  - `ld -o cpuid cpuid.o`
