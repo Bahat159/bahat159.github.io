@@ -35,8 +35,40 @@ void push_to_stack(double f);
 double pop_from_stack(void);
 int get_character(void);
 void unget_character(int c);
+void print_in_decimal_places(int n);
+void quick_sort(int v[], int left, int right);
+void swap_data(int v[], int i, int j);
 
 
 enum boolean {NO, YES};
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
 enum months { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC }; /* FEB = 2, MAR = 3, etc. */
+
+/* The C Preprocessor */
+
+/* Macro Substitution */
+
+#define forever for (;;) /* infinite loop */
+#define max(A, B) ((A) > (B) ? (A) : (B))
+
+/* 
+max() Usage: 
+x = max(p+q, r+s);
+will be replaced by the line
+x = ((p+q) > (r+s) ? (p+q) : (r+s));
+*/
+
+#define dprint(expr) printf(#expr " = %g\n", expr)
+
+/*
+dprint(x/y)
+the macro is expanded into
+printf("x/y" " = &g\n", x/y);
+*/
+
+/* Conditional Inclusion */
+
+#if !defined(HDR)
+#define HDR
+/* contents of hdr.h go here */
+#endif
