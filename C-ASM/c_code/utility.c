@@ -9,6 +9,7 @@ int main(){
     char *t = "String comparison function implemented in pointers";
     char message[200] = "\nWelcome, Busari Habibullaah\nC/CPP/ASM Programming\nMalware analysis and Reverse Engineering";
     int check_return_value = 0;
+    int month_name_by_number = 5;
     printf("\n%s\n",message);
     printf("===========End of Introduction==============\n");
     int string_length = string_length_with_pointer("Hello World");
@@ -25,6 +26,8 @@ int main(){
     if(returned_value != check_return_value){
         printf("Returned Value: %d\n", returned_value);
     }
+    char *monthname = month_name(month_name_by_number);
+    printf("Month Name: %s\nMonth Number: %d\n", monthname, month_name_by_number);
     exit(0);
 }
 
@@ -428,4 +431,16 @@ void month_day(int year, int yearday, int *pmonth, int *pday){
     }
     *pmonth = i;
     *pday = yearday;
+}
+
+/* Initialization of Pointer Arrays */
+char *month_name(int n){
+    static char *name[] = {
+        "Illegal month",
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+    };
+    return (n < 1 || n > 12) ? name[0] : name[n];
 }
