@@ -29,6 +29,10 @@ int trim_character(char s[]);
 int string_index(char s[], char t[]);
 double ato_float(char s[]);
 int ato_integer(char s[]);
+void push_to_stack(double f);
+double pop_from_stack(void);
+int get_character(void);
+void unget_character(int c);
 
 
 enum boolean {NO, YES};
@@ -271,3 +275,48 @@ int ato_integer(char s[]){
     double ato_float(char s[]);
     return (int) ato_float(s);
 }
+
+#define MAXVAL 100 /* maximum depth of val stack */
+int sp = 0; /* next free stack position */
+double val[MAXVAL]; /* value stack */
+
+/* push: push f onto value stack */
+void push_to_stack(double f){
+    if (sp < MAXVAL){
+        val[sp++] = f;
+    }
+    else{
+        printf("error: stack full, can't push %g\n", f);
+    }
+}
+
+/* pop: pop and return top value from stack */
+double pop_from_stack(void){
+    if (sp > 0){
+        return val[--sp];
+    }
+    else {
+        printf("error: stack empty\n");
+        return 0.0;
+    }
+}
+
+#define BUFSIZE 100
+char buf[BUFSIZE]; /* buffer for ungetch */
+int bufp = 0; /* next free position in buf */
+
+/* get a (possibly pushed-back) character */
+int get_character(void) {
+    return (bufp > 0) ? buf[--bufp] : getchar();
+}
+
+/* push character back on input */
+void unget_character(int c) {
+    if (bufp >= BUFSIZE){
+        printf("ungetch: too many characters\n");
+    }
+    else{
+        buf[bufp++] = c;
+    }
+}
+
