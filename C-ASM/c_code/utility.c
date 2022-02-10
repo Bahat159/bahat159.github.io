@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "utility.h"
 
 
@@ -346,8 +347,8 @@ void print_in_decimal_places(int n){
 void quick_sort(int v[], int left, int right){
     int i, last;
     void swap_data(int v[], int i, int j);
-    if (left >= right){
-        return; /* fewer than two elements */
+    if (left >= right){   /* do nothing if array contains */
+        return;          /* fewer than two elements */
     }
     swap_data(v, left, (left + right)/2); /* move partition elem */
     last = left; /* to v[0] */
@@ -483,4 +484,107 @@ char *month_name(int n){
         "October", "November", "December"
     };
     return (n < 1 || n > 12) ? name[0] : name[n];
+}
+
+/* numcmp: compare s1 and s2 numerically */
+int numb_compare(char *s1, char *s2){
+    double v1, v2;
+    v1 = ato_float(s1);
+    v2 = ato_float(s2);
+
+    if(v1 < v2){
+        return -1;
+    }
+    else if(v1 > v2){
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+/* Complicated Declarations */
+/*
+int *f();           f: function returning pointer to int 
+int (*pf)();        pf: pointer to function returning int 
+char **argv;        argv: pointer to char
+int (*daytab)[13]   daytab: pointer to array[13] of int
+int *daytab[13]     daytab: array[13] of pointer to int
+void *comp()        comp: function returning pointer to void
+*/
+
+
+int get_token(void){
+    int c, get_character(void);
+    void unget_character(int);
+    char *p = token;
+
+    while((c = get_character()) == ' ' || c == '\t'){
+        ;
+    }
+    if (c == '('){
+        if ((c = get_character()) == ')'){
+            copy_to_from_using_pointer(token, " () ");
+            return tokentype = PARENS;
+        }
+        else {
+            unget_character(c);
+            return tokentype = '(';
+        }
+    }
+    else if(c == '['){
+        for(*p++ = c; (*p++ = get_character()) != ']';){
+            ;
+        }
+        *p = '\0';
+        return tokentype = BRACKETS;
+    }
+    else if (isalpha(c)){
+        for (*p++ = c; isalnum(c = get_character()); ){
+            *p++ = c;
+        }
+        *p = '\0';
+        unget_character(c);
+        return tokentype = NAME;
+    }
+    else {
+        return tokentype = c;
+    }
+}
+
+void parse_declarator(void){
+    int ns;
+    for (ns = 0; get_token() == '*';){    /* count *'s */
+        ns++;
+    }
+    parse_direct_declarator();
+    while(ns-- > 0){
+        strcat(out, " pointer to");
+    }
+}
+
+void parse_direct_declarator(void){
+    int type;
+    if(tokentype == '('){
+        parse_declarator();
+        if (tokentype != ')'){
+            printf("error: missing ) \n");
+        }
+        else if(tokentype == NAME){    /* variable name */
+            copy_to_from_using_pointer(name, token);
+        }
+    }
+    else {
+        printf("eror: expected name or (parse_declarator)\n");
+    }
+    while((type = get_token()) == PARENS || type == BRACKETS){
+        if (type = PARENS){
+            strcat(out, " function returning");
+        }
+        else {
+            strcat(out, " array");
+            strcat(out, token);
+            strcat(out, " of");
+        }
+    }
 }
