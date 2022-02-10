@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <string.h>
 
 
 #define LOWER 0 
@@ -24,6 +24,7 @@ int generate_random(void);
 int binary_search(int x, int v[], int n);
 int alphabet_to_integer(char s[]);
 void shell_sort(int v[], int n);
+void reverse_string(char s[]);
 
 enum boolean {NO, YES};
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
@@ -196,5 +197,15 @@ void shell_sort(int v[], int n){
                 v[j+gap] = temp;
             }
         }
+    }
+}
+
+void reverse_string(char s[]){
+    int c,i,j;
+
+    for(i = 0, j = strlen(s) - 1; i < j; i++, j--){
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
     }
 }
