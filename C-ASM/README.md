@@ -1,1 +1,1 @@
-# This Repository consist of `C` programs and `Assembly` Programs
+# This Repository contain  `C` and `Assembly` Program codes
