@@ -26,6 +26,10 @@ int alphabet_to_integer(char s[]);
 void shell_sort(int v[], int n);
 void reverse_string(char s[]);
 int trim_character(char s[]);
+int string_index(char s[], char t[]);
+double ato_float(char s[]);
+int ato_integer(char s[]);
+
 
 enum boolean {NO, YES};
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
@@ -80,6 +84,7 @@ int power_function_call_by_value(int base, int n){
     }
 }
 
+/* getline() */
 int getline_input(char s[],int lim){
     int c, i;
     for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i){
@@ -93,6 +98,7 @@ int getline_input(char s[],int lim){
     return i;
 }
 
+/* copy() */
 void copy_to_from(char to[], char from[]){
     int i;
     i = 0;
@@ -171,6 +177,7 @@ int binary_search(int x, int v[], int n){
     return -1;   /* no match */
 }
 
+/* atoi() */
 int alphabet_to_integer(char s[]){
     int i, n, sign;
 
@@ -219,4 +226,48 @@ int trim_character(char s[]){
     }
     s[n+1] = '\0';
     return n;
+}
+
+/* Function */
+
+/* string_index: return index of t in s, -1 if none */
+int string_index(char s[], char t[]){
+    int i, j, k;
+    for (i = 0; s[i] != '\0'; i++) {
+        for (j=i, k=0; t[k]!='\0' && s[j]==t[k]; j++, k++)
+        ;
+        if (k > 0 && t[k] == '\0'){
+            return i;
+        }
+    }
+    return -1;
+}
+
+/* ato_float: convert string s to double */
+double ato_float(char s[]){
+    double val, power;
+    int i, sign;
+    for (i = 0; isspace(s[i]); i++){
+        ;
+    }
+    sign = (s[i] == '-') ? -1 : 1;
+    if (s[i] == '+' || s[i] == '-'){
+        i++;
+    }
+    for (val = 0.0; isdigit(s[i]); i++){
+        val = 10.0 * val + (s[i] - '0');
+    }
+    if (s[i] == '.'){
+        i++;
+    }
+    for (power = 1.0; isdigit(s[i]); i++) {
+        val = 10.0 * val + (s[i] - '0');
+        power *= 10;
+    }
+    return sign * val / power;
+}
+
+int ato_integer(char s[]){
+    double ato_float(char s[]);
+    return (int) ato_float(s);
 }
