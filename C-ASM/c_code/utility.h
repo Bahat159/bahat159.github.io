@@ -49,6 +49,7 @@ int string_length_with_pointer(char *s);
 char *memory_allocator(int n);
 void after_use_free(char *p);
 void copy_to_from_using_pointer(char *s, char *t);
+int string_compare(char *s, char *t);
 
 enum boolean {NO, YES};
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
