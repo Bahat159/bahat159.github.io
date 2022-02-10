@@ -4,6 +4,46 @@
 #include "utility.h"
 
 
+int main_with_command_line_argument(int argc, char *argv[]){
+    int i;
+    for (i = 1; i < argc; i++){
+        printf("%s%s", argv[i], (i < argc -1 ) ? " ": "");
+    }
+    printf("\n");
+    return 0;
+}
+
+int main_with_commandline_argument(int argc, char *argv[]){
+    char line[MAXLINE];
+    long lineno = 0;
+    int c, except = 0, number = 0, found = 0;
+    while (--argc > 0 && (*++argv)[0] == '-'){
+        while (c = *++argv[0]){
+            switch (c) {
+                case 'x':
+                    except = 1;
+                    break;
+                case 'n':
+                    number = 1;
+                    break;
+                default:
+                printf("find: illegal option %c\n", c);
+                argc = 0;
+                found = -1;
+                break;
+            }
+        }
+    }
+    if (argc != 1){
+        printf("Usage: find -x -n pattern\n");
+    }
+    else {
+        printf("Line Pattern\n");
+        printf("Program argument: [%s]\nProgram command line argument functional\n", *argv);
+    }
+    return 0;
+}
+
 int main(){
     char *s = "This is from Busari Habibullaah";
     char *t = "String comparison function implemented in pointers";
