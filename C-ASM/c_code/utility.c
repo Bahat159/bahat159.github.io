@@ -15,7 +15,7 @@ int main(){
     int space_to_allocate = 10000;
     char *allocated_space = memory_allocator(space_to_allocate);
     printf("String length input: %d\n", string_length);
-    if (allocated_space >= space_to_allocate){
+    if (allocated_space){
         printf("Allocated Space from Memory: %d\n", *allocated_space);
     }
     else{
@@ -407,4 +407,25 @@ int string_compare(char *s, char *t){
         }
     }
     return *s - *t;
+}
+
+/* day_of_year: set day of year from month & day */
+int day_of_year(int year, int month, int day){
+    int i, leap;
+    leap = year%4 == 0 && year%100 != 0 || year%400 == 0;
+    for(i = 1; i < month; i++){
+        day += daytab[leap][i];
+    }
+    return day;
+}
+
+/* month_day: set month, day from day of year */
+void month_day(int year, int yearday, int *pmonth, int *pday){
+    int i, leap;
+    leap = year%4 == 0 && year%100 != 0 || year%400 == 0;
+    for (i = 1; yearday > daytab[leap][i]; i++){
+        yearday -= daytab[leap][i];
+    }
+    *pmonth = i;
+    *pday = yearday;
 }
