@@ -9,15 +9,21 @@
 #define BUFSIZE 100
 #define MAXVAL 100 /* maximum depth of val stack */
 #define ALLOCSIZE 10000 /* size of available space */
-
+#define MAXTOKEN 100
 
 static char allocbuf[ALLOCSIZE]; /* storage for alloc */
 static char *allocp = allocbuf; /* next free position */
+
 
 int sp = 0; /* next free stack position */
 double val[MAXVAL]; /* value stack */
 char buf[BUFSIZE]; /* buffer for ungetch */
 int bufp = 0; /* next free position in buf */
+int tokentype; /* type of last token */
+char token[MAXTOKEN]; /* last token string */
+char name[MAXTOKEN]; /* identifier name */
+char datatype[MAXTOKEN]; /* data type = char, int, etc. */
+char out[1000];
 
 static char daytab[2][13] = {
 {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
@@ -61,8 +67,13 @@ void month_day(int year, int yearday, int *pmonth, int *pday);
 char *month_name(int n);
 int main_with_commandline_argument(int argc, char *argv[]);
 int main_with_command_line_argument(int argc, char *argv[]);
+int numb_compare(char *s1, char *s2);
+int get_token(void);
+void parse_declarator(void);
+void parse_direct_declarator(void);
 
 enum boolean {NO, YES};
+enum { NAME, PARENS, BRACKETS };
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
 enum months { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC }; /* FEB = 2, MAR = 3, etc. */
 
