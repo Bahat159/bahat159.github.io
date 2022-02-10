@@ -8,6 +8,11 @@
 #define BELL_CHAR '\x7' /* ASCII bell character in hexadecimal */
 #define BUFSIZE 100
 #define MAXVAL 100 /* maximum depth of val stack */
+#define ALLOCSIZE 10000 /* size of available space */
+
+
+static char allocbuf[ALLOCSIZE]; /* storage for alloc */
+static char *allocp = allocbuf; /* next free position */
 
 int sp = 0; /* next free stack position */
 double val[MAXVAL]; /* value stack */
@@ -40,7 +45,10 @@ void quick_sort(int v[], int left, int right);
 void swap_data(int v[], int i, int j);
 void swap_data_with_pointer(int *px, int *py);
 int get_integer(int *pn);
-
+int string_length_with_pointer(char *s);
+char *memory_allocator(int n);
+void after_use_free(char *p);
+void copy_to_from_using_pointer(char *s, char *t);
 
 enum boolean {NO, YES};
 enum escapes { BELL = '\a', BACKSPACE = '\b', TAB = '\t', NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
