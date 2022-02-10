@@ -38,6 +38,8 @@ void unget_character(int c);
 void print_in_decimal_places(int n);
 void quick_sort(int v[], int left, int right);
 void swap_data(int v[], int i, int j);
+void swap_data_with_pointer(int *px, int *py);
+int get_integer(int *pn);
 
 
 enum boolean {NO, YES};
