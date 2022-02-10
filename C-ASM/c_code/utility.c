@@ -267,3 +267,80 @@ void unget_character(int c) {
         buf[bufp++] = c;
     }
 }
+
+/* Recursion */
+
+void print_in_decimal_places(int n){
+    if (n < 0) {
+        putchar('-');
+        n = -n;
+    }
+    if (n / 10){
+        print_in_decimal_places(n / 10);
+        putchar(n % 10 + '0');
+    }
+}
+
+
+/* quick_sort: sort v[left]...v[right] into increasing order */
+void quick_sort(int v[], int left, int right){
+    int i, last;
+    void swap_data(int v[], int i, int j);
+    if (left >= right){
+        return; /* fewer than two elements */
+    }
+    swap_data(v, left, (left + right)/2); /* move partition elem */
+    last = left; /* to v[0] */
+    for (i = left + 1; i <= right; i++){
+        if (v[i] < v[left]){
+            swap_data(v, ++last, i);
+        }
+    }
+    swap_data(v, left, last); /* restore partition elem */
+    quick_sort(v, left, last-1);
+    quick_sort(v, last+1, right);
+}
+
+/* swap: interchange v[i] and v[j] */
+void swap_data(int v[], int i, int j){
+    int temp;
+    temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+
+
+/* Pointers and Addresses */
+
+void swap_data_with_pointer(int *px, int *py){
+    int temp;
+
+    temp = *px;
+    *px = *py;
+    *py = temp;
+}
+
+/* getint: get next integer from input into *pn */
+int get_integer(int *pn){
+    int c, sign;
+
+    while(isspace(c = get_character())){
+        ;
+    }
+    if (!isdigit(c) && c != EOF && c != '+' && c != '-'){
+        unget_character(c);
+        return 0;
+    }
+    sign = (c == '-') ? -1 : 1;
+    if(c == '+' || c == '-'){
+        c = get_character();
+    }
+    for (*pn = 0; isdigit(c); c = get_character()){
+        *pn = 10 * *pn + (c - '0');
+    }
+    *pn *= sign;
+    if(c != EOF){
+        unget_character(c);
+    }
+    return c;
+}
