@@ -71,6 +71,13 @@ int numb_compare(char *s1, char *s2);
 int get_token(void);
 void parse_declarator(void);
 void parse_direct_declarator(void);
+void work_with_struct();
+/*
+int ptinrect(struct point p, struct rect r);
+int addpoint(struct point p1, struct point p2);
+struct rect canonrect(struct rect r);
+
+*/
 
 enum boolean {NO, YES};
 enum { NAME, PARENS, BRACKETS };
@@ -82,6 +89,7 @@ enum months { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC }; 
 /* Macro Substitution */
 
 #define forever for (;;) /* infinite loop */
+#define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(A, B) ((A) > (B) ? (A) : (B))
 
 /* 
@@ -105,3 +113,30 @@ printf("x/y" " = &g\n", x/y);
 #define HDR
 /* contents of hdr.h go here */
 #endif
+
+
+/* Structures */
+
+struct point {
+    int x;
+    int y;
+};
+
+struct rect {
+    struct point pt1;
+    struct point pt2;
+};
+
+
+
+/* makepoint: make a point from x and y components */
+struct point makepoint(int x, int y){
+    struct point temp;
+    temp.x = x;
+    temp.y = y;
+    return temp;
+};
+
+struct rect screen;
+struct point middle; 
+struct point makepoint(int, int);
