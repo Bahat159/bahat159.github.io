@@ -69,6 +69,8 @@ int main(){
     }
     char *monthname = month_name(month_name_by_number);
     printf("Month Name: %s\nMonth Number: %d\n", monthname, month_name_by_number);
+
+    work_with_struct();
     exit(0);
 }
 
@@ -587,4 +589,29 @@ void parse_direct_declarator(void){
             strcat(out, " of");
         }
     }
+}
+
+void work_with_struct(){
+    struct point pt = {320, 200};
+    printf("Point X: %d\nPoint Y: %d\n", pt.x, pt.y);
+}
+
+
+int ptinrect(struct point p, struct rect r){
+    return (p.x >= r.pt1.x && p.x < r.pt2.x && p.y >= r.pt1.y && p.y < r.pt2.y);
+};
+
+int addpoint(struct point p1, struct point p2){
+    p1.x += p2.x;
+    p1.y += p2.y;
+    return (p1.x, p2.y);
+};
+
+struct rect canonrect(struct rect r){
+    struct rect temp;
+    temp.pt1.x = min(r.pt1.x, r.pt2.x);
+    temp.pt1.y = min(r.pt1.y, r.pt2.y);
+    temp.pt2.x = max(r.pt1.x, r.pt2.x);
+    temp.pt2.y = max(r.pt1.y, r.pt2.y);
+    return temp;
 }
