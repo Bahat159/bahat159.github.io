@@ -615,3 +615,30 @@ struct rect canonrect(struct rect r){
     temp.pt2.y = max(r.pt1.y, r.pt2.y);
     return temp;
 }
+
+/* binary_search_in_struct: find word in tab[0]...tab[n-1] */
+int binary_search_in_struct(char *word, struct key tab[], int n){
+    int cond;
+    int low, high, mid;
+    
+    low = 0;
+    high = n - 1;
+    while (low <= high) {
+        mid = (low+high) / 2;
+        if ((cond = strcmp(word, tab[mid].word)) < 0){
+            high = mid - 1;
+        }
+        else if (cond > 0){
+            low = mid + 1;
+        }
+        else{
+            return mid;
+        }
+    }
+    return -1;
+}
+
+/*
+Warning: And Todo: 
+    utility.h:75:48: warning: ‘struct key’ declared inside parameter list will not be visible outside of this definition or declaration  
+*/
