@@ -42,3 +42,25 @@ class CallExprAST : public ExprAST {
 };
 
 
+/// PrototypeAST - This class represents the "prototype" for a function,
+/// which captures its name, and its argument names (thus implicitly the number
+/// of arguments the function takes).
+
+class PrototypeASt {
+    std::string Name;
+    std::vector<std::string> Args;
+
+    public:
+    PrototypeASt(const std::string &name, std::vector<std::string> Args) : Name(name), Args(std::move(Args)) {}
+};
+
+/// FunctionAST - This class represents a function definition itself.
+
+class FunctionASt {
+    std::unique_ptr<PrototypeASt> Proto;
+    std::unique_ptr<ExprAST> Body;
+
+    public:
+    FunctionASt(Std::unique_ptr<PrototypeASt> Proto, std::unique_ptr<ExprAST> Body) : Proto(std::move(Proto)), Body(std::move(Body)) {}
+};
+
