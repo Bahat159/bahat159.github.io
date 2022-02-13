@@ -1,3 +1,5 @@
+#include <cctype>
+#include "lexer.h"
 
 /// CurTok/getNextToken - Provide a simple token buffer.  CurTok is the current
 /// token the parser is looking at.  getNextToken reads another token from the
@@ -18,4 +20,31 @@ std::unique_ptr<ExprAST> LogError(const char *Str) {
 std::unique_ptr<PrototypeASt> LogError(const char *Str) {
     LogError(Str);
     return nullptr;
+}
+
+/// Basic Expression Parsing
+
+/// numberexpr ::= number
+
+static std::unique_ptr<ExprAST> ParseNumberExpr() {
+    auto Result = std::make_unique<NumberExprAST> (NumVal);
+    getNextToken();  /// consume the number
+    return std::move(Result);
+}
+
+
+/// parenexpr ::= '(' expression ')'
+
+static std::unique_ptr<ExprAST> ParseParenExpr() {
+    getNextToken();
+    auto V = ParseExpression();
+     
+    if(!V){
+        return nullptr;
+    }
+    if (Curtok != ')'){
+        return LogError("Expected ')'");
+    }
+    getNextToken();
+    return V;
 }
