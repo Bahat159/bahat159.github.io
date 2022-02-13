@@ -48,3 +48,38 @@ static std::unique_ptr<ExprAST> ParseParenExpr() {
     getNextToken();
     return V;
 }
+
+/// identifierexpr
+///   ::= identifier
+///   ::= identifier '(' expression* ')'
+
+static std::unique_ptr<ExprASt> ParseIdentifierExpr() {
+    std::string IdName = IdentifierStr;
+
+    getNextToken();
+
+    if(Curtok != '('){
+        return std::make_unique<VariableExprAST>(IdName);
+    }
+    getNextToken();
+    std::vector<std::unique_ptr<ExprAST>> Args;
+    if (Curtok != ')'){
+        while (1){
+            if (auto Arg = ParseExpression()){
+                Args.push_back(std::move(Args))
+            }
+            else {
+                return nullptr;
+            }
+            if (Curtok == ')'){
+                break;
+            }
+            if (Curtok != ','){
+                return LogError("Expected ')' or ',' in argument list");
+            }
+            getNextToken();
+        }
+    }
+    getNextToken();
+    return std::make_unique<CallExprAST>(Idname, std::move(Args));
+}
