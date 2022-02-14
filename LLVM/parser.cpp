@@ -103,7 +103,7 @@ static std::unique_ptr<ExprAST> ParsePrimary() {
 }
 
 
-/// Binary Expression PArsing
+/// Binary Expression Parsing
 
 /// BinopPrecedence - This holds the precedence for each binary operator that is
 /// defined.
@@ -137,9 +137,31 @@ static std::unique_ptr<ExprAST> ParseExpression() {
     if(!LHS){
         return nullptr;
     }
-    return PArseBinOpRHS(0, std::move(LHS));
+    return ParseBinOpRHS(0, std::move(LHS));
 }
 
 /// binoprhs
 ///   ::= ('+' primary)*
 
+static std::unique_ptr<ExprAST> ParseBinOpRHS(int ExprPrec, std::unique_ptr<ExprAST> LHS) {
+    // If this is a binop, find its precedence.
+    while(1) {
+        int TokPrec = GetTokPrecedence();
+    }
+    // If this is a binop that binds at least as tightly as the current binop,
+    // consume it, otherwise we are done.
+
+    if(TokPrec < ExprPrec){
+        return LHS;
+    }
+}
+
+// Okay, we know this is a binop.
+
+int BinOp = Curtok;
+getNextToken();
+
+auto RHS = ParsePrimary();
+if(!RHS) {
+    return nullptr;
+}
