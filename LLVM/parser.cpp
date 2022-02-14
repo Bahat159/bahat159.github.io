@@ -83,3 +83,63 @@ static std::unique_ptr<ExprASt> ParseIdentifierExpr() {
     getNextToken();
     return std::make_unique<CallExprAST>(Idname, std::move(Args));
 }
+
+/// primary
+///   ::= identifierexpr
+///   ::= numberexpr
+///   ::= parenexpr
+
+static std::unique_ptr<ExprAST> ParsePrimary() {
+    switch (Curtok){
+        default:
+            return LogError("unknown token when expecting an expression");
+        case tok_identifier:
+            return ParseIdentifierExpr();
+        case tok_number:
+            return ParseNumberExpr();
+        case '(':
+            return ParseParenExpr();
+    }
+}
+
+
+/// Binary Expression PArsing
+
+/// BinopPrecedence - This holds the precedence for each binary operator that is
+/// defined.
+
+static std::map<char, int> BinopPrecedence;
+
+static int GetTokPrecedence() {
+    if (!isascii(Curtok)) {
+        return -1;
+    }
+    int TokPrec = BinopPrecedence[Curtok];
+    if (TokPrec <= 0) {
+        return -1;
+    }
+}
+
+
+int parser_main() {
+    BinopPrecedence['<'] = 10;
+    BinopPrecedence['+'] = 20;
+    BinopPrecedence['-'] = 30;
+    BinopPrecedence['='] = 40; // highest
+}
+
+/// expression
+///   ::= primary binoprhs
+///
+
+static std::unique_ptr<ExprAST> ParseExpression() {
+    auto LHS = ParsePrimary();
+    if(!LHS){
+        return nullptr;
+    }
+    return PArseBinOpRHS(0, std::move(LHS));
+}
+
+/// binoprhs
+///   ::= ('+' primary)*
+
