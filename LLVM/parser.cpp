@@ -199,3 +199,36 @@ static std::unique)ptr<PrototpyeAST> ParsePrototype() {
     getNextToken();
     return std::make_unique<PrototypeAST>(FnName, std::move(ArgNames));
 }
+
+
+/// definition ::= 'def' prototype expression
+
+static std::unique_ptr<FunctionAST> ParseDefinition() {
+    getNextToken();
+    auto Proto = ParsePrototype();
+    if(!Proto) {
+        return nullptr;
+    }
+    if(auto E = ParseExpression()){
+        return std::make_unique<FunctionAST>(std::move(Proto), std::move(E));
+    }
+    return nullptr;
+}
+
+/// external ::= 'extern' prototype
+
+static std::unique_ptr<PrototypeAST> ParseExtern() {
+    getNextToken();
+    return ParsePrototype();
+}
+
+/// toplevelexpr ::= expression
+
+static std::unique_ptr<FunctionAST> ParseTopLevelExpr() {
+    if(auto E = ParseExpression()) {
+         // Make an anonymous proto
+        auto Proto = std::make_unique<PrototypeAST> ("", std::vector<std::string>());
+        return std::make_unique<FunctionAST>(std::move(Proto), std::move(E));
+    }
+    return nullptr;
+}
