@@ -251,25 +251,56 @@ static std::unique_ptr<FunctionAST> ParseTopLevelExpr() {
 // Top-Level parsing
 //===----------------------------------------------------------------------===//
 
+static void InitializeModule() {
+    TheContext = std::make_unique<LLVMContext>();
+    TheModule = std::make_unique<Module>("my cool jit", *TheContext);
+    // Create a new builder for the module.
+    Builder = std::make_unique<IRBuilder<>> (*TheContext);
+}
+
 static void HandleDefinition() {
-    if(ParseDefinition()) {
-        fprintf(stderr, "Parsed a function definition\n");
-    }
-    else {
+    if (auto FnAST = ParseDefinition()){
+        if (auto *FnIR = FnAST->codegen()){
+            fprintf(stderr, "REad function definition");
+            FnIR->print(errs());
+            fprintf(stderr, "\n");
+        }
+    } else {
         // Skip token for error recovery.
         getNextToken();
     }
 }
 
 static void HandleExtern() {
-    if(ParseExern()) {
-        fprintf(stderr, "Parsed an extern\n");
-    }
-    else {
+    if (auto ProtoAST = ParseExtern()){
+        if (auto *FnIR = ProtoAST->codegen()){
+            fprintf(stderr, "Read Extern");
+            FnIR->print(errs());
+            fprintf(stderr, "\n");
+        }
+    } else {
         // Skip token for error recovery.
         getNextToken();
     }
 }
+
+static void HandleTopLevelExpression() {
+    // Evaluate a top-level expression into an anonymous function.
+    if (auto FnAST = ParseTopLevelExpr()){
+        if (auto *FnIR = FnAST->codegen()){
+            fprintf(stderr, "Read top level expression:");
+            FnIT->print(errs());
+            fprintf(stderr, "\n");
+            // Remove the anonymous expression.
+            FnIR->eraseFromParent();
+        }
+    } else {
+        // Skip token for error recovery.
+        getNextToken();
+    }
+}
+
+/// top ::= definition | external | expression | ';'
 
 static void MainLoop() {
     while(true) {
@@ -297,9 +328,9 @@ static void MainLoop() {
 // Code Generation
 //===----------------------------------------------------------------------===//
 
-static LLVMContext TheContext;
-static IRBuilder<> Builder(TheContext);
+static std::unique_ptr<LLVMContext> TheContext;
 static std::unique_ptr<Module> TheModule;
+static std::unique_ptr<IRBuilder<>> Builder;
 static std::map<std::string, Value *> NamedValues;
 
 Value *LogErrorV(const char *Str) {
@@ -395,7 +426,26 @@ Function *FunctionAST::codegen() {
     if (!TheFunction->empty()){
         return (Function*)LogErrorV("Function cannot be redefined.");
     }
+    // Create a new basic block to start insertion into.
+    BasicBlock *BB = BasicBlock::Create(TheContext, "entry", TheFunction);
+    Builder.SetInsertPoint(BB);
+    // Record the function arguments in the NamedValues map.
+    NamedValues.clear();
+    for (auto &Arg : TheFunction->args()){
+        NamedValues[Arg.getName()] = &Arg;
+    }
+    if (Value *RetVal = Body->codegen()){
+        // Finish off the function.
+        Builder->CreateRet(RetVal);
+        // Validate the generated code, checking for consistency.
+        verifyFunction(*TheFunction);
+        return TheFunction;
+    }
+    // Error reading body, remove function.
+    TheFunction->eraseFromParent();
+    return nullptr;
 }
+
 
 int main() {
      // Install standard binary operators.
@@ -409,8 +459,15 @@ int main() {
     fprintf(stderr, "ready> ");
     getNextToken();
 
+    // Make the module, which holds all the code.
+    InitializeModule();
+
+
     // Run the main "interpreter loop" now.
     MainLoop();
+
+    // Print out all of the generated code.
+    TheModule->print(errs(), nullptr);
 
     return 0;
 }
