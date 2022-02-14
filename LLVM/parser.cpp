@@ -147,21 +147,55 @@ static std::unique_ptr<ExprAST> ParseBinOpRHS(int ExprPrec, std::unique_ptr<Expr
     // If this is a binop, find its precedence.
     while(1) {
         int TokPrec = GetTokPrecedence();
-    }
-    // If this is a binop that binds at least as tightly as the current binop,
-    // consume it, otherwise we are done.
+        // If this is a binop that binds at least as tightly as the current binop,
+        // consume it, otherwise we are done.
 
-    if(TokPrec < ExprPrec){
-        return LHS;
+        if(TokPrec < ExprPrec){
+            return LHS;
+        }
+        // Okay, we know this is a binop.
+        int BinOp = Curtok;
+        getNextToken();
+        // Parse the primary expression after the binary operator.
+        auto RHS = ParsePrimary();
+        if(!RHS) {
+            return nullptr;
+        }
+        // If BinOp binds less tightly with RHS than the operator after RHS, let
+        // the pending operator take RHS as its LHS.
+        int NextPrec = GetTokPrecedence();
+        if (TokPrec < NextPrec) {
+            RHS = ParseBinOpRHS (TokPrec + 1, std::move(RHS));
+            if(!RHS) {
+                return nullptr;
+            }
+        }
+        LHS = std::make_unique<BinaryExprAST>(BinOp, std::move(LHS), std::move(RHS));
     }
 }
 
-// Okay, we know this is a binop.
+/// prototype
+///   ::= id '(' id* ')'
 
-int BinOp = Curtok;
-getNextToken();
+static std::unique)ptr<PrototpyeAST> ParsePrototype() {
+    if(Curtok != tok_identifier) {
+        return LogError("Expected function name in prototype");
+    }
+    std::string FnName = IdentifierStr;
+    getNextToken();
 
-auto RHS = ParsePrimary();
-if(!RHS) {
-    return nullptr;
+    if(Curtok != '('){
+        return LogErrorP("Expected '(' in prototype");
+    }
+    // Read the list of argument names.
+    std::vector<std::string> ArgNames;
+    while(getNextToken() == tok_identifier){
+        ArgNames.push_back() == tok_identifier;
+    }
+    if(Curtok != ')'){
+        return LogErrorP("Expected ')' in prototype");
+    }
+     // success.
+    getNextToken();
+    return std::make_unique<PrototypeAST>(FnName, std::move(ArgNames));
 }
