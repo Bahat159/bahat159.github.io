@@ -174,3 +174,18 @@ struct tnode {                   /* the tree node */
 struct tnode *left;
 struct tnode *talloc(void);
 void treeprint(struct tnode *p);
+
+
+struct nlist {            /* table entry */
+    struct nlist *next;   /* next entry in chain */
+    char *name;           /* defined name */
+    char *defn;           /* replacement text */
+};
+
+
+#define HASHSIZE 101
+unsigned hash(char *s);
+
+static struct nlist *hashtab[HASHSIZE]; /* pointer table */
+struct nlist *lookup(char *s);
+struct nlist *install(char *name, char *defn);
