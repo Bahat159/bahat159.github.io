@@ -72,6 +72,10 @@ int get_token(void);
 void parse_declarator(void);
 void parse_direct_declarator(void);
 void work_with_struct();
+char *string_duplicate(char *s);
+
+
+
 /*  int binary_search_in_struct(char *word, struct key tab[], int n);  */
 /*
 int ptinrect(struct point p, struct rect r);
@@ -168,3 +172,5 @@ struct tnode {                   /* the tree node */
 };
 
 struct tnode *left;
+struct tnode *talloc(void);
+void treeprint(struct tnode *p);
