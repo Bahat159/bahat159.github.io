@@ -731,3 +731,8 @@ struct nlist *install(char *name, char *defn){
     }
     return np;
 }
+
+
+Treeptr t_alloc(void) {
+    return (Treeptr) malloc(sizeof(Treenode));
+}
