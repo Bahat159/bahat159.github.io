@@ -72,6 +72,7 @@ int get_token(void);
 void parse_declarator(void);
 void parse_direct_declarator(void);
 void work_with_struct();
+/*  int binary_search_in_struct(char *word, struct key tab[], int n);  */
 /*
 int ptinrect(struct point p, struct rect r);
 int addpoint(struct point p1, struct point p2);
@@ -140,3 +141,30 @@ struct point makepoint(int x, int y){
 struct rect screen;
 struct point middle; 
 struct point makepoint(int, int);
+
+struct key {
+    char *word;
+    int count;
+} keytab[] = {
+    "auto", 0,
+    "break", 0,
+    "case", 0,
+    "char", 0,
+    "const", 0,
+    "continue", 0,
+    "default", 0,
+    "unsigned", 0,
+    "void", 0,
+    "volatile", 0,
+    "while", 0
+    };
+
+
+struct tnode {                   /* the tree node */
+    char *word;                 /* points to the text */
+    int count;                 /* number of occurences */
+    struct tnode *left;       /* left child */
+    struct tnode *right;     /* right child */
+};
+
+struct tnode *left;
