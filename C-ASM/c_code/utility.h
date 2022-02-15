@@ -10,6 +10,12 @@
 #define MAXVAL 100 /* maximum depth of val stack */
 #define ALLOCSIZE 10000 /* size of available space */
 #define MAXTOKEN 100
+#define HASHSIZE 101
+#define NSYM 0
+#define forever for (;;) /* infinite loop */
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define max(A, B) ((A) > (B) ? (A) : (B))
+#define dprint(expr) printf(#expr " = %g\n", expr)
 
 static char allocbuf[ALLOCSIZE]; /* storage for alloc */
 static char *allocp = allocbuf; /* next free position */
@@ -93,18 +99,12 @@ enum months { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC }; 
 
 /* Macro Substitution */
 
-#define forever for (;;) /* infinite loop */
-#define min(a, b) ((a) < (b) ? (a) : (b))
-#define max(A, B) ((A) > (B) ? (A) : (B))
-
 /* 
 max() Usage: 
 x = max(p+q, r+s);
 will be replaced by the line
 x = ((p+q) > (r+s) ? (p+q) : (r+s));
 */
-
-#define dprint(expr) printf(#expr " = %g\n", expr)
 
 /*
 dprint(x/y)
@@ -187,7 +187,6 @@ struct nlist {            /* table entry */
 }Treenode;
 
 
-#define HASHSIZE 101
 unsigned hash(char *s);
 
 static struct nlist *hashtab[HASHSIZE]; /* pointer table */
@@ -209,3 +208,23 @@ Length *lengths[MAXLINE];
 typedef struct tnode *Treeptr;
 
 Treeptr t_alloc(void);
+
+
+/* Unions */
+
+union u_tag {
+    int ival;
+    float fval;
+    char *sval;
+}u;
+
+struct {
+    char *name;
+    int flags;
+    int utype;
+    union {
+        int ival;
+        float fval;
+        char *sval;
+    }u;
+}symtab[NSYM];
