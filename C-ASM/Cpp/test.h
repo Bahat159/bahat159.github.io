@@ -8,6 +8,9 @@ struct S {
     S(std::string s, float f) : name(s), num(f) {}
 };
 
+
+#ifndef ACCOUNT_CLASS
+#define ACCOUNT_CLASS
 // Declare class Account at global scope.
 class Account{
     public:
@@ -16,3 +19,5 @@ class Account{
     private:
         double balance;
 };
+
+#endif
