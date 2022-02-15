@@ -164,6 +164,8 @@ struct key {
     };
 
 
+/*  Self-referential Structures */
+
 struct tnode {                   /* the tree node */
     char *word;                 /* points to the text */
     int count;                 /* number of occurences */
@@ -176,11 +178,13 @@ struct tnode *talloc(void);
 void treeprint(struct tnode *p);
 
 
+/* Table Lookup */
+
 struct nlist {            /* table entry */
     struct nlist *next;   /* next entry in chain */
     char *name;           /* defined name */
     char *defn;           /* replacement text */
-};
+}Treenode;
 
 
 #define HASHSIZE 101
@@ -189,3 +193,19 @@ unsigned hash(char *s);
 static struct nlist *hashtab[HASHSIZE]; /* pointer table */
 struct nlist *lookup(char *s);
 struct nlist *install(char *name, char *defn);
+
+
+/* Typedef */
+
+typedef char *String;
+String p, lineptr[MAXLINE], alloc(int);
+
+typedef int Length;
+
+Length len, maxlen;
+Length *lengths[MAXLINE];
+
+
+typedef struct tnode *Treeptr;
+
+Treeptr t_alloc(void);
