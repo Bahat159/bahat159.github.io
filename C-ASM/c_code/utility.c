@@ -643,6 +643,8 @@ Warning: And Todo:
     utility.h:75:48: warning: ‘struct key’ declared inside parameter list will not be visible outside of this definition or declaration  
 */
 
+/*  Self-referential Structures */
+
 char *string_duplicate(char *s){
     char *p;
     p = (char *) malloc(strlen(s) + 1);
@@ -686,6 +688,7 @@ struct treenode *addtree(struct tnode *p, char *w){
     return p;
 }
 
+/* Table Lookup */
 
 unsigned hash(char *s){
     unsigned hashval;
