@@ -1,9 +1,11 @@
 #include <iostream>
 #include <vector>
-
+#include "test.h"
 
 
 #define SIZE 10
+
+double Account = 15.37;            // Hides class name Account
 
 int main() {
     std::vector<int> v{1,2,3};
@@ -18,4 +20,28 @@ int main() {
 
     constexpr int size = 10;
     std::cout <<"ConstExpr Size :"<< size <<"\n";
+
+    char type = check_type();
+
+    if(type){
+        std::cout <<"Test Data: "<< type << "\n";
+    }
+    else {
+        std::cout <<"This function is not returning";
+    }
+
+    class Account Checking( Account ); // Qualifies Account as //  class name
+    std::cout << "Opening account with a balance of: "<< Checking.GetBalance() << "\n";
 }
+
+char check_type(){
+    auto \u30AD = 42;
+    if(\u30AD == 42){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
