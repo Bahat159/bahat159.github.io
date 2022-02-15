@@ -31,7 +31,9 @@ int main() {
     }
 
     class Account Checking( Account ); // Qualifies Account as //  class name
+    class Account *MY_Checking = new class Account( Account );
     std::cout << "Opening account with a balance of: "<< Checking.GetBalance() << "\n";
+    std::cout << "Opening account with MY_Checking Pointer a balance of: "<< MY_Checking->GetBalance() << "\n";
 }
 
 char check_type(){
