@@ -685,3 +685,46 @@ struct treenode *addtree(struct tnode *p, char *w){
     }
     return p;
 }
+
+
+unsigned hash(char *s){
+    unsigned hashval;
+
+    for(hashval = 0; *s != '\0'; s++){
+        hashval = *s + 31 * hashval;
+    }
+    return hashval % HASHSIZE;
+}
+
+
+struct nlist *lookup(char *s){
+    struct nlist *np;
+    for(np = hashtab[hash(s)]; np != NULL; np = np->next){
+        if (string_compare(s, np->name) == 0){
+            return np;      /* found */
+        }
+        return NULL;       /* not found */
+    }
+}
+
+struct nlist *install(char *name, char *defn){
+    struct nlist *np;
+    unsigned hashval;
+
+    if((np = lookup(name)) == NULL) {
+        np = (struct nlist *) malloc(sizeof(*np));
+        if(np == NULL || (np->name = string_duplicate(name)) == NULL){
+            return NULL;
+        }
+        hashval = hash(name);
+        np->next = hashtab[hashval];
+        hashtab[hashval] = np;
+    }
+    else {
+        after_use_free((void *) np->defn);
+    }
+    if ((np->defn = string_duplicate(defn)) == NULL){
+        return NULL;
+    }
+    return np;
+}
