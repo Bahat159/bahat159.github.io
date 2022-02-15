@@ -1,6 +1,10 @@
 #include <iostream>
 #include <vector>
 
+
+
+#define SIZE 10
+
 int main() {
     std::vector<int> v{1,2,3};
 
@@ -11,4 +15,7 @@ int main() {
     for(auto& num : v){
         std::cout << num <<"\n";
     }
+
+    constexpr int size = 10;
+    std::cout <<"ConstExpr Size :"<< size <<"\n";
 }
