@@ -9,6 +9,10 @@ using namespace std;
 double Account = 15.37;            // Hides class name Account
 
 
+int CMyClass::m_i = 0;
+CMyClass myObject1;
+CMyClass myObject2;
+
 int main() {
 
     cout << boolalpha;
@@ -24,6 +28,7 @@ int main() {
     cout << "POD is trivial is: " << is_trivial<POD>() << endl; // true
     cout << "POD is standard-layout is: " << is_standard_layout<POD>() << endl; // true
 
+    /*
     std::vector<int> v{1,2,3};
 
     for (int i = 0; i < v.size(); ++i){
@@ -33,6 +38,8 @@ int main() {
     for(auto& num : v){
         std::cout << num <<"\n";
     }
+
+    */
 
     constexpr int size = 10;
     std::cout <<"ConstExpr Size :"<< size <<"\n";
@@ -50,6 +57,33 @@ int main() {
     class Account *MY_Checking = new class Account( Account );
     std::cout << "Opening account with a balance of: "<< Checking.GetBalance() << "\n";
     std::cout << "Opening account with MY_Checking Pointer a balance of: "<< MY_Checking->GetBalance() << "\n";
+    
+    for(int i = 0; i < 5; i++){
+        showStat(i);
+    }
+
+    /*
+    cout << myObject1.m_i << endl;
+    cout << myObject2.m_i << endl;
+
+    myObject1.m_i = 1;
+    cout << myObject1.m_i << endl;
+    cout << myObject2.m_i << endl;
+
+    myObject2.m_i = 2;
+    cout << myObject1.m_i << endl;
+    cout << myObject2.m_i << endl;
+
+    CMyClass::m_i = 3;
+    cout << myObject1.m_i << endl;
+    cout << myObject2.m_i << endl;
+
+    */
+
+    C_ c1;
+    C_ c2;
+    c1.Test(100);
+    c2.Test(100);
 }
 
 char check_type(){
@@ -62,3 +96,16 @@ char check_type(){
     }
 }
 
+
+void Func(double& d){}
+
+void ConstCast() {
+    const double pi = 3.14;
+    Func(const_cast<double&>(pi));
+}
+
+void showStat(int curr) {
+    static int nStatic;
+    nStatic += curr;
+    std::cout << "nStatic is: "<< nStatic << endl;
+}
