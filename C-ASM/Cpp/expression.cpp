@@ -1,10 +1,10 @@
 #include <iostream>
+#include "expression.h"
 
 using namespace std;
 
 
 void print(const char *string, const char *terminator = "\n");
-//void printt();
 
 
 void printt() {
@@ -19,6 +19,7 @@ template <typename First, typename... Rest> void printt(const First& first, cons
     std::cout << first <<", ";
     printt(rest...);
 }
+
 
 int main() {
     print("hello, ");
@@ -35,6 +36,27 @@ int main() {
     printt(10, 20);
     printt(100, 200, 300);
     printt("first", 2, "third", 3.14159);
+
+    std::cout<<"======================================"<<"\n";
+
+    Alpha *pa = new Calm;
+    Alpha *pa2 = new Beta;
+
+    pa->test();
+
+    Beta * pb = dynamic_cast<Beta *>(pa);
+    if(pb) {
+        pb->test2();
+    }
+    Calm * pc = dynamic_cast<Calm *>(pa2);
+    if(pc) {
+        pc->test2();
+    }
+    Calm ConStack;
+    Globaltest(ConStack);
+
+    Beta BonStack;
+    Globaltest(BonStack);
 }
 
 void print(const char *string, const char *terminator) {
@@ -46,3 +68,12 @@ void print(const char *string, const char *terminator) {
     }
 }
 
+void Globaltest(Alpha& a) {
+    try{
+        Calm &c = dynamic_cast<Calm&> (a);
+        std::cout << "In GlobalTest"<< "\n";
+    }
+    catch(std::bad_cast) {
+        std::cout <<"Cant cast to Calm" <<"\n";
+    }
+}
