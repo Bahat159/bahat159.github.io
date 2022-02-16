@@ -1,13 +1,29 @@
 #include <iostream>
+#include <type_traits>
 #include <vector>
 #include "test.h"
-
+using namespace std;
 
 #define SIZE 10
 
 double Account = 15.37;            // Hides class name Account
 
+
 int main() {
+
+    cout << boolalpha;
+    cout << "A is trivial is: " << is_trivial<A>() << endl; // false
+    cout << "A is standard-layout is: " << is_standard_layout<A>() << endl;  // false
+
+    cout << "C is trivial is: " << is_trivial<C>() << endl; // true
+    cout << "C is standard-layout is: " << is_standard_layout<C>() << endl;  // false
+
+    cout << "D is trivial is: " << is_trivial<D>() << endl;  // false
+    cout << "D is standard-layout is: " << is_standard_layout<D>() << endl; // true
+
+    cout << "POD is trivial is: " << is_trivial<POD>() << endl; // true
+    cout << "POD is standard-layout is: " << is_standard_layout<POD>() << endl; // true
+
     std::vector<int> v{1,2,3};
 
     for (int i = 0; i < v.size(); ++i){
@@ -45,5 +61,4 @@ char check_type(){
         return false;
     }
 }
-
 
