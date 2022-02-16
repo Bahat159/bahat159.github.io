@@ -128,6 +128,11 @@ int main() {
         std::cout << "Exception Occured: "<<ex.what() << "\n";
     }
 
+    MyAggregate agg1{ 1, 'c' };
+    MyAggregate2 agg2{2};
+    std::cout << "agg1: " << agg1.myChar << ": " << agg1.myInt << endl;
+    std::cout << "agg2: " << agg2.myChar << ": " << agg2.myInt << endl;
+
 }
 
 char check_type(){
