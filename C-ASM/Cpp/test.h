@@ -184,3 +184,30 @@ class Foo {
     private:
     int _i;
 };
+
+
+#ifndef POINT_S
+#define POINT_S
+
+struct Point {
+    int x;
+    int y;
+};
+
+#endif
+class PointConsumer {
+    public:
+        void set_point(Point p) {};
+        void set_points(initializer_list<Point> my_list){};
+};
+
+class MyClass {
+    public:
+        MyClass(int myInt) {}
+        void set_int(int myInt) { m_int = myInt; }
+        int get_int() const { return m_int; }
+    private:
+        int m_int = 7;
+};
+
+class MyException : public exception {};
