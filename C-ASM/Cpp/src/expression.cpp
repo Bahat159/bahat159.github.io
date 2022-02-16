@@ -57,6 +57,16 @@ int main() {
 
     Beta BonStack;
     Globaltest(BonStack);
+    std::cout<<"======================================"<<"\n";
+
+    Shape shape_instance;
+    Shape& ref_shape = shape_instance;
+    try{
+        Circle& ref_circle = dynamic_cast<Circle&> (ref_shape);
+    }
+    catch(bad_cast b){
+        std::cout << "Caught: "<< b.what() <<"\n";
+    }
 }
 
 void print(const char *string, const char *terminator) {
