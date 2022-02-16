@@ -1,4 +1,3 @@
-#include <type_traits>
 #include <string>
 #include <tuple>
 #include <stdarg.h>
@@ -19,6 +18,7 @@ using namespace std;
 #pragma GCC system_header
 
 /*
+#include <type_traits>
 //Declare printf with C linkage.
 extern "C" int printf( const char *fmt, ... );
 
@@ -57,7 +57,6 @@ struct Subt {
 
 Subt g();
 
-void ShowVar( char *szTypes, ... );
 
 
 // Function overloading
