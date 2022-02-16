@@ -164,3 +164,23 @@ struct S_L {
 };
 
 #endif
+
+class Date {
+    public:
+        Date (int mn, int dy, int yr);
+        int getMonth() const;
+        void setMonth(int mn);
+    private:
+        int month;
+};
+
+
+class Foo {
+    public:
+        constexpr explicit Foo(int i) : _i(i) {}
+        constexpr int GetValue() const {
+            return _i;
+        }
+    private:
+    int _i;
+};
