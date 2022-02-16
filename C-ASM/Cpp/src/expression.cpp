@@ -67,6 +67,15 @@ int main() {
     catch(bad_cast b){
         std::cout << "Caught: "<< b.what() <<"\n";
     }
+
+    std::cout<<"======================================"<<"\n";
+
+    CCTest X;
+    X.setNumber(8);
+    X.printNumber();
+
+    std::cout<<"======================================"<<"\n";
+
 }
 
 void print(const char *string, const char *terminator) {
@@ -86,4 +95,13 @@ void Globaltest(Alpha& a) {
     catch(std::bad_cast) {
         std::cout <<"Cant cast to Calm" <<"\n";
     }
+}
+
+
+void CCTest::setNumber(int num) { number = num ;}
+
+void CCTest::printNumber() const {
+    std::cout << "Before: "<< number << "\n";
+    const_cast<CCTest *> (this)->number--;
+    std::cout << "After: " << number << "\n";
 }
