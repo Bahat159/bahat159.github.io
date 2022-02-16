@@ -116,9 +116,10 @@ int main() {
 
     int i = 5;
     MyClass mc1(i);
-    MyClass* mc2 = new class MyClass(i);
+    MyClass* mc2 = new class MyClass(i);  // class initializer
     mc1.set_int(i);
     int i2 = mc1.get_int();
+    std::cout << "Get Integer Value :" << i2 <<"\n";
 
     try{
         throw MyException();
