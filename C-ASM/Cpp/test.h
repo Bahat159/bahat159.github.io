@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <memory>
+#include <stdexcept>
+
+using namespace std;
 
 char check_type();
 
@@ -114,6 +118,49 @@ struct D {
 struct POD {
     int a;
     int b;
+};
+
+#endif
+
+enum suits { Spades = 1, Clubs, Hearts,Diamonds };
+
+void Func(double& d);
+void ConstCast();
+void showStat(int curr);
+
+
+class CMyClass{
+    public:
+        static int m_i;
+};
+
+#ifndef STRUCT_C
+#define STRCUT_C
+
+struct C_ {
+    void Test(int value) {
+        static int var = 0;
+        if(var == value) {
+            std::cout << "var == value" << endl;
+        }
+        else {
+            std::cout << "var != value" << endl;
+        }
+        var = value;
+    }
+};
+
+#endif
+
+
+thread_local float f = 42.0;
+
+#ifndef STRUC_S
+#define STRCU_S
+
+struct S_L {
+    thread_local static int i;
+    thread_local static char buf[10];
 };
 
 #endif
