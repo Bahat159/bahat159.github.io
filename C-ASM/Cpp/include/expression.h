@@ -1,4 +1,7 @@
 #include <iostream>
+#include <typeinfo>
+#include <iostream>
+
 
 struct Alpha {
     virtual void test() {
@@ -17,7 +20,7 @@ struct Beta : Alpha {
 
 struct Calm : Beta {
     virtual void test() {
-        std::cout << "In C" <<"\n";
+        std::cout << "In Calm" <<"\n";
     }
 
     void test2(){
@@ -27,4 +30,15 @@ struct Calm : Beta {
 
 
 void Globaltest(Alpha& a);
+
+
+class Shape {
+    public:
+        virtual void virtualfunc () const {}
+};
+
+class Circle : public Shape {
+    public:
+        virtual void virtualfunc() const {}
+};
 
