@@ -13,6 +13,29 @@ int CMyClass::m_i = 0;
 CMyClass myObject1;
 CMyClass myObject2;
 
+// Pass by Value
+constexpr float exp(float x, int n){
+    return n == 0 ? 1 : n % 2 == 0 ? exp(x *x, n /2) : exp(x *x, (n-1) / 2) * x;
+}
+
+// Pass by Reference
+constexpr float exp2(const float& x, const int& n){
+    return n == 0 ? 1 : n % 2 == 0 ? exp2(x *x, n / 2) : exp2(x*x, (n-1) / 2) * x;
+}
+
+// Compile-time computation of array length
+
+template<typename T, int N>
+constexpr int length(const T(&)[N]){
+    return N;
+}
+
+// Recursive constexpr function
+
+constexpr int fac(int n){
+    return n == 1 ? 1 : n * fac(n-1);
+}
+
 int main() {
 
     cout << boolalpha;
@@ -62,28 +85,27 @@ int main() {
         showStat(i);
     }
 
-    /*
-    cout << myObject1.m_i << endl;
-    cout << myObject2.m_i << endl;
-
-    myObject1.m_i = 1;
-    cout << myObject1.m_i << endl;
-    cout << myObject2.m_i << endl;
-
-    myObject2.m_i = 2;
-    cout << myObject1.m_i << endl;
-    cout << myObject2.m_i << endl;
-
-    CMyClass::m_i = 3;
-    cout << myObject1.m_i << endl;
-    cout << myObject2.m_i << endl;
-
-    */
-
     C_ c1;
     C_ c2;
     c1.Test(100);
     c2.Test(100);
+
+
+    constexpr Foo foo(5);
+
+    constexpr float x = exp(5, 3);
+    constexpr float y { exp(2, 5) };
+    constexpr int val = foo.GetValue();
+    constexpr int f5 = fac(5);
+    const int nums[] { 1, 2, 3, 4 };
+    const int nums2[length(nums) * 2] { 1, 2, 3, 4, 5, 6, 7, 8 };
+
+    // Run time:
+    cout << "The value of foo is: " << foo.GetValue() << endl;
+    cout << "The Fac of [fac(5)] is: "<< f5 << endl;
+    cout << "The Length is: "<< nums2 << endl;
+
+
 }
 
 char check_type(){
@@ -109,3 +131,6 @@ void showStat(int curr) {
     nStatic += curr;
     std::cout << "nStatic is: "<< nStatic << endl;
 }
+
+
+
