@@ -58,3 +58,10 @@ struct Subt {
 Subt g();
 
 void ShowVar( char *szTypes, ... );
+
+
+// Function overloading
+// Prototype three print functions.
+int print(std::string s);             // Print a string.
+int print(double dvalue);            // Print a double.
+int print(double dvalue, int prec);  // Print a double with a given precision.
