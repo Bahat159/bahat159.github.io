@@ -211,3 +211,30 @@ class MyClass {
 };
 
 class MyException : public exception {};
+
+
+#ifndef MY_CLASS_STRUCT
+#define MY_CLASS_STRUCT
+
+struct MyStruct {
+    int my_int;
+    char my_char;
+    MyClass my_class;
+};
+#endif
+
+
+#ifndef AGGR_STRUCT
+#define AGGR_STRUCT
+
+struct MyAggregate{
+    int myInt;
+    char myChar;
+};
+
+struct MyAggregate2{
+    int myInt;
+    char myChar = 'Z'; // member-initializer OK in C++14
+};
+
+#endif
