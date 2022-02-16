@@ -36,6 +36,7 @@ constexpr int fac(int n){
     return n == 1 ? 1 : n * fac(n-1);
 }
 
+
 int main() {
 
     cout << boolalpha;
@@ -105,6 +106,26 @@ int main() {
     cout << "The Fac of [fac(5)] is: "<< f5 << endl;
     cout << "The Length is: "<< nums2 << endl;
 
+    PointConsumer pc{};
+    pc.set_point({});
+    pc.set_point({ 3, 4 });
+    pc.set_points({ { 3, 4 }, { 5, 6 } });
+
+    Point p1{1, 2};
+    pc.set_point(Point{5, 6});
+
+    int i = 5;
+    MyClass mc1(i);
+    MyClass* mc2 = new class MyClass(i);
+    mc1.set_int(i);
+    int i2 = mc1.get_int();
+
+    try{
+        throw MyException();
+    }
+    catch (MyException ex) {
+        std::cout << "Exception Occured: "<<ex.what() << "\n";
+    }
 
 }
 
@@ -131,6 +152,3 @@ void showStat(int curr) {
     nStatic += curr;
     std::cout << "nStatic is: "<< nStatic << endl;
 }
-
-
-
