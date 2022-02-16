@@ -29,6 +29,13 @@ int main() {
         }
         inputs.pop();
     }
+
+    union NumericType Values = {10};
+    std::cout <<"Union Integer Value: "<< Values.iValue << endl;
+
+    Values.dValue = 3.1416;
+    std::cout <<"Union Float Value: " <<Values.dValue <<endl;
+
     return 0;
 }
 
