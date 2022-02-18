@@ -42,6 +42,20 @@ int main(int argc, char *argv[]) {
     else {
         print("Gotcha!!!");
     }
+    std::cout <<"========================="<< "\n";
+    Over o1;            // Calls default constructor.
+    Over o2( o1 );      // Calls Over( Over& ).
+    const Over o3;      // Calls default constructor.
+    Over o4( o3 );      // Calls Over( const Over& ).
+    volatile Over o5;   // Calls default constructor.
+    Over o6( o5 );      // Calls Over( volatile Over& ).
+
+    std::cout <<"========================="<< "\n";
+
+    UDC udc;
+
+    Printish(udc);
+
     return 0;
 }
 
@@ -122,3 +136,5 @@ int print(double dvalue, int prec) {
     std::cout << dvalue << endl;
     return std::cout.good();
 }
+
+void Printish(int i) {};
