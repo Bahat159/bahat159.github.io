@@ -1,3 +1,4 @@
+#include <type_traits>
 #include <string>
 #include <tuple>
 #include <stdarg.h>
@@ -18,7 +19,6 @@ using namespace std;
 #pragma GCC system_header
 
 /*
-#include <type_traits>
 //Declare printf with C linkage.
 extern "C" int printf( const char *fmt, ... );
 
@@ -57,6 +57,7 @@ struct Subt {
 
 Subt g();
 
+void ShowVar( char *szTypes, ... );
 
 
 // Function overloading
@@ -64,3 +65,23 @@ Subt g();
 int print(std::string s);             // Print a string.
 int print(double dvalue);            // Print a double.
 int print(double dvalue, int prec);  // Print a double with a given precision.
+
+
+class Over {
+    public:
+        Over() { std::cout << "Over default constructor\n";}
+        Over(Over &co) { std::cout << "Over&\n"; }
+        Over(const Over &co) { std::cout << "Const Over&\n"; }
+        Over(volatile Over &vo) { std::cout << "Volatile Over&\n"; }
+};
+
+
+class UDC {
+    public:
+        operator int() {
+            return 0;
+        }
+        operator long();
+};
+
+void Printish(int i);
