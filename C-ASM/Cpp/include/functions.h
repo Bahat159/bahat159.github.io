@@ -105,3 +105,16 @@ class Csm {
     private:
         vector<unsigned> _data;
 };
+
+class Account {
+    public:
+        Account() {}
+        double Deposit(double dAmount, char *szPassword);
+    private:
+        double Deposit(double dAmount){
+            return 0.0;
+        }
+        int Validate(char *szPassword){
+            return 0;
+        }
+};
