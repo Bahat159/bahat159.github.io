@@ -64,6 +64,11 @@ int main(int argc, char *argv[]) {
     auto ve = ccp.get_data();
     auto ve2 = Csm().get_data();
 
+    std::cout <<"========================="<< "\n";
+
+    Account *pAcct = new Account();
+
+    pAcct->Deposit(52.77, "pswd");
 
     return 0;
 }
@@ -147,3 +152,12 @@ int print(double dvalue, int prec) {
 }
 
 void Printish(int i) {};
+
+double Account::Deposit(double dAmount, char *szPassword){
+    if (Validate(szPassword)){
+        return Deposit(dAmount);
+    }
+    else {
+        return 0.0;
+    }
+}
