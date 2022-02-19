@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <math.h>
+#include <vector>
 #include "functions.h"
 
 using namespace std;
@@ -55,6 +56,14 @@ int main(int argc, char *argv[]) {
     UDC udc;
 
     Printish(udc);
+
+    std::cout <<"========================="<< "\n";
+
+    Csm ccp;
+    auto outro = ccp.print_outro();
+    auto ve = ccp.get_data();
+    auto ve2 = Csm().get_data();
+
 
     return 0;
 }
