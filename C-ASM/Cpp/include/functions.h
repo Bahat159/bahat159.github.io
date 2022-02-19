@@ -85,3 +85,23 @@ class UDC {
 };
 
 void Printish(int i);
+
+
+class Csm {
+    public:
+        Csm() {}
+        vector<unsigned> get_data() & {
+            std::cout <<"Lvalue from class Csm()" <<"\n";
+            return _data;
+        }
+        vector<unsigned> get_data() && {
+            std::cout <<"Rvalue from class Csm()"<<"\n";
+            return std::move(_data);
+        }
+        vector<unsigned> print_outro() {
+            std::cout <<"Fucntion overloading with example" <<"\n";
+            return _data;
+        }
+    private:
+        vector<unsigned> _data;
+};
