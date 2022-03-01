@@ -45,3 +45,18 @@ Point Point::operator--(int) {
     --*this;
     return temp;
 }
+
+
+class Int {
+    public:
+        Int operator++( int n);
+    private:
+        int _i;
+};
+
+
+class Point_x {
+    public:
+        int _x, _y;
+        Point_x& operator = (const Point_x&);
+};
