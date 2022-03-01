@@ -65,10 +65,7 @@ int main(int argc, char *argv[]) {
     auto ve2 = Csm().get_data();
 
     std::cout <<"========================="<< "\n";
-
-    Account *pAcct = new Account();
-
-    pAcct->Deposit(52.77, "pswd");
+    
 
     return 0;
 }
@@ -160,4 +157,16 @@ double Account::Deposit(double dAmount, char *szPassword){
     else {
         return 0.0;
     }
+}
+
+
+inline int maxwell(int a, int b) {
+    if(a > b) {
+        return a;
+    }
+    return b;
+}
+
+inline char to_upper( char a ) {
+   return ((a >= 'a' && a <= 'z') ? a-('a'-'A') : a );
 }
