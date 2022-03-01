@@ -118,3 +118,33 @@ class Account {
             return 0;
         }
 };
+
+/*
+namespace Asp {
+    struct Xmp {};
+    void fus(const Xmp&){ return Xmp; }
+};
+
+*/
+
+class Account_plus{
+    public:
+        Account_plus(double initial_balance) { balance = initial_balance; }
+        double GetBalance();
+        double Deposit(double Amount);
+        double Withdraw(double Amount);
+    private:
+        double balance;
+};
+
+inline double Account_plus::GetBalance() {
+    return balance;
+}
+
+inline double Account_plus::Deposit(double Amount) {
+    return (balance += Amount);
+}
+
+inline double Account_plus::Withdraw(double Amount) {
+    return (balance -= Amount);
+}
