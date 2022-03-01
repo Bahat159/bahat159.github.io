@@ -60,3 +60,15 @@ class Point_x {
         int _x, _y;
         Point_x& operator = (const Point_x&);
 };
+
+
+class IntVector {
+    public:
+        IntVector( int cElements);
+        ~IntVector() { delete[] _iElements; }
+        int& operator[] (int nSubscript);
+    private:
+        int *_iElements;
+        int _iUpperBound;
+};
+
