@@ -148,3 +148,8 @@ inline double Account_plus::Deposit(double Amount) {
 inline double Account_plus::Withdraw(double Amount) {
     return (balance -= Amount);
 }
+
+inline int maxwell(int a, int b);
+inline char to_upper( char a );
+
+#define toupper(a) ((a) >= 'a' && ((a) <= 'z') ? ((a)-('a'-'A')):(a))
