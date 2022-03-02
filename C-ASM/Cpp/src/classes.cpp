@@ -12,8 +12,10 @@ int main() {
     DerivedClass1 derived_class1;
     DerivedClass2 derived_class2;
 
-    /* derived_class1.PublicFunc();
-    derived_class2.PublicFunc(); */       // function is inaccessible
+    /* 
+    derived_class1.PublicFunc();
+    derived_class2.PublicFunc();    // function is inaccessible
+    */
 
     VFuncDerived vfd;
     VFuncBase *pvfb = &vfd;
