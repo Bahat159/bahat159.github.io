@@ -58,3 +58,25 @@ class TestRun {
 };
 
 int TestRun::_instances { 0 };
+
+
+class CanInit {
+    public:
+        long num{17};   // OK in C++11
+        int k = 9;      // OK in C++11
+
+        CanInit() {}    // initializes num to 7 and k to 9
+        CanInit(int val) : num(val) {}  // override original intiailized value of num.
+};
+
+class CanInit2 {
+    public:
+        CanInit2() {}
+
+        long num{7};
+        static int i;
+        static int j;
+};
+
+int CanInit2::i = 15;
+int CanInit2::j  = i;
