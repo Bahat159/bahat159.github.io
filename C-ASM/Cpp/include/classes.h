@@ -94,3 +94,28 @@ class Point {
     protected:
         Point ToWindowCoords();
 };
+
+class BaseClass {
+    public:
+        int PublicFunc();
+    protected:
+        int ProtectedFunc();
+    private:
+        int PrivateFunc();
+};
+
+class DerivedClass1 : public BaseClass {
+    void foo() {
+        PublicFunc();
+        ProtectedFunc();
+        /* PrivateFunc(); */    // function is inaccessible
+    }
+};
+
+class DerivedClass2 : private BaseClass {
+    void foo() {
+        PublicFunc();
+        ProtectedFunc();
+        /*PrivateFunc(); */     // function is inaccessible
+    }
+};
