@@ -80,3 +80,17 @@ class CanInit2 {
 
 int CanInit2::i = 15;
 int CanInit2::j  = i;
+
+
+class Point {
+    public:
+        Point(int, int);
+        Point();
+        int &x(int);
+        int &y(int);
+    private:
+        int _x;
+        int _y;
+    protected:
+        Point ToWindowCoords();
+};
