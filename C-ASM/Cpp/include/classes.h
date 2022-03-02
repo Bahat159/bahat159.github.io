@@ -119,3 +119,29 @@ class DerivedClass2 : private BaseClass {
         /*PrivateFunc(); */     // function is inaccessible
     }
 };
+
+
+class Base {
+    public:
+        int Print();
+        static int CountOf();
+};
+
+class Derived1 : private Base{};
+
+class Derived2 : public Base {
+    int ShowCount();
+};
+
+
+class VFuncBase {
+    public:
+        virtual int GetState() { return _state; }
+    protected:
+        int _state;
+};
+
+class VFuncDerived : public VFuncBase {
+    private:
+        int GetState() { return _state; }
+};
