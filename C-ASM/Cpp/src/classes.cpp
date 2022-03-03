@@ -38,7 +38,14 @@ int main() {
     yc1.printMember();
     yoc1.change( yc1, 5);
     yc1.printMember();
-    
+
+    std::cout <<"======================================="<<std::endl;
+
+    x.setProtMemb( 0 );   // OK, uses public access function
+    x.Display();
+    y.setProtMemb( 5 );   // OK, uses public access function
+    y.Display();
+    y.useProtfunc();      // OK, uses public access function in derived class
 
 
     return 0;
