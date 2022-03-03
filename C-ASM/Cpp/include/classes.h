@@ -82,17 +82,17 @@ int CanInit2::i = 15;
 int CanInit2::j  = i;
 
 
-class Point {
+class Point_s {
     public:
-        Point(int, int);
-        Point();
+        Point_s(int, int);
+        Point_s();
         int &x(int);
         int &y(int);
     private:
         int _x;
         int _y;
     protected:
-        Point ToWindowCoords();
+        Point_s ToWindowCoords();
 };
 
 class BaseClass {
@@ -172,3 +172,15 @@ class G {
     friend Fp4;
     friend class Fst;
 };
+
+
+class Point {
+    friend void ChangePrivate( Point &);
+    public:
+        Point (void) : m_i(0) {}
+        void PrintPrivate(void) {std::cout << m_i << std::endl; }
+    private:
+        int m_i;
+};
+
+void ChangePrivate(Point &i) { i.m_i++; }
