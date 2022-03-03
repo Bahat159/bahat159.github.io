@@ -95,6 +95,8 @@ class Point_s {
         Point_s ToWindowCoords();
 };
 
+/* Member Access Control */
+
 class BaseClass {
     public:
         int PublicFunc();
@@ -147,6 +149,8 @@ class VFuncDerived : public VFuncBase {
 };
 
 
+/* Friend */
+
 namespace NS{
     class M {
         friend class F;
@@ -184,3 +188,21 @@ class Point {
 };
 
 void ChangePrivate(Point &i) { i.m_i++; }
+
+
+class B;
+
+class A {
+    public:
+        int Func1(B& b);
+    private:
+        int Func2(B& b);
+};
+
+class B {
+    private:
+        int _b;
+        friend int A::Func1(B&);
+};
+
+int A::Func1(B& b) { return b._b; }
