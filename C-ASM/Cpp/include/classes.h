@@ -247,3 +247,20 @@ class Derived_class2 : private Base_class {
 };
 
 */
+
+
+/* Protected */
+
+class XX {
+    public:
+        void setProtMemb(int i) { m_protMemb = i; }
+        void Display() { std::cout << m_protMemb << std::endl; }
+    protected:
+        int m_protMemb;
+        void Protfunc() { std::cout << "\nAccess allowed\n"; }
+}x;
+
+class Y : public XX {
+public:
+   void useProtfunc() { Protfunc(); }
+} y;
