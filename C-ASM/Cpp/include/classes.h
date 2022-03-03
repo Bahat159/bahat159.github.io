@@ -145,3 +145,30 @@ class VFuncDerived : public VFuncBase {
     private:
         int GetState() { return _state; }
 };
+
+
+namespace NS{
+    class M {
+        friend class F;
+    };
+}
+
+class F {};
+namespace NS {
+    class MS {
+        friend F;
+    };
+}
+
+
+template <typename T> class my_class {
+    friend T;
+};
+
+class Foo {};
+typedef Foo Fp4;
+
+class G {
+    friend Fp4;
+    friend class Fst;
+};
