@@ -206,3 +206,18 @@ class B {
 };
 
 int A::Func1(B& b) { return b._b; }
+
+
+class YourClass {
+    friend class YourOtherClass;
+    public:
+        YourClass() {};
+        void printMember() { std::cout << topSecret << std::endl; }
+    private:
+        int topSecret;
+};
+
+class YourOtherClass {
+    public:
+        void change(YourClass& yc, int x) { yc.topSecret = x; }
+};
