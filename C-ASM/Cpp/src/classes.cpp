@@ -31,5 +31,15 @@ int main() {
     ChangePrivate(sPoint);
     sPoint.PrintPrivate();
 
+    std::cout <<"======================================="<<std::endl;
+
+    YourClass yc1;
+    YourOtherClass yoc1;
+    yc1.printMember();
+    yoc1.change( yc1, 5);
+    yc1.printMember();
+    
+
+
     return 0;
 }
