@@ -26,6 +26,10 @@ int main() {
     State = pvdf->GetState(); 
     State = pvdf->GetState();
     */
+    Point sPoint;
+    sPoint.PrintPrivate();
+    ChangePrivate(sPoint);
+    sPoint.PrintPrivate();
 
     return 0;
 }
