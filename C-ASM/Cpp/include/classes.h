@@ -221,3 +221,29 @@ class YourOtherClass {
     public:
         void change(YourClass& yc, int x) { yc.topSecret = x; }
 };
+
+
+/* Private */
+/*
+class Base_class {
+    public:
+        int pubFunc() { return privMem; }
+    private:
+        void privMem;
+};
+
+
+class Derived_class : public Base_class {
+    public:
+        // C2248: privMem not accessible from derived class
+        
+        void usePrivate(int i) { privMem = i; }
+        
+};
+
+class Derived_class2 : private Base_class {
+    public:
+        int usePublic() { return pubFunc(); }
+};
+
+*/
