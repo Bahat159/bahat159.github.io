@@ -1,6 +1,11 @@
 #include <iostream>
 #include <string>
 #include <time.h>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+
 class dog {
     public:
         dog() {
@@ -327,4 +332,66 @@ class Box {
         int m_width{0};
         int m_length{0};
         int m_height{0};
+};
+
+/*
+class BoxWithMove {
+    public:
+        BoxWithMove() { std::cout << "Default " <<std::endl; }
+        BoxWithMove(int width, int height, int length) : m_width(width), m_height(height), m_length(length) {
+            std::cout <<"int, int, int" <<std::endl;
+        }
+        BoxWithMove(BoxWithMove& other) : m_width(other.m_width), m_height(other.m_height), m_length(other.m_length) {
+            std::cout<< "Copy " << std::endl;
+        }
+        BoxWithMove(BoxWithMove&& other) : m_width(other.m_width), m_height(other.m_height), m_length(other.m_length){
+            m_contents = std::move(other.m_contents);
+            std::cout <<"Move " <<std::endl;
+        }
+        int Volume() { return m_width * m_height * m_length; }
+        void Add_Item(std::string item) { m_contents.push_back(item); }
+        void Print_contents() {
+            for (const auto& item : m_contents) {
+                std::cout << item << " ";
+            }
+        }
+    private:
+        int m_width{0};
+        int m_height{0};
+        int m_length{0};
+        vector<std::string>m_contents;
+};
+
+*/
+
+/* Order of Constructor */
+
+class Contained1 {
+    public:
+        Contained1() { std::cout <<"Contained1 ctor"<<std::endl; }
+};
+
+class Contained2 {
+    public:
+        Contained2() { std::cout <<"Contained2 ctor"<<std::endl; }
+};
+
+class Contained3 {
+    public:
+        Contained3() { std::cout<<"Contained3 ctor"<<std::endl; }
+};
+
+class BaseContainer {
+    public:
+        BaseContainer() { std::cout<<"BaseContainer ctor"<<std::endl; }
+    private:
+        Contained1 c1;
+        Contained2 c2;
+};
+
+class DerivedContainer : public BaseContainer { 
+    public:
+        DerivedContainer() : BaseContainer() { std::cout <<"DerivedContainer ctor" <<std::endl; }
+    private:
+        Contained3 c3;
 };
