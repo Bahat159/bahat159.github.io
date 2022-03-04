@@ -283,3 +283,21 @@ struct TempData2 {
     double maxTemp;
     double minTemp;
 };
+
+class class_a {
+    public:
+        class_a() {}
+        class_a(std::string str) : m_string {str} {}
+        class_a(std::string str, double dbl) : m_string{str}, m_double {dbl} {}
+    double m_double;
+    std::string m_string;
+};
+
+class class_d {
+    public:
+        float m_float;
+        std::string m_string;
+        wchar_t m_char;
+};
+
+
