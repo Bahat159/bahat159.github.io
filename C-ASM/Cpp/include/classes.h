@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include <time.h>
 class dog {
     public:
         dog() {
@@ -257,10 +257,29 @@ class XX {
         void Display() { std::cout << m_protMemb << std::endl; }
     protected:
         int m_protMemb;
-        void Protfunc() { std::cout << "\nAccess allowed\n"; }
+        void Protfunc() { std::cout << "Access allowed\n"; }
 }x;
 
 class Y : public XX {
 public:
    void useProtfunc() { Protfunc(); }
 } y;
+
+// Without Constructor
+struct TempData {
+    int StationId;
+    time_t timeSet;
+    double current;
+    double maxTemp;
+    double minTemp;
+};
+
+// With Constructor  
+struct TempData2 {
+    TempData2(double minimum, double maximum, double cur, int id, time_t t) : stationId{id}, timeSet{t}, current{cur}, maxTemp{maximum}, minTemp{minimum} {}
+    int stationId;
+    time_t timeSet;
+    double current;
+    double maxTemp;
+    double minTemp;
+};
