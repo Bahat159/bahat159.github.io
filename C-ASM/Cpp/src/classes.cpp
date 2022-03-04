@@ -86,6 +86,10 @@ int main() {
     std::cout <<"======================================="<<std::endl;
 
     DerivedContainer dc;
+    std::cout <<"======================================="<<std::endl;
     
+    const std::string aLabel = "aLabel";
+    StorageBox sb(1, 2, 3, aLabel);
+
     return 0;
 }
