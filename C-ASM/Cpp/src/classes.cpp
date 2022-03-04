@@ -47,6 +47,14 @@ int main() {
     y.Display();
     y.useProtfunc();      // OK, uses public access function in derived class
 
+    std::cout <<"======================================="<<std::endl;
+
+    time_t time_to_set;
+
+    TempData td{ 45978, time(&time_to_set), 28.9, 37.0, 16.7 };
+    TempData td_default{};
+    TempData2 td2{ 16.7, 37.0, 28.9, 45978, time(&time_to_set)}; 
+
 
     return 0;
 }
