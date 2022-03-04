@@ -83,5 +83,9 @@ int main() {
     std::cout << "box3.Volume: " << b3.Volume() << std::endl;
     std::cout << "box4.Volume: " << b4.Volume() << std::endl;
 
+    std::cout <<"======================================="<<std::endl;
+
+    DerivedContainer dc;
+    
     return 0;
 }
