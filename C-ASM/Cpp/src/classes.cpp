@@ -55,6 +55,19 @@ int main() {
     TempData td_default{};
     TempData2 td2{ 16.7, 37.0, 28.9, 45978, time(&time_to_set)}; 
 
+    class_a c1{};
+    class_a c1_1;
+
+    class_a c2{"ww"};
+    class_a c2_1{"xx"};
+
+    class_a c3{"yy", 4.4};
+    class_a c3_1{"zz", 5.5};
+
+    /* class_d d1{}; */
+    class_d d1{4.5};
+    class_d d2{4.5, "string"};
+    class_d d3{4.5, "string", 'c'};
 
     return 0;
 }
