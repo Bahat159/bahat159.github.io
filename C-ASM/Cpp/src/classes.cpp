@@ -69,5 +69,19 @@ int main() {
     class_d d2{4.5, "string"};
     class_d d3{4.5, "string", 'c'};
 
+    class_f cf{"Hello"};
+
+    std::cout <<"======================================="<<std::endl;
+
+    Box b;
+    Box b2{5};
+    Box b3{5, 8, 12};
+    Box b4(2, 4, 6);
+
+    std::cout << "box.Volume: " << b.Volume() << std::endl; 
+    std::cout << "box2.Volume: " << b2.Volume() << std::endl;
+    std::cout << "box3.Volume: " << b3.Volume() << std::endl;
+    std::cout << "box4.Volume: " << b4.Volume() << std::endl;
+
     return 0;
 }
