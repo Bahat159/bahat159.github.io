@@ -540,3 +540,35 @@ String::~String() {
 }
 
 */
+
+class Account_t {
+    public:
+        double Deposit(double HowMuch) {
+            balance += HowMuch;
+            return balance;
+        }
+    private:
+        double balance;
+};
+
+class Account {
+    public:
+        Account(double d) { _balance = d; }
+        virtual ~Account() {}
+        virtual double GetBalance() { return _balance; }
+        virtual void PrintBalance() { std::cerr<<"Error. Balance not available for the base type."<<std::endl;}
+    private:
+        double _balance;
+};
+
+class CheckingAccount : public Account {
+    public:
+        CheckingAccount(double d) : Account(d) {}
+        void PrintBalance() { std::cout <<"Checking account balance: "<< GetBalance() << std::endl; } 
+};
+
+class SavingsAccount : public Account {
+    public:
+        SavingsAccount(double d) : Account(d) {}
+        void PrintBalance() { std::cout <<"Savings account balance: " <<GetBalance() <<std::endl; }
+};
