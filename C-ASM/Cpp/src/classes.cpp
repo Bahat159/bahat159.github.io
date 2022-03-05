@@ -94,5 +94,10 @@ int main() {
 
     Dervied_Class dcl;
 
+    std::cout <<"======================================="<<std::endl;
+    MemoryBlock mbm(25);
+    MemoryBlock mbmg(50);
+    MemoryBlock mbmx(75);
+
     return 0;
 }
