@@ -465,6 +465,7 @@ class MemoryBlock {
                 _length = other._length;
                 _data = new int[_length];
                 std::copy(other._data, other._data+_length, _data);
+                std::cout<<std::endl;
             }
             return *this;
         }
@@ -474,4 +475,31 @@ class MemoryBlock {
     private:
         size_t _length;
         int* _data;
+};
+
+class class_ctor {
+    public:
+        int max;
+        int min;
+        int middle;
+
+        class_ctor() {}
+        class_ctor(int my_max) {
+            max = my_max > 0 ? my_max : 10; 
+            std::cout << "My Max in class_ctor(int max) = " <<max <<std::endl;
+        }
+        class_ctor(int my_max, int my_min) {
+            max = my_max > 0 ? my_max : 10;
+            min = my_min > 0 && my_min < max ? my_min : 1;
+            std::cout << "My Max in class_ctor(int my_max, int my_min) = " <<max <<std::endl;
+            std::cout << "My Min in class_ctor(int my_max, int my_min) = " <<min <<std::endl;
+        }
+        class_ctor(int my_max, int my_min, int my_middle) {
+            max = my_max > 0 ? my_max : 10;
+            min = my_min > 0 && my_min < max ? my_min : 1;
+            middle = my_middle < max && my_middle > min ? my_middle : 5;
+            std::cout << "My Max in class_ctor(int my_max, int my_min, int my_middle) = " <<max <<std::endl;
+            std::cout << "My Min in class_ctor(int my_max, int my_min, int my_middle) = " <<min <<std::endl;
+            std::cout << "My Middle in class_ctor(int my_max, int my_min, int my_middle) = " <<middle <<std::endl;
+        }
 };
