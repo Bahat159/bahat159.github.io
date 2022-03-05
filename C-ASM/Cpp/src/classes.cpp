@@ -93,6 +93,18 @@ int main() {
     std::cout <<"======================================="<<std::endl;
 
     Dervied_Class dcl;
+    std::cout <<"======================================="<<std::endl;
+
+    class_a_ctor a{"hello", 2.0};
+
+
+    CheckingAccount checking{100.00};
+    SavingsAccount savings{100.00};
+    Account *pAccount = &checking;
+    pAccount->PrintBalance();
+    pAccount = &savings;
+    pAccount->PrintBalance();
+
 
     std::cout <<"======================================="<<std::endl;
     class_ctor m_ctor(5);
