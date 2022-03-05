@@ -503,3 +503,12 @@ class class_ctor {
             std::cout << "My Middle in class_ctor(int my_max, int my_min, int my_middle) = " <<middle <<std::endl;
         }
 };
+
+class class_a_ctor {
+    public:
+        class_a_ctor() {}
+        class_a_ctor(std::string str) : m_string {str} {}
+        class_a_ctor(std::string str, double dbl) : class_a_ctor(str) { m_double = dbl; }
+        double m_double{1.0};
+        std::string m_string {m_double < 10.0 ? "alpha" : "beta"};
+};
