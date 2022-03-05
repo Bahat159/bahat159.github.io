@@ -637,3 +637,19 @@ class Queue {};
 class CashierQueue : virtual public Queue {};
 class LunchQueue : virtual public Queue {};
 class LunchCashierQueue : public LunchQueue, public CashierQueue {};
+
+
+class Alpha {
+    public:
+        unsigned a;
+        unsigned b();
+};
+
+class Beta {
+    public:
+        unsigned a();
+        int b();
+        char c;
+};
+
+class Cida : public Alpha, public Beta{};
