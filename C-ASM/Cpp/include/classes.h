@@ -572,3 +572,33 @@ class SavingsAccount : public Account {
         SavingsAccount(double d) : Account(d) {}
         void PrintBalance() { std::cout <<"Savings account balance: " <<GetBalance() <<std::endl; }
 };
+
+
+class BaseAgain {
+    public:
+        virtual void NameOf();
+        void InvokingClass();
+};
+
+
+void BaseAgain::NameOf() {
+    std::cout<< "BaseAgain::NameOf"<< std::endl;
+}
+
+void BaseAgain::InvokingClass() {
+    std::cout <<"Invoked by BaseAgain" <<std::endl;
+}
+
+class DerivedAgain : public BaseAgain {
+    public:
+        void NameOf();
+        void InvokingClass();
+};
+
+void DerivedAgain::NameOf() {
+    std::cout<<"DerivedAgain::NameOf()" <<std::endl;
+}
+
+void DerivedAgain::InvokingClass() {
+    std::cout<<"Invoked by DerivedAgain" <<std::endl;
+}
