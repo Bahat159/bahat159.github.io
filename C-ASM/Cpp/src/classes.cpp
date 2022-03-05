@@ -90,6 +90,9 @@ int main() {
     
     const std::string aLabel = "aLabel";
     StorageBox sb(1, 2, 3, aLabel);
+    std::cout <<"======================================="<<std::endl;
+
+    Dervied_Class dcl;
 
     return 0;
 }
