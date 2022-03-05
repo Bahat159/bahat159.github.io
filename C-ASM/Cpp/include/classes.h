@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <cstring>
 
 
 class dog {
@@ -512,3 +513,30 @@ class class_a_ctor {
         double m_double{1.0};
         std::string m_string {m_double < 10.0 ? "alpha" : "beta"};
 };
+
+/* Destructor */
+
+class String {
+    public:
+        String(char *ch);
+        ~String();
+    private:
+        char *_text;
+        size_t sizeOfText;
+};
+/*
+String::String(char *ch) {
+    sizeOfText = strlen(ch) + 1;
+
+    _text = new char[sizeOfText];
+
+    if(_text) {
+        strcpy_s(_text, sizeOfText, ch);
+    }
+}
+
+String::~String() {
+    delete[] _text;
+}
+
+*/
