@@ -418,3 +418,23 @@ class StorageBox : public Box_x {
     private:
         std::string m_label;
 };
+
+class BaseClass1 {
+    public:
+        BaseClass1() { std::cout << "BaseClass1 ctor" <<std::endl; }
+};
+
+class BaseClass2 {
+    public:
+        BaseClass2() { std::cout <<"BaseClass2 ctor "<<std::endl; }
+};
+
+class BaseClass3 {
+    public:
+        BaseClass3() { std::cout <<"BaseClass3 ctor"<< std::endl; }
+};
+
+class Dervied_Class : public BaseClass1, public BaseClass2, public BaseClass3 {
+    public:
+        Dervied_Class() {std::cout <<"Dervied_Class ctor" <<std::endl; }
+};
