@@ -105,6 +105,18 @@ int main() {
     pAccount = &savings;
     pAccount->PrintBalance();
 
+    std::cout <<"======================================="<<std::endl;
+
+    DerivedAgain aDerived;
+
+    DerivedAgain *pDerived = &aDerived;
+    BaseAgain *pBase = &aDerived;
+
+    pBase->NameOf();
+    pBase->InvokingClass();
+    pDerived->NameOf();
+    pDerived->InvokingClass();
+
 
     std::cout <<"======================================="<<std::endl;
     class_ctor m_ctor(5);
