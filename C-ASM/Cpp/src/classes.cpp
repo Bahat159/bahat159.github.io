@@ -95,6 +95,10 @@ int main() {
     Dervied_Class dcl;
 
     std::cout <<"======================================="<<std::endl;
+    class_ctor m_ctor(5);
+    class_ctor mi_ctor(5, 10);
+    class_ctor min_ctor(5, 10, 15);
+    std::cout <<"======================================="<<std::endl;
     MemoryBlock mbm(25);
     MemoryBlock mbmg(50);
     MemoryBlock mbmx(75);
