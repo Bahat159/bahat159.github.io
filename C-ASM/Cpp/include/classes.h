@@ -395,3 +395,26 @@ class DerivedContainer : public BaseContainer {
     private:
         Contained3 c3;
 };
+
+class Box_x {
+    public:
+        Box_x(int width, int length, int height){
+            m_width = width;
+            m_length = length;
+            m_height = height;
+        }
+    private:
+        int m_width;
+        int m_length;
+        int m_height;
+};
+
+class StorageBox : public Box_x {
+    public:
+        StorageBox(int width, int length, int height, const std::string label) : Box_x(width, length, height) {
+            m_label = label;
+            std::cout<<m_label <<std::endl;
+        }
+    private:
+        std::string m_label;
+};
