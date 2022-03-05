@@ -574,6 +574,8 @@ class SavingsAccount : public Account {
 };
 
 
+/* Virtual Fucntion */
+
 class BaseAgain {
     public:
         virtual void NameOf();
@@ -602,3 +604,36 @@ void DerivedAgain::NameOf() {
 void DerivedAgain::InvokingClass() {
     std::cout<<"Invoked by DerivedAgain" <<std::endl;
 }
+
+/* Single Inhertiance */
+
+class Document {
+    public:
+        char *Name;
+        void PrintNameOf();
+};
+
+void Document::PrintNameOf() {
+    std::cout <<Name <<std::endl;
+}
+
+class Book : public Document {
+    public:
+        Book(char *name, long pagecount);
+    private:
+        long pageCount;
+};
+
+Book::Book(char *name, long pagecount) {
+    Name = new char[strlen(name) + 1];
+    strcpy(Name, Name);
+    pageCount = pagecount;
+};
+
+
+/* Multiple Base class */
+
+class Queue {};
+class CashierQueue : virtual public Queue {};
+class LunchQueue : virtual public Queue {};
+class LunchCashierQueue : public LunchQueue, public CashierQueue {};
