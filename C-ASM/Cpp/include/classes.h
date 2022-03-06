@@ -653,3 +653,32 @@ class Beta {
 };
 
 class Cida : public Alpha, public Beta{};
+
+
+/* Explicit Override */
+
+extern "C" int printf_s(const char *, ...);
+/*
+__interface IMyInt1 {
+    void mf1();
+    void mf1(int);
+    void mf2();
+    void mf2(int);
+};
+
+__interface IMyInt2 {
+    public:
+        void mf1();
+        void mf1(int);
+        void mf2();
+        void mf2(int);
+};
+
+class CMyClass : public IMyInt1, public IMyInt2 {
+    public:
+        void IMyInt1::mf1() {
+            printf_s("In CMyClass::IMyInt1::mf1()\n");
+        }
+};
+
+*/
