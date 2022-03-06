@@ -700,3 +700,17 @@ struct D : B1, B2 {
 };
 
 */
+
+class BufferedOutput {
+    public:
+        short ByteWritten() {
+            return bytecount;
+        }
+        static void ResetCount() {
+            bytecount = 0;
+        }
+
+        static long bytecount;
+};
+
+long BufferedOutput::bytecount;
