@@ -116,7 +116,12 @@ int main() {
     pBase->InvokingClass();
     pDerived->NameOf();
     pDerived->InvokingClass();
+    std::cout <<"======================================="<<std::endl;
 
+    Money payable{79.99};
+    display_balance(payable);
+    display_balance(49.95);
+    display_balance(9.99f);
 
     std::cout <<"======================================="<<std::endl;
     class_ctor m_ctor(5);
@@ -128,4 +133,9 @@ int main() {
     MemoryBlock mbmx(75);
 
     return 0;
+}
+
+
+void display_balance(const Money balance) {
+    std::cout <<"The balance is: "<< balance.amount <<std::endl;
 }
