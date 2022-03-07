@@ -755,3 +755,10 @@ class BufferedIO {
         };
         class BufferedOutput {};
 };
+
+
+class C_typedDef {
+    public:
+        typedef class U u_t;
+        typedef class V {} v_t;
+};
