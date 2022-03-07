@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <cstring>
+#include <stdio.h>
 
 
 class dog {
@@ -768,3 +769,39 @@ class C_typedDef {
         typedef class U u_t;
         typedef class V {} v_t;
 };
+
+/* 
+
+Anonymous Class Types
+Classes can be anonymous — that is, they can be declared without an identifier. 
+This is useful when you replace a class name with a typedef name, as in the following:
+
+*/
+
+typedef struct {
+    unsigned x;
+    unsigned y;
+}POINT;
+
+struct PTValue {
+    POINT ptLoc;
+    union {
+        int iValue;
+        long LValue;
+    };
+};
+
+/* Anonymous structs */
+
+struct phone {
+    int areacode;
+    long number;
+};
+
+struct person {
+    char name[30];
+    char gender;
+    int age;
+    int weight;
+    phone phone_struct;   // Anonymous structure; no name needed  // For true anonymus replace as struct phone;
+}Habib;
