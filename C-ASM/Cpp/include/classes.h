@@ -724,3 +724,17 @@ class Money {
 };
 
 void display_balance(const Money balance);
+
+
+/* Mutable Data Members (C++) */
+
+class X_m {
+    public:
+        bool GetFlag() const {
+            m_accessCount++;
+            return m_flag;
+        }
+        private:
+            bool m_flag;
+            mutable int m_accessCount;
+};
