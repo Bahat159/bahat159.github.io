@@ -805,3 +805,12 @@ struct person {
     int weight;
     phone phone_struct;   // Anonymous structure; no name needed  // For true anonymus replace as struct phone;
 }Habib;
+
+
+class Window {
+    Window();                                   // Default constructor.
+    Window(int x1, int y1, int x2, int y2);     // Constructor specifying Window size.
+    bool SetCaption(const char *szTitle);       // Set window caption.
+    const char *GetCaption();                   // Get window caption.
+    char *szWinCaption;                         // Window caption.
+};
