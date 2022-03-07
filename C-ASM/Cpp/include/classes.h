@@ -754,6 +754,10 @@ class BufferedIO {
         class BufferedOutput {};
 };
 
+int BufferedIO::BufferedInput::read() {
+    return (1);
+}
+
 int BufferedIO::BufferedInput::good() {
     return _inputerror == None;
 }
