@@ -747,14 +747,16 @@ class BufferedIO {
         class BufferedInput {
             public:
                 int read();
-                int good() {
-                    return _inputerror == None;
-                }
+                int good();
             private:
                 IOError _inputerror;
         };
         class BufferedOutput {};
 };
+
+int BufferedIO::BufferedInput::good() {
+    return _inputerror == None;
+}
 
 
 class C_typedDef {
