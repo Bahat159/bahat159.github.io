@@ -122,6 +122,7 @@ int main() {
     display_balance(payable);
     display_balance(49.95);
     display_balance(9.99f);
+    display_balance((Money)9.99f);  // Legal: explicit cast to Money
 
     std::cout <<"======================================="<<std::endl;
     class_ctor m_ctor(5);
