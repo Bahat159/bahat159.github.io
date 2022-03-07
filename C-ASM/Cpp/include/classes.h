@@ -738,3 +738,20 @@ class X_m {
             bool m_flag;
             mutable int m_accessCount;
 };
+
+
+class BufferedIO {
+    public:
+        enum IOError { None, Access, General };
+
+        class BufferedInput {
+            public:
+                int read();
+                int good() {
+                    return _inputerror == None;
+                }
+            private:
+                IOError _inputerror;
+        };
+        class BufferedOutput {};
+};
