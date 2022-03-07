@@ -125,6 +125,14 @@ int main() {
     display_balance((Money)9.99f);  // Legal: explicit cast to Money
 
     std::cout <<"======================================="<<std::endl;
+
+    // Typedef class definition
+    U* pu;      // okay, forward declaration used above so file scope is used
+    C_typedDef::V* pv2;     // okay, fully qualified name
+
+    std::cout<<"Nested class typeddef declaration, class C_typedDef {}"<<std::endl;
+
+    std::cout <<"======================================="<<std::endl;
     class_ctor m_ctor(5);
     class_ctor mi_ctor(5, 10);
     class_ctor min_ctor(5, 10, 15);
