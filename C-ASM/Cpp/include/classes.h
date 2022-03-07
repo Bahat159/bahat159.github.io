@@ -714,3 +714,13 @@ class BufferedOutput {
 };
 
 long BufferedOutput::bytecount;
+
+
+class Money {
+    public:
+        Money() : amount{0.0} {};
+        Money(double _amount) : amount { _amount } {};
+        double amount;
+};
+
+void display_balance(const Money balance);
