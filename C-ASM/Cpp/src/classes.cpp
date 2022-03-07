@@ -131,6 +131,10 @@ int main() {
     C_typedDef::V* pv2;     // okay, fully qualified name
 
     std::cout<<"Nested class typeddef declaration, class C_typedDef {}"<<std::endl;
+    std::cout <<"======================================="<<std::endl;
+
+    Habib.phone_struct.number = 0-044262-67;
+    std::cout<<"Habib phone number: "<<Habib.phone_struct.number<<std::endl;
 
     std::cout <<"======================================="<<std::endl;
     class_ctor m_ctor(5);
