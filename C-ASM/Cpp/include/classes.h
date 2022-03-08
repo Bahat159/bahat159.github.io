@@ -814,3 +814,23 @@ class Window {
     const char *GetCaption();                   // Get window caption.
     char *szWinCaption;                         // Window caption.
 };
+
+
+class Window_Base {
+    public:
+        virtual void Print();
+};
+
+/* void (Window_Base::bfnPrint)() = *Window_Base::Print;  */
+void Window_Base::Print() {
+    std::cout <<"Print Function for class Window_Base" <<std::endl;
+}
+
+class Dervied_from_Window_Base: public Window_Base {
+    public:
+        void Print();
+};
+
+void Dervied_from_Window_Base::Print() {
+    std::cout<<"Print function for class Dervied_from_Window_Base"<<std::endl;
+}
