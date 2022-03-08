@@ -16,6 +16,12 @@ const int cFactories = sizeof(TransportCosts) / sizeof(double[cMkts]);
 
 double FindMinToMkt(int Mkt, double myTransportCosts[][cMkts], int mycFacts);
 
+struct Person {
+    char* Name;
+    short Age;
+};
+
+
 int main(int argc, char *argv[]) {
     double MinCost;
 
@@ -25,6 +31,18 @@ int main(int argc, char *argv[]) {
     }
     MinCost = FindMinToMkt(*argv[1] - '0', TransportCosts, cFacts);
     std::cout <<"The minimum cost to Market: " << argv[1] << " is "<<MinCost <<std::endl;
+
+    std::cout<<"====================================="<<std::endl;
+
+    Person mySelf;
+    Person& rFriend = mySelf;
+
+    mySelf.Name = "Busari Habibullaah";
+    rFriend.Age   = 30;
+
+    std::cout<<rFriend.Name <<" is "<<mySelf.Age <<" Years, as at 2022"<<std::endl;
+
+    return 0;
 }
 
 double FindMinToMkt(int Mkt, double myTransportCosts[][cMkts], int mycFacts) {
