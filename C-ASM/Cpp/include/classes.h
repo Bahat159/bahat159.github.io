@@ -870,3 +870,13 @@ Buf& Buf::operator=(const Buf &otherbuf) {
 }
 
 */
+
+
+struct Date {
+    unsigned short nWeekDay : 3;
+    unsigned short nMonthDay : 6;
+    unsigned short nMonth : 5;
+    unsigned short nYear : 8;
+};
+
+
