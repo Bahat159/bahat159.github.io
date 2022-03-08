@@ -2,7 +2,8 @@
 #include <string>
 #include <time.h>
 #include <vector>
-#include <string>
+#include <cstring>
+#include <string.h>
 #include <algorithm>
 #include <cstring>
 #include <stdio.h>
@@ -834,3 +835,38 @@ class Dervied_from_Window_Base: public Window_Base {
 void Dervied_from_Window_Base::Print() {
     std::cout<<"Print function for class Dervied_from_Window_Base"<<std::endl;
 }
+
+
+class Buf {
+    public:
+        Buf(char* szBuffer, size_t sizeOfBuffer);
+        Buf& operator=(const Buf &);
+        void Display() {std::cout << buffer <<std::endl; }
+    private:
+        char* buffer;
+        size_t sizeOfBuffer;
+};
+
+/*
+Buf::Buf (char* szBuffer, size_t sizeOfBuffer) {
+    sizeOfBuffer++;
+    buffer = new char[sizeOfBuffer];
+    if(buffer) {
+        strcpy_s(buffer, sizeOfBuffer, szBuffer);
+        sizeOfBuffer = sizeOfBuffer;
+    }
+}
+
+Buf& Buf::operator=(const Buf &otherbuf) {
+    if(&otherbuf != this) {
+        if(buffer) {
+            delete[] buffer;
+        }
+        sizeOfBuffer = strlen(otherbuf.buffer) + 1;
+        buffer = new char[sizeOfBuffer];
+        strcpy_s(buffer, sizeOfBuffer, otherbuf.buffer);
+    }
+    return *this;
+}
+
+*/
