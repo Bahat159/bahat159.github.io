@@ -20,12 +20,13 @@ void func_B(MyClass mc) {
     std::cout <<"Local copy of mc: ";
     mc.print();
 }
-
+ 
+void func(int arr[], int length);
 
 int main() {
     MyClass* pmc = new MyClass{108, "Nick"};
     std::cout<<pmc <<std::endl;
-    
+
     MyClass mc = *pmc;
     MyClass* pcopy = &mc;
 
@@ -44,4 +45,17 @@ int main() {
     pmc->print();
 
     delete(pmc);
+    std::cout<<"=================================" <<std::endl;
+
+    int i[5]{2,4,6,8,10};
+    int j = sizeof(i) / sizeof(i[0]);
+    func(i,j);
+}
+
+
+void func(int *arr, int length) {
+    size_t test = sizeof(arr);
+    for(int i = 0; i < length; ++i) {
+        std::cout<<arr[i] << " "<<std::endl;
+    }
 }
