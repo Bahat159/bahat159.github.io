@@ -36,6 +36,7 @@ int main() {
 
     std::cout<<"=================================" <<std::endl;
 
+    Blanks *a5 = new(0xa5) Blanks;
+    return a5 != 0;
     
 }
-
