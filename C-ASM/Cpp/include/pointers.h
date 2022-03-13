@@ -2,7 +2,8 @@
 #include <string>
 #include <malloc.h>
 #include <memory.h>
-
+#include <vector>
+#include <algorithm>
 
 #define BIG_NUMBER 100000000
 
@@ -104,3 +105,20 @@ void operator delete(void *pvMem) {
     }
     free(pvMem);
 }
+
+struct MediaAsset{
+    virtual ~MediaAsset() = default;
+};
+
+struct Song : public MediaAsset {
+    std::wstring artist;
+    std::wstring title;
+    Song(const std::wstring& artist_, const std::wstring& title_) : artist { artist_}, title{title_} {}
+};
+
+struct Photo : public MediaAsset {
+    std::wstring date;
+    std::wstring location;
+    std::wstring subject;
+    Photo(const std::wstring& date_, const std::wstring& location_, const std::wstring& subject_) : date{date_}, location{location_}, subject{subject_} {}
+};
