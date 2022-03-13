@@ -6,7 +6,7 @@
  
 void func(int arr[], int length);
 
-int main() {
+int main(int argc, char *argv[]) {
     MyClass* pmc = new MyClass{108, "Nick"};
     std::cout<<pmc <<std::endl;
 
@@ -38,5 +38,21 @@ int main() {
 
     Blanks *a5 = new(0xa5) Blanks;
     return a5 != 0;
+
+    int *pI = new int[BIG_NUMBER];
+    if( pI == 0x0 ) {
+        std::cout << "Insufficient memory" << std::endl;
+        return -1;
+    }
+
+    fLogMemory = 1;
+    if(argc > 1) {
+        for (int i = 0; i < atoi(argv[1]); ++i) {
+            char *pMem = new char[10];
+            delete[] pMem;
+        }
+        fLogMemory = 0;
+        return cBlocksAllocated;
+    }
     
 }
