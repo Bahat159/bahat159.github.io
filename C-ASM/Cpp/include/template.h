@@ -73,3 +73,25 @@ template <class T> class X_x {
     public:
         void print() { y.print(); }
 };
+
+template <class T>
+template <class U> X_x<T>::Y<U>::Y() {
+    std::cout<<"X<T>::Y<U>::Y()"<<std::endl;
+    u = new U();
+}
+
+template <class T>
+template <class U> U& X_x<T>::Y<U>::Value() {
+    return *u;
+}
+
+template <class T>
+template <class U> void X_x<T>::Y<U>::print() {
+    std::cout<<this->Value() <<std::endl;
+}
+
+template <class T>
+template <class U> X_x<T>::Y<U>::~Y() {
+    std::cout<<"X<T>::Y<U>::~Y()" <<std::endl;
+    delete u;
+}
