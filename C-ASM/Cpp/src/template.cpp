@@ -13,6 +13,13 @@ int main() {
 
     My_X x(1, 'a');
     x.print();
+    
+    X_x<int>* xi;
+    X_x<char>* xc;
+    xi->print();
+    xc->print();
+    delete xi;
+    delete xc;
 
     return 0;
 }
