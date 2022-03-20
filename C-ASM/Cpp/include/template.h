@@ -32,3 +32,7 @@ template <class T, int i> class MyStack {
         void push(const T item);
         T& pop(void);
 };
+
+template <class T, int i> MyStack<T, i>::MyStack(void) {};
+template <class T, int i> void MyStack<T, i>::push(const T item) {};
+template <class T, int i> T& MyStack<T, i>::pop(void) {};
