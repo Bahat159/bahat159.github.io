@@ -1,8 +1,8 @@
 #include <iostream>
 #include <type_traits>
 #include <vector>
-#include "test.h"
-#include "temp.h"
+#include "../include/test.h"
+#include "../include/temp.h"
 
 
 using namespace std;
