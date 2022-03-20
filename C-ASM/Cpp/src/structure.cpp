@@ -1,4 +1,4 @@
-#include "structure.h"
+#include "../include/structure.h"
 
 int main() {
     struct PERSON sister;
