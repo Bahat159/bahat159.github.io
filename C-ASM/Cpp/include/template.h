@@ -44,3 +44,18 @@ template <typename T> class X {
 };
 
 template <typename T> template <typename U> void X<T>::mf (const U &u) {};
+
+class My_X {
+    template <class T> struct Y {
+        T m_t;
+        Y(T t) : m_t(t) {}
+    };
+    Y <int> yInt;
+    Y <char> yChar;
+
+    public:
+        My_X (int i, char c) : yInt(i), yChar(c) {}
+        void print() {
+            std::cout <<yInt.m_t << " " <<yChar.m_t <<std::endl;
+        }
+};
