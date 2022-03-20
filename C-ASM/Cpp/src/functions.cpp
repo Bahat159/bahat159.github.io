@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include <math.h>
 #include <vector>
-#include "functions.h"
+#include "../include/functions.h"
 
 using namespace std;
 
