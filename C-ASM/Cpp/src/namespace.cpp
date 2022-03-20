@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "namespace.h"
+#include "../include/namespace.h"
 
 //using namespace std;
 
