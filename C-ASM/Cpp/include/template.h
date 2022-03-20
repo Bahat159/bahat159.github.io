@@ -15,3 +15,20 @@ class MyClass {
         int num;
         std::wstring description;
 };
+
+
+template <typename T, size_t L> class MyArray {
+    T arr[L];
+    public:
+        MyArray() {}
+};
+
+template <class T, int i> class MyStack {
+    T* pStack;
+    T StackBuffer[i];
+    static const int cItems = i * sizeof(T);
+    public:
+        MyStack(void);
+        void push(const T item);
+        T& pop(void);
+};
