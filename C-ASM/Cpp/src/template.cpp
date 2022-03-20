@@ -10,6 +10,9 @@ int main() {
 
     MyClass mc1 { 1, L"Hello"};
     MyClass mc2 { 2, L"goodbye"};
-    
+
+    My_X x(1, 'a');
+    x.print();
+
     return 0;
 }
