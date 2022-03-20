@@ -36,3 +36,11 @@ template <class T, int i> class MyStack {
 template <class T, int i> MyStack<T, i>::MyStack(void) {};
 template <class T, int i> void MyStack<T, i>::push(const T item) {};
 template <class T, int i> T& MyStack<T, i>::pop(void) {};
+
+
+template <typename T> class X {
+    public:
+        template <typename U> void mf (const U &u);
+};
+
+template <typename T> template <typename U> void X<T>::mf (const U &u) {};
