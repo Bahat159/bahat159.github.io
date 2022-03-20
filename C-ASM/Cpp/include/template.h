@@ -9,3 +9,9 @@ template <typename T> T minimum_t(const T& lhs, const T& rhs) {
 int minimum(const int& lhs, const int& rhs) {
     return lhs < rhs ? lhs : rhs;
 }
+
+class MyClass {
+    public:
+        int num;
+        std::wstring description;
+};
