@@ -60,7 +60,8 @@ class My_X {
         }
 };
 
-template <class T> class X_x {
+template <class T> 
+class X_x {
     template <class U> class Y {
         U* u;
         public:
