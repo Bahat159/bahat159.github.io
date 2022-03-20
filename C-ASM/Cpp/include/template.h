@@ -59,3 +59,17 @@ class My_X {
             std::cout <<yInt.m_t << " " <<yChar.m_t <<std::endl;
         }
 };
+
+template <class T> class X_x {
+    template <class U> class Y {
+        U* u;
+        public:
+            Y();
+            U& Value();
+            void print();
+            ~Y();
+    };
+    Y<int> y;
+    public:
+        void print() { y.print(); }
+};
