@@ -1,4 +1,4 @@
-#include "classes.h"
+#include "../include/classes.h"
 
 int main() {
     dog mongrel;
