@@ -17,7 +17,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	RegisterClass(&wc);
 
-	HWND hwnd = CreateWindowExW(0, CLASS_NAME, L"Learn to program Windows in C++", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+	HWND hwnd = CreateWindowExW(0, CLASS_NAME, L"First Win32API Application", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 		NULL, NULL, hInstance, NULL);
 
 	if (hwnd == NULL) {
@@ -47,6 +47,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 			EndPaint(hwnd, &ps);
 		}
 		return 0;
+		case WM_CLOSE:
+			if (MessageBox(hwnd, L"Really quit?", L"First Win32API Application", MB_OKCANCEL) == IDOK) {
+				DestroyWindow(hwnd);
+			}
+			return 0;
 	}
 	return DefWindowProcW(hwnd, uMsg, wParam, lParam);
 }
