@@ -1,7 +1,9 @@
 #include <windows.h>
 #include <d2d1.h>
+#include <comdef.h>
+#include <comutil.h>
 #pragma comment(lib, "d2d1")
-#pragma once
+
 
 
 
@@ -159,4 +161,26 @@ void MainWindow::Resize() {
 		CalculateLayout();
 		InvalidateRect(m_hwnd, NULL, FALSE);
 	}
+}
+
+LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
+	switch (uMsg) {
+	case WM_CREATE:
+		if (FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &pFactory))) {
+			return -1;
+		}
+		return 0;
+	case WM_DESTROY:
+		DiscardGraphicsResources();
+		SafeRelease(&pFactory);
+		PostQuitMessage(0);
+		return 0;
+	case WM_PAINT:
+		OnPaint();
+		return 0;
+	case WM_SIZE:
+		Resize();
+		return 0;
+	}
+	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
 }
