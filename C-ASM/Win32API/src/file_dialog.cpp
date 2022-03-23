@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <shobjidl.h>
 
-DWORD Get_FileDialog() {
+HRESULT Get_FileDialog() {
 	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 	if (SUCCEEDED(hr)) {
 		IFileOpenDialog *pFileOpen;
