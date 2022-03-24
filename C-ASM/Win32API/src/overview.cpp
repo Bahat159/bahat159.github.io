@@ -16,7 +16,7 @@ inline void throw_if_fail(HRESULT hr) {
 	}
 }
 
-/**
+
 
 inline DWORD_PTR throw_if_success(HRESULT hr) {
 	if (SUCCEEDED(hr)) {
@@ -24,7 +24,7 @@ inline DWORD_PTR throw_if_success(HRESULT hr) {
 	}
 }
 
-**/
+
 
 DWORD MainWindow_Main(int nCmdShow) {
 	MainWindow win;
@@ -65,3 +65,36 @@ int Get_FileDialog() {
 	}
 	return 0;
 }
+
+
+float g_DPIScaleX = 1.0f;
+float g_DPIScaleY = 1.0f;
+
+
+/*
+void InitializeDPIScale(ID2D1Factory* pFactory) {
+	FLOAT dpiX, dpiY;
+
+	pFactory->GetDesktopDpi(&dpiX, &dpiY);
+	g_DPIScaleX = dpiX / 96.0f;
+	g_DPIScaleY = dpiY / 96.0f;
+}
+*/
+
+void InitializeDPIScale(HWND hwnd) {
+	HDC hdc = GetDC(hwnd);
+	g_DPIScaleX = GetDeviceCaps(hdc, LOGPIXELSX) / 96.0f;
+	g_DPIScaleY = GetDeviceCaps(hdc, LOGPIXELSY) / 96.0f;
+	ReleaseDC(hwnd, hdc);
+}
+
+template <typename T>
+float PixelsToDipsX(T x) {
+	return static_cast<float>(x) / g_DPIScaleX;
+}
+
+template <typename T>
+float PixelsToDipsY(T y) {
+	return static_cast<float>(y) / g_DPIScaleY;
+}
+
