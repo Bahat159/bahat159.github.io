@@ -86,7 +86,7 @@ class MainWindow : public BaseWindow<MainWindow>
 {
 	ID2D1Factory *pFactory;
 	ID2D1HwndRenderTarget *pRenderTarget;
-	ID2D1SolidColorBrush *pBrush;
+	ID2D1SolidColorBrush *pBrush, *pStroke, *pFill;
 	D2D1_ELLIPSE            ellipse;
 
 	void CalculateLayout();
@@ -94,6 +94,8 @@ class MainWindow : public BaseWindow<MainWindow>
 	void DiscardGraphicsResources();
 	void OnPaint();
 	void Resize();
+	void DrawClockHand(float fHandLength, float fAngle, float fStrokeWidth);
+	void RenderScene();
 public:
 	MainWindow() : pFactory(NULL), pRenderTarget(NULL), pBrush(NULL) {}
 	PCWSTR ClassName() const {
@@ -183,4 +185,30 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		return 0;
 	}
 	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
+}
+
+void MainWindow::DrawClockHand(float fHandLength, float fAngle, float fStrokeWidth) {
+	pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(fAngle, ellipse.point));
+	D2D_POINT_2F endPoint = D2D1::Point2F(ellipse.point.x, ellipse.point.y - (ellipse.radiusY * fHandLength));
+	pRenderTarget->DrawLine(ellipse.point, endPoint, pStroke, fStrokeWidth);
+}
+
+
+void MainWindow::RenderScene() {
+	pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::SkyBlue));
+	pRenderTarget->FillEllipse(ellipse, pFill);
+	pRenderTarget->DrawEllipse(ellipse, pStroke);
+
+	SYSTEMTIME time;
+	GetLocalTime(&time);
+
+	// 60 minutes = 30 degrees, 1 minute = 0.5 degree
+	const float fHourAngle = (360.0f / 12) * (time.wHour) + (time.wMinute * 0.5f);
+	const float fMinuteAngle = (360.0f / 60) * (time.wMinute);
+
+	DrawClockHand(0.6f, fHourAngle, 6);
+	DrawClockHand(0.85f, fMinuteAngle, 4);
+
+	// Restore the identity transformation.
+	pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 }
