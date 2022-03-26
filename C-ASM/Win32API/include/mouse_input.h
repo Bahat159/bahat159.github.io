@@ -25,6 +25,26 @@ public:
 float DPIScale::scaleX = 1.0f;
 float DPIScale::scaleY = 1.0f;
 
+class MouseTrackEvents {
+	bool m_bMouseTracking;
+public:
+	MouseTrackEvents() : m_bMouseTracking(false) {}
+	void OmMouseMove(HWND hwnd) {
+		if (!m_bMouseTracking) {
+			TRACKMOUSEEVENT tme;
+			tme.cbSize = sizeof(tme);
+			tme.hwndTrack = hwnd;
+			tme.dwFlags = TME_HOVER | TME_LEAVE;
+			tme.dwHoverTime = HOVER_DEFAULT;
+			TrackMouseEvent(&tme);
+			m_bMouseTracking = true;
+		}
+	}
+	void Reset(HWND hwnd) {
+		m_bMouseTracking = false;
+	}
+};
+
 class MouseMovement : public BaseWindow<MainWindow>
 {
 	ID2D1Factory* pFactory;
@@ -79,13 +99,18 @@ void MouseMovement::OnLButtonUp()
 void MouseMovement::ConfineCursorToScreen() {
 	RECT rc;
 	GetClientRect(m_hwnd, &rc);
+
+	// Convert the client area to screen coordinates.
 	POINT pt = { rc.left, rc.top };
 	POINT pt2 = { rc.right, rc.bottom };
 	ClientToScreen(m_hwnd, &pt);
 	ClientToScreen(m_hwnd, &pt2);
 	SetRect(&rc, pt.x, pt.y, pt2.x, pt2.y);
+
+	// Confine the cursor.
 	ClipCursor(&rc);
 }
+
 
 LRESULT MouseMovement::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
