@@ -1,7 +1,59 @@
 #include <windows.h>
 #include <windowsx.h>
+#include <wchar.h>
 #include "FirstWindowApp.h"
+#include <memory>
+#include <list>
 #pragma once
+
+/// define numeric identifiers for the table and for the application commands. 
+/// These values are arbitrary
+
+#define IDR_ACCEL1                      101
+#define ID_TOGGLE_MODE                40002
+#define ID_DRAW_MODE                  40003
+#define ID_SELECT_MODE				  40004
+
+
+struct MyEllipse
+{
+	D2D1_ELLIPSE    ellipse;
+	D2D1_COLOR_F    color;
+
+	void Draw(ID2D1RenderTarget* pRT, ID2D1SolidColorBrush* pBrush)
+	{
+		pBrush->SetColor(color);
+		pRT->FillEllipse(ellipse, pBrush);
+		pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+		pRT->DrawEllipse(ellipse, pBrush, 1.0f);
+	}
+
+	BOOL HitTest(float x, float y)
+	{
+		const float a = ellipse.radiusX;
+		const float b = ellipse.radiusY;
+		const float x1 = x - ellipse.point.x;
+		const float y1 = y - ellipse.point.y;
+		const float d = ((x1 * x1) / (a * a)) + ((y1 * y1) / (b * b));
+		return d <= 1.0f;
+	}
+};
+
+std::list<std::shared_ptr<MyEllipse>>::iterator   selection;
+
+std::shared_ptr<MyEllipse> Selection()
+{
+	if (selection == ellipses.end())
+	{
+		return nullptr;
+	}
+	else
+	{
+		return (*selection);
+	}
+}
+
+void    ClearSelection() { selection = ellipses.end(); }
 
 
 class DPIScale {
@@ -25,7 +77,7 @@ public:
 float DPIScale::scaleX = 1.0f;
 float DPIScale::scaleY = 1.0f;
 
-class MouseTrackEvents {
+class MouseTrackEvents : public BaseWindow<MainWindow>  {
 	bool m_bMouseTracking;
 public:
 	MouseTrackEvents() : m_bMouseTracking(false) {}
@@ -57,35 +109,9 @@ public:
 	}
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-protected:
-	HWND m_hwnd;
 };
 
 LRESULT MouseTrackEvents::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	switch (uMsg)
-	{
-	case WM_MOUSEMOVE:
-		mouseTrack.OnMouseMove(m_hwnd);  // Start tracking.
-
-		// TODO: Handle the mouse-move message.
-
-		return 0;
-
-	case WM_MOUSELEAVE:
-
-		// TODO: Handle the mouse-leave message.
-
-		mouseTrack.Reset(m_hwnd);
-		return 0;
-
-	case WM_MOUSEHOVER:
-
-		// TODO: Handle the mouse-hover message.
-
-		mouseTrack.Reset(m_hwnd);
-		return 0;
-
-	}
 	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
 }
 
