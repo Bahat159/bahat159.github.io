@@ -43,7 +43,11 @@ public:
 	void Reset(HWND hwnd) {
 		m_bMouseTracking = false;
 	}
+	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	UINT GetMouseHoverTime();
 };
+
+LRESULT MouseTrackEvents::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {}
 
 class MouseMovement : public BaseWindow<MainWindow>
 {
