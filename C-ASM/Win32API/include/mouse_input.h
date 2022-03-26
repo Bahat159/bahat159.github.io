@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <windowsx.h>
-#include "./FirstWindowApp.h"
+#include "FirstWindowApp.h"
 #pragma once
 
 
@@ -33,10 +33,11 @@ class MouseMovement : public BaseWindow<MainWindow>
 	D2D1_ELLIPSE            ellipse;
 	D2D1_POINT_2F           ptMouse;
 
-	void CalculateLayout() {};
+	void	CalculateLayout() {};
 	void    OnLButtonDown(int pixelX, int pixelY, DWORD flags);
 	void    OnLButtonUp();
 	void    OnMouseMove(int pixelX, int pixelY, DWORD flags);
+	void	ConfineCursorToScreen();
 public:
 	MouseMovement() : pFactory(NULL), pRenderTarget(NULL), pBrush(NULL), ellipse(D2D1::Ellipse(D2D1::Point2F(), 0, 0)), ptMouse(D2D1::Point2F()){}
 	PCWSTR ClassName() const {
@@ -73,6 +74,17 @@ void MouseMovement::OnMouseMove(int pixelX, int pixelY, DWORD flags)
 void MouseMovement::OnLButtonUp()
 {
 	ReleaseCapture();
+}
+
+void MouseMovement::ConfineCursorToScreen() {
+	RECT rc;
+	GetClientRect(m_hwnd, &rc);
+	POINT pt = { rc.left, rc.top };
+	POINT pt2 = { rc.right, rc.bottom };
+	ClientToScreen(m_hwnd, &pt);
+	ClientToScreen(m_hwnd, &pt2);
+	SetRect(&rc, pt.x, pt.y, pt2.x, pt2.y);
+	ClipCursor(&rc);
 }
 
 LRESULT MouseMovement::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
