@@ -52,10 +52,42 @@ public:
 			return 0;
 		}
 	}
+	BOOL IsMouseWheelPresent(){
+		return (GetSystemMetrics(SM_MOUSEWHEELPRESENT) != 0);
+	}
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+protected:
+	HWND m_hwnd;
 };
 
-LRESULT MouseTrackEvents::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {}
+LRESULT MouseTrackEvents::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
+	switch (uMsg)
+	{
+	case WM_MOUSEMOVE:
+		mouseTrack.OnMouseMove(m_hwnd);  // Start tracking.
+
+		// TODO: Handle the mouse-move message.
+
+		return 0;
+
+	case WM_MOUSELEAVE:
+
+		// TODO: Handle the mouse-leave message.
+
+		mouseTrack.Reset(m_hwnd);
+		return 0;
+
+	case WM_MOUSEHOVER:
+
+		// TODO: Handle the mouse-hover message.
+
+		mouseTrack.Reset(m_hwnd);
+		return 0;
+
+	}
+	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
+}
 
 class MouseMovement : public BaseWindow<MainWindow>
 {
