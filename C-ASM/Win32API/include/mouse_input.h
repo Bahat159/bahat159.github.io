@@ -43,8 +43,16 @@ public:
 	void Reset(HWND hwnd) {
 		m_bMouseTracking = false;
 	}
+	UINT GetMouseHoverTime() {
+		UINT msec;
+		if (SystemParametersInfo(SPI_GETMOUSEHOVERTIME, 0, &msec, 0)) {
+			return msec;
+		}
+		else {
+			return 0;
+		}
+	}
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
-	UINT GetMouseHoverTime();
 };
 
 LRESULT MouseTrackEvents::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {}
