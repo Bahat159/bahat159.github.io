@@ -39,6 +39,7 @@ struct MyEllipse
 	}
 };
 
+std::list<std::shared_ptr<MyEllipse>>             ellipses;
 std::list<std::shared_ptr<MyEllipse>>::iterator   selection;
 
 std::shared_ptr<MyEllipse> Selection()
