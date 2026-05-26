@@ -1,32 +1,98 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Hi I am Busari Habibullaah">
-    <meta name="keywords" content="Busari, Habibullaah, Python, Php, Javascript, Linux, Bsd">
-    <meta name="author" content="Busari Habibullaah">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="./favicon.png"/>
-    <title>Busari Habibullaah - Bahat159</title> 
-  </head>
-    <body style="font-size:1.15em; padding:25px;">
-	    <p ><span><b>Hi, I am Busari Habibullah</b></span></p>
-	<p>
-		<span>
-			I am a computer programmer by education and profession, with focus on both open and closed source software application. 
-			My profile and project can be viewed at <a target="_blank" href="https://github.com/bahat159">github</a>, 
-			my professional portfolio is at <a target="_blank" href="https://www.linkedin.com/in/habib-busari-191ba8155/">linkedin</a>.
-		</span>
-		<span>For more information about me and my work, you should send me an Email at <a href= "mailto:busarihabib159@gmail.com">Send an Email</a></span>
-	 </p>
-	    <p>This is still a work in progress, i will be updating this page often, till i am satisfied with my design of choice.</p>
-	    <h4>Project List</h4>
-	    <p>PyCrypt: Python cryptography wrapper library to make life more easier for developers alike:
-		    <a target="_blank" href="https://github.com/Bahat159/PyCrypt">PyCrypt </a>
-	    </p>
-	    <p>FileOp: low-level file and directory access operation written in C++: <a target="_blank" href="https://github.com/Bahat159/FileOp">FileOp</a></p>
-	    <p>TheMovieDB: Django Restful API extension of themoviedb API:
-		    <a target="_blank" href="https://github.com/Bahat159/TheMovieDB">TheMovieDB </a>
-	    </p>
-    </body>
-</html>
+    <title>Developer Portfolio | Data Engineering & Web Pipelines</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1 class="profile-title">Hi, I'm <span>Your Name</span></h1>
+            <p class="profile-subtitle">Data Engineer & Full-Stack Developer specializing in real-time ingestion pipelines, automated scrapers, and decoupled application architectures.</p>
+            <div class="links-container">
+                <a href="https://github.com/bahat159" target="_blank" class="btn btn-primary">📁 View GitHub</a>
+                <a href="#contact" class="btn btn-glass">✉️ Get In Touch</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="projects">
+            <h2>🛠️ Featured Repositories</h2>
+            <div class="project-grid">
+                
+                <article class="project-card">
+                    <div class="project-header">
+                        <h3>Live USD-to-NGN FX Pipeline</h3>
+                        <p class="project-desc">A decoupled full-stack tracking hub that polls live exchange rates via a Python mining script, caches data through a sanitized PHP REST gateway, and triggers real-time UI updates asynchronously.</p>
+                    </div>
+                    <div>
+                        <div class="tag-row">
+                            <span class="tag">Python</span>
+                            <span class="tag">PHP 8.x</span>
+                            <span class="tag">JavaScript ES6</span>
+                            <span class="tag">JSON Cache</span>
+                        </div>
+                        <a href="https://github.com/bahat159/usd-ngn-rate-monitor" target="_blank" class="btn">Source Code &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Project 2: Global Asset Matrix Monitor -->
+                <article class="project-card">
+                    <div class="project-header">
+                        <h3>Global Asset Monitor ($1 USD Base)</h3>
+                        <p class="project-desc">An advanced multithreaded architecture displaying multi-currency fiat markets alongside live cryptocurrency asset metrics (BTC, ETH, SOL) using persistent flat-file storage nodes.</p>
+                    </div>
+                    <div>
+                        <div class="tag-row">
+                            <span class="tag">Data Orchestration</span>
+                            <span class="tag">API Integration</span>
+                            <span class="tag">Data Wrangling</span>
+                            <span class="tag">CORS</span>
+                        </div>
+                        <a href="https://github.com/bahat159/global-asset-monitor" target="_blank" class="btn">Source Code &rarr;</a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Technical Skill Capabilities Overview -->
+        <section id="skills">
+            <h2>🧠 Core Capabilities</h2>
+            <div class="tag-row" style="gap: 0.75rem;">
+                <span class="btn" style="cursor: default;">Python Scripting & Automation</span>
+                <span class="btn" style="cursor: default;">Backend API Design (PHP)</span>
+                <span class="btn" style="cursor: default;">Asynchronous JavaScript (DOM / Fetch)</span>
+                <span class="btn" style="cursor: default;">Data Cleaning & Sanitization</span>
+                <span class="btn" style="cursor: default;">JSON Caching Strategies</span>
+                <span class="btn" style="cursor: default;">Mobile-First Responsive Layouts</span>
+            </div>
+        </section>
+
+        <!-- Dynamic User Ingress Form (Contact) -->
+        <section id="contact">
+            <h2>✉️ Let's Work Together</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; max-width: 500px;">Looking to integrate AI tools or optimize your real-time data pipelines? Drop your message details down below.</p>
+            
+            <form class="contact-form" action="https://formspree.io/f/xwvzwppe" method="POST">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Project Scope Details</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Describe your data pipeline or remote application needs..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Dispatch Message</button>
+            </form>
+        </section>
+    </main>
+</body>
